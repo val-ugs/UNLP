@@ -10,7 +10,7 @@ def classification_trainer_bert_run():
     model_name_or_path = "bert-base-uncased"
 
     # Training args
-    output_model_name = "my_output_model_name"
+    output_model_name = "my_output_classification_model_name"
 
     # Evaluate
     evaluate_metric_name = 'accuracy'
@@ -42,14 +42,14 @@ def classification_trainer_bert_run():
 
     # Load model from path
     # # classification_trainer = ClassificationTrainer(
-    # #     model_name_or_path='./my_bert_model/',
+    # #     model_name_or_path='./my_bert_classification_model/',
     # #     training_args=training_args,
     # #     metric=metric,
     # #     train_df=train_df,
     # #     val_df=val_df)
 
     # Training
-    classification_trainer.train('./my_bert_model/')
+    classification_trainer.train('./my_bert_classification_model/')
     
     # Predicting (with labels)
     predictions = classification_trainer.predict(test_df)

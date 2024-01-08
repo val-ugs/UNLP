@@ -4,6 +4,8 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer, Data
 from services.Preparation import Preparation
 from utils.get_id2label_label2id import get_id2label_label2id
 
+#  Importance!!! DataFrame has columns: 'text', 'labels'
+
 class ClassificationTrainer:
     def __init__(self, model_name_or_path, training_args, metric, train_df, val_df):
         self.metric = metric
@@ -20,9 +22,10 @@ class ClassificationTrainer:
         tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path=model_name_or_path)
         self.preparation = Preparation(tokenizer)
 
+        tokenized_train_dataset = self.preparation.get_classification_dataset(train_df)
+        tokenized_val_dataset = self.preparation.get_classification_dataset(val_df)
+
         data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
-        tokenized_train_dataset = self.preparation.get_dataset(train_df)
-        tokenized_val_dataset = self.preparation.get_dataset(val_df)
 
         self.trainer = Trainer(
             model=model,
@@ -41,7 +44,7 @@ class ClassificationTrainer:
             self.trainer.save_model(path_to_model)
 
     def predict(self, test_df):
-        test_dataset = self.preparation.get_dataset(test_df)
+        test_dataset = self.preparation.get_classification_dataset(test_df)
         predictions, labels, metrics = self.trainer.predict(test_dataset, metric_key_prefix='predict')
 
         predictions = np.argmax(predictions, axis=1)
