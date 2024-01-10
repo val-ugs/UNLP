@@ -1,0 +1,30 @@
+// Use case
+// .div {
+//     @include media-1000 {
+//         @content;
+//     }
+// }
+
+@mixin media-1370 {
+  @media (max-width: 1370px) {
+    @content;
+  }
+}
+
+@mixin media-1000 {
+  @media (max-width: 1000px) {
+    @content;
+  }
+}
+
+@mixin media-700 {
+  @media (max-width: 700px) {
+    @content;
+  }
+}
+
+@mixin media-480 {
+  @media (max-width: 480px) {
+    @content;
+  }
+}

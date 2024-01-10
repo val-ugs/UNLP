@@ -1,0 +1,28 @@
+@import 'variables.scss';
+
+.labels {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    padding: 10px;
+    text-align: center;
+    background-color: $color-4;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    padding-top: 5px;
+  }
+
+  &__item {
+    max-height: 40px;
+    margin: 0 5px 5px;
+    border: none;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

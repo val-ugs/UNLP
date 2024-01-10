@@ -1,0 +1,33 @@
+@import 'variables.scss';
+
+.nlp-train {
+  display: flex;
+
+  &__sidebar {
+    width: 300px;
+  }
+
+  &__title {
+    padding: 10px;
+    text-align: center;
+    background-color: $color-4;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+  }
+
+  &__item {
+    margin-bottom: 5px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__main {
+    padding: 10px;
+  }
+}
