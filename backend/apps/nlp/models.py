@@ -1,19 +1,5 @@
 from django.db import models
 
-class Label(models.Model):
-    name = models.CharField(max_length=100)
-    color = models.CharField(max_length=7)
-
-class NlpText(models.Model):
-    text = models.TextField()
-    title = models.CharField(max_length=100)
-    
-class NlpToken(models.Model):
-    token = models.TextField()
-    pos = models.IntegerField()
-    label = models.OneToOneField(Label, on_delete=models.CASCADE)
-    text = models.ForeignKey(NlpText, on_delete=models.CASCADE)
-
 class ClassificationModel(models.Model):
     model_name_or_path = models.CharField(max_length=200)
 

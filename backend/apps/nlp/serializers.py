@@ -1,27 +1,5 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
-from .models import Label, NlpText, NlpToken, ClassificationModel, ClassificationModelTrain, ClassificationModelPredict, NerModel, NerModelTrain, NerModelPredict
-
-class LabelSerializer(ModelSerializer):
-    class Meta:
-        model = Label
-        fields = '__all__'
-
-class NlpTextSerializer(ModelSerializer):
-    tokens = SerializerMethodField()
-
-    class Meta:
-        model = NlpText
-        fields = ('text', 'title', 'tokens')
-
-    def get_tokens(self, obj):
-        
-        tokens = NlpToken.objects.filter(text=obj)
-        return NlpTokenSerializer(tokens, many=True).data
-
-class NlpTokenSerializer(ModelSerializer):
-    class Meta:
-        model = NlpToken
-        fields = '__all__'
+from rest_framework.serializers import ModelSerializer
+from .models import ClassificationModel, ClassificationModelTrain, ClassificationModelPredict, NerModel, NerModelTrain, NerModelPredict
 
 class ClassificationModelSerializer(ModelSerializer):
     class Meta:
