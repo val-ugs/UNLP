@@ -7,11 +7,11 @@ import json
 from apps.common.models import NlpText, NlpToken
 from apps.common.serializers import NlpTextSerializer
 
-from .serializers import FileUploadSerializer
+from ..serializers import FileUploadSerializer
 
 
 @api_view(['GET']) 
-def get_nlp_texts(request):
+def get(request):
     file_upload_serializer = FileUploadSerializer(data=request.data)
     if file_upload_serializer.is_valid():
         file = file_upload_serializer.validated_data['file']
@@ -55,7 +55,7 @@ def get_nlp_texts(request):
     )
 
 @api_view(['POST'])  
-def save_nlp_texts(request):
+def save(request):
     nlp_text_serializer = NlpTextSerializer(data=request.data['data'], many=True)
     if (nlp_text_serializer.is_valid()):
         nlp_text_serializer.save()
@@ -71,7 +71,7 @@ def save_nlp_texts(request):
     )
 
 @api_view(['POST'])  
-def tokenize_nlp_texts(request):
+def tokenize(request):
     remove_pattern = request.data['remove_pattern']
     split_pattern = request.data['split_pattern']
 
@@ -106,3 +106,14 @@ def tokenize_nlp_texts(request):
         "Tokenization pattern not specified",
         status=status.HTTP_400_BAD_REQUEST
     )
+
+@api_view(['PUT'])  
+def update(request, pk):
+    item = NlpText.objects.get(pk=pk)
+    nlp_text_serializer = NlpTextSerializer(instance=item, data=request.data)
+ 
+    if nlp_text_serializer.is_valid():
+        nlp_text_serializer.save()
+        return Response(nlp_text_serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(nlp_text_serializer.errors, status=status.HTTP_404_NOT_FOUND)

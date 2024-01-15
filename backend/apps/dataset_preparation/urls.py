@@ -1,10 +1,11 @@
 from django.urls import path
-from . import views
+from .views import nlp_text_view
 
 app_name = 'dataset_preparation'
 
 urlpatterns = [
-    path('get-nlp-texts/', views.get_nlp_texts, name='get-nlp-texts'),
-    path('save-nlp-texts/', views.save_nlp_texts, name='save-nlp-texts'),
-    path('tokenize-nlp-texts/', views.tokenize_nlp_texts, name='tokenize-nlp-texts')
+    path('nlp-text/', nlp_text_view.get, name='get-nlp-texts'),
+    path('nlp-text/save/', nlp_text_view.save, name='save-nlp-texts'),
+    path('nlp-text/tokenize/', nlp_text_view.tokenize, name='tokenize-nlp-texts'),
+    path('nlp-text/<int:pk>/', nlp_text_view.update, name='update-nlp-text')
 ]
