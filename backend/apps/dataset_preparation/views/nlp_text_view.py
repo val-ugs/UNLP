@@ -23,7 +23,7 @@ class NlpTextView(APIView):
             )
         return Response("Nlp texts not found", status=status.HTTP_400_BAD_REQUEST)
 
-    def put(request, pk):
+    def put(self, request, pk):
         """
         update nlp_text
         """
