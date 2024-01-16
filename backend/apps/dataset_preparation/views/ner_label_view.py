@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -6,6 +7,21 @@ from apps.common.models import NerLabel
 from apps.common.serializers import NerLabelSerializer
 
 class NerLabelView(APIView):
+    def post(self, request):
+        ner_label_serializer = NerLabelSerializer(data=request.data)
+
+        if NerLabel.objects.filter(**request.data).exists():
+            raise serializers.ValidationError('NerLabel already exists')
+        
+        if ner_label_serializer.is_valid():
+            ner_label_serializer.save()
+            return Response(ner_label_serializer.data)
+        else:
+            return Response(
+                ner_label_serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
     def get(self, request):
         """
         get ner_labels
