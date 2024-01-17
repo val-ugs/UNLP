@@ -1,8 +1,8 @@
-import { LabelProps } from './label.interface';
+import { NlpTokenProps } from './nlpToken.interface';
 
 export interface NlpTextProps {
   id: number;
   text: string;
-  title: string;
-  labels: LabelProps[];
+  classification_label: string;
+  nlp_tokens: NlpTokenProps[];
 }

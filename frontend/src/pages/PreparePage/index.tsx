@@ -1,24 +1,26 @@
 import React, { FC, useState } from 'react';
 import Layout from 'pages/_layouts/Layout';
 import Button from 'components/common/Button';
-import Texts from './components/Texts';
+import NlpTexts from './components/NlpTexts';
 import NlpTextForm from './components/NlpTextForm';
-import Labels from './components/Labels';
+import NerLabels from './components/NerLabels';
 import { NlpTextProps } from 'interfaces/nlpText.interface';
+import { useAppDispatch } from 'hooks/redux';
+import { loadDataModalSlice } from 'store/reducers/loadDataModalSlice';
 import './styles.scss';
 
 const nlpTexts: NlpTextProps[] = [
   {
     id: 1,
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum in orci ac aliquam. Nullam gravida mauris dictum, vulputate turpis eu, sodales neque. Quisque ut lobortis sapien. Donec id arcu venenatis, semper libero ultricies, blandit mauris. Donec malesuada neque velit, vel laoreet est eleifend eget. Pellentesque nec quam neque. Mauris sed egestas augue.',
-    title: 'Title 1',
-    labels: [],
+    classification_label: 'Label 1',
+    nlp_tokens: [],
   },
   {
     id: 2,
     text: 'Lorem ipsum dolor',
-    title: 'Title 2',
-    labels: [],
+    classification_label: 'Label 2',
+    nlp_tokens: [],
   },
 ];
 
@@ -26,10 +28,12 @@ const PreparePage: FC = () => {
   const [selectedNlpText, setSelectedNlpText] = useState<NlpTextProps>(
     nlpTexts[0]
   );
+  const dispatch = useAppDispatch();
+  const { activate } = loadDataModalSlice.actions;
 
-  const handleLoadDataset = () => {};
+  const handleLoadData = () => dispatch(activate());
 
-  const handleSaveDataset = () => {};
+  const handleSaveData = () => {};
 
   const handleConvertNerLabelOrSummarizationToText = () => {};
 
@@ -38,17 +42,11 @@ const PreparePage: FC = () => {
       <div className="prepare-page">
         <div className="prepare-page__main">
           <div className="prepare-page__buttons">
-            <Button
-              className="prepare-page__button"
-              onClick={handleLoadDataset}
-            >
-              Load dataset
+            <Button className="prepare-page__button" onClick={handleLoadData}>
+              Load data
             </Button>
-            <Button
-              className="prepare-page__button"
-              onClick={handleSaveDataset}
-            >
-              Save dataset
+            <Button className="prepare-page__button" onClick={handleSaveData}>
+              Save data
             </Button>
             <Button
               className="prepare-page__button"
@@ -58,7 +56,7 @@ const PreparePage: FC = () => {
             </Button>
           </div>
           <div className="prepare-page__body">
-            <Texts
+            <NlpTexts
               className="prepare-page__sidebar-left"
               nlpTexts={nlpTexts}
               selectedNlpText={selectedNlpText}
@@ -69,7 +67,7 @@ const PreparePage: FC = () => {
               nlpText={selectedNlpText}
               setNlpText={setSelectedNlpText}
             />
-            <Labels className="prepare-page__sidebar-right" />
+            <NerLabels className="prepare-page__sidebar-right" />
           </div>
         </div>
       </div>

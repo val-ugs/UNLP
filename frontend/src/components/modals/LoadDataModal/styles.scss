@@ -1,0 +1,48 @@
+@import 'variables.scss';
+
+.load-data-modal {
+  display: flex;
+  flex-direction: column;
+
+  &__field {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+  }
+
+  &__field-button {
+    justify-content: center;
+  }
+
+  &__label {
+    display: block;
+    margin-right: 10px;
+    padding: 5px;
+    text-align: center;
+    background-color: $color-2;
+    border: 2px solid $color-4;
+    border-radius: 20px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-3;
+    }
+
+    &:active {
+      background-color: $color-2;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__path {
+  }
+
+  &__input {
+  }
+
+  &__button {
+  }
+}

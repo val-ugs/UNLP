@@ -14,8 +14,8 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
   nlpText,
   setNlpText,
 }) => {
-  const setTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setNlpText({ ...nlpText, title: e.target.value });
+  const setClassificationLabel = (e: ChangeEvent<HTMLInputElement>) => {
+    setNlpText({ ...nlpText, classification_label: e.target.value });
   };
 
   const setText = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -25,8 +25,11 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
   return (
     <div className={`text-nlp-form ${className}`}>
       <div className="text-nlp-form__up">
-        <LabeledElement labelElement={{ value: 'Title' }}>
-          <input value={nlpText.title} onChange={setTitle} />
+        <LabeledElement labelElement={{ value: 'Classification label' }}>
+          <input
+            value={nlpText.classification_label}
+            onChange={setClassificationLabel}
+          />
         </LabeledElement>
       </div>
       <div className="text-nlp-form__down">

@@ -1,0 +1,47 @@
+@import 'variables.scss';
+@import 'media_mixin.scss';
+
+// variables
+$input-button-background-color: $color-2;
+$input-button-border-color: $color-4;
+$input-button-background-hover-color: $color-3;
+$input-button-background-active-color: $color-2;
+$input-button-text-color: $color-5;
+
+.input-button {
+  padding: 10px 50px;
+  color: $input-button-text-color;
+  font-size: 20px;
+  font-family: $font-family;
+  background-color: $input-button-background-color;
+  border: 2px solid $input-button-border-color;
+  border-radius: 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $input-button-background-hover-color;
+  }
+
+  &:active {
+    background-color: $input-button-background-active-color;
+  }
+
+  &:disabled {
+    filter: brightness(70%);
+  }
+
+  @include media-1000 {
+    padding: 10px 40px;
+    font-size: 20px;
+  }
+
+  @include media-700 {
+    padding: 10px 30px;
+    font-size: 16px;
+  }
+
+  @include media-480 {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+}

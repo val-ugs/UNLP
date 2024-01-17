@@ -56,6 +56,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '..', './dist'),
     filename: './js/main.js',
+    publicPath: '/',
   },
   plugins: [
     new CleanWebpackPlugin(), // Clears the dist folder

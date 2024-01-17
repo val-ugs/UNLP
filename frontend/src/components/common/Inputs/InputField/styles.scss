@@ -1,0 +1,95 @@
+@import 'variables.scss';
+@import 'media_mixin.scss';
+
+// InputField variables
+$input-field-background-color: $color-2;
+$input-field-border-color: $color-2;
+$input-field-text-color: $color-5;
+$input-field-focus-border-color: $color-2;
+
+.input-field {
+  position: relative;
+  display: flex;
+  color: $input-field-text-color;
+  font-size: 20px;
+  background-color: $input-field-background-color;
+  border: 1px solid $input-field-border-color;
+  border-radius: 10px;
+
+  &:focus-within {
+    border-color: $input-field-focus-border-color;
+  }
+
+  &__input {
+    padding-right: 1.1em;
+    color: inherit;
+    font-size: inherit;
+    font-family: $font-family;
+    background-color: inherit;
+    border: none;
+    border-radius: inherit;
+
+    &::placeholder {
+      color: inherit;
+      opacity: 0.4;
+    }
+
+    &:focus {
+      border-color: $input-field-focus-border-color;
+      outline: none;
+    }
+
+    &::-webkit-search-cancel-button {
+      display: none;
+    }
+
+    &::-ms-clear {
+      display: none;
+    }
+
+    &:disabled {
+      filter: brightness(70%);
+    }
+  }
+
+  &__clear {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    bottom: 2px;
+    display: flex;
+    justify-content: center;
+    width: 1em;
+  }
+
+  &__clear-button {
+  }
+
+  @include media-1000 {
+    font-size: 16px;
+  }
+
+  @include media-700 {
+    font-size: 14px;
+  }
+}
+
+.input-field input[type='email'] {
+  width: 100%;
+}
+
+.input-field input[type='password'] {
+  width: 100%;
+}
+
+.input-field input[type='search'] {
+  width: 100%;
+}
+
+.input-field input[type='tel'] {
+  width: 100%;
+}
+
+.input-field input[type='text'] {
+  width: 100%;
+}

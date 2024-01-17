@@ -1,0 +1,16 @@
+@import 'variables.scss';
+@import 'media_mixin.scss';
+
+.input-cross-button {
+  height: 100%;
+  color: inherit;
+  font-weight: bold;
+  font-size: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}

@@ -1,0 +1,17 @@
+@import 'variables.scss';
+
+.content-modal {
+  position: relative;
+  padding: 10px;
+  background-color: $color-1;
+  border: 5px solid $color-3;
+
+  &__close-button {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+  }
+}

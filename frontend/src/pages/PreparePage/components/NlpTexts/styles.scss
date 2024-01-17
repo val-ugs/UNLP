@@ -1,6 +1,6 @@
 @import 'variables.scss';
 
-.labels {
+.nlp-texts {
   display: flex;
   flex-direction: column;
 
@@ -13,16 +13,16 @@
   &__list {
     display: flex;
     flex-direction: column;
-    padding-top: 5px;
   }
 
   &__item {
     max-height: 40px;
-    margin: 0 5px 5px;
-    border: none;
+    overflow: hidden;
+    border: 2px solid $color-4;
+    border-radius: 0;
 
-    &:last-child {
-      margin-bottom: 0;
+    &.active {
+      background-color: $color-3;
     }
   }
 }
