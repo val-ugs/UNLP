@@ -8,21 +8,21 @@ import json
 from apps.common.models import NlpDataset, NlpText, NlpToken
 from apps.common.serializers import NlpDatasetSerializer
 
-from ..serializers import UploadedFileSerializer
+from ..serializers import LoadingDataSerializer
 
 class NlpDatasetView(APIView):
-    def post(self, request, pk):
+    def post(self, request, pk = None):
         """
         if json file then get nlp_dataset
         if txt file then add data to nlp_dataset (if not exists create nlp_dataset) and try tokenize 
         """
-        file_upload_serializer = UploadedFileSerializer(data=request.data)
-        if file_upload_serializer.is_valid():
-            file = file_upload_serializer.validated_data['file']
+        loading_data_serializer = LoadingDataSerializer(data=request.data)
+        if loading_data_serializer.is_valid():
+            file = loading_data_serializer.validated_data['file']
             f = file.open('r')
 
             if file.name.endswith('.txt'):
-                text_pattern_to_split = file_upload_serializer.validated_data.get('text_pattern_to_split', None)
+                text_pattern_to_split = loading_data_serializer.validated_data.get('text_pattern_to_split', None)
                 content = f.read().decode()
 
                 nlp_dataset, _ = NlpDataset.objects.get_or_create(pk=pk)
@@ -53,7 +53,7 @@ class NlpDatasetView(APIView):
                 )
         
         return Response(
-            file_upload_serializer.errors,
+            loading_data_serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
 

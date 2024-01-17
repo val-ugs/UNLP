@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import get_api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dataset-preparation/', include('apps.dataset_preparation.urls', namespace='dataset_preparation')),
-    path('nlp/', include('apps.nlp.urls')),
+    path('api/', get_api),
+    path('api/dataset-preparation/', include('apps.dataset_preparation.urls', namespace='dataset_preparation')),
+    path('api/nlp/', include('apps.nlp.urls')),
 ]

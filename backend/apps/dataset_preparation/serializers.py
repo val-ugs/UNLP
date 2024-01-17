@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import UploadedFile
+from .models import LoadingData
 
-class UploadedFileSerializer(serializers.ModelSerializer):
+class LoadingDataSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UploadedFile
+        model = LoadingData
         fields = '__all__'
