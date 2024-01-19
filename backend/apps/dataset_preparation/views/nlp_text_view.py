@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -6,21 +7,33 @@ from apps.common.models import NlpText
 from apps.common.serializers import NlpTextSerializer
 
 class NlpTextView(APIView):
-    def get(self, request):
+    def get(self, request, pk):
         """
         get nlp_texts
         """
-        if request.query_params:
-            nlp_texts = NlpText.objects.filter(**request.query_params.dict())
-        else:
-            nlp_texts = NlpText.objects.all()
-    
-        if nlp_texts:
-            nlp_text_serializer = NlpTextSerializer(nlp_texts, many=True)
-            return Response(
-                nlp_text_serializer.data,
-                status=status.HTTP_200_OK
-            )
+        if pk:
+            nlp_text = get_object_or_404(NlpText, pk=pk)
+        
+            if nlp_text:
+                nlp_text_serializer = NlpTextSerializer(nlp_text)
+                return Response(
+                    nlp_text_serializer.data,
+                    status=status.HTTP_200_OK
+                )
+                
+        elif pk == None:
+            if request.query_params:
+                nlp_texts = NlpText.objects.filter(**request.query_params.dict())
+            else:
+                nlp_texts = NlpText.objects.all()
+        
+            if nlp_texts:
+                nlp_text_serializer = NlpTextSerializer(nlp_texts, many=True)
+                return Response(
+                    nlp_text_serializer.data,
+                    status=status.HTTP_200_OK
+                )
+            
         return Response("Nlp texts not found", status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk):
