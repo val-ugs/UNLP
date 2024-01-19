@@ -4,36 +4,23 @@ import Button from 'components/common/Button';
 import NlpTexts from './components/NlpTexts';
 import NlpTextForm from './components/NlpTextForm';
 import NerLabels from './components/NerLabels';
-import { NlpTextProps } from 'interfaces/nlpText.interface';
-import { useAppDispatch } from 'hooks/redux';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { loadDataModalSlice } from 'store/reducers/loadDataModalSlice';
 import './styles.scss';
 
-const nlpTexts: NlpTextProps[] = [
-  {
-    id: 1,
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum in orci ac aliquam. Nullam gravida mauris dictum, vulputate turpis eu, sodales neque. Quisque ut lobortis sapien. Donec id arcu venenatis, semper libero ultricies, blandit mauris. Donec malesuada neque velit, vel laoreet est eleifend eget. Pellentesque nec quam neque. Mauris sed egestas augue.',
-    classification_label: 'Label 1',
-    nlp_tokens: [],
-  },
-  {
-    id: 2,
-    text: 'Lorem ipsum dolor',
-    classification_label: 'Label 2',
-    nlp_tokens: [],
-  },
-];
-
 const PreparePage: FC = () => {
-  const [selectedNlpText, setSelectedNlpText] = useState<NlpTextProps>(
-    nlpTexts[0]
-  );
-  const dispatch = useAppDispatch();
+  const { nlpDataset } = useAppSelector((state) => state.nlpDatasetReducer);
+  const [selectedNlpTextId, setSelectedNlpTextId] = useState<
+    number | undefined
+  >(undefined);
   const { activate } = loadDataModalSlice.actions;
+  const dispatch = useAppDispatch();
 
   const handleLoadData = () => dispatch(activate());
 
-  const handleSaveData = () => {};
+  const handleSaveData = () => {
+    console.log(nlpDataset);
+  };
 
   const handleConvertNerLabelOrSummarizationToText = () => {};
 
@@ -58,15 +45,20 @@ const PreparePage: FC = () => {
           <div className="prepare-page__body">
             <NlpTexts
               className="prepare-page__sidebar-left"
-              nlpTexts={nlpTexts}
-              selectedNlpText={selectedNlpText}
-              setSelectedNlpText={setSelectedNlpText}
+              nlpDataset={nlpDataset}
+              selectedNlpTextId={selectedNlpTextId}
+              setSelectedNlpTextId={setSelectedNlpTextId}
             />
-            <NlpTextForm
-              className="prepare-page__text-nlp-form"
-              nlpText={selectedNlpText}
-              setNlpText={setSelectedNlpText}
-            />
+            {selectedNlpTextId ? (
+              <NlpTextForm
+                className="prepare-page__text-nlp-form"
+                selectedNlpTextId={selectedNlpTextId}
+              />
+            ) : (
+              <div className="prepare-page__text-nlp-form">
+                Text not selected or not found
+              </div>
+            )}
             <NerLabels className="prepare-page__sidebar-right" />
           </div>
         </div>

@@ -21,7 +21,7 @@ const LabeledElement: FC<LabeledElementProps> = ({
         {required && <span className="labeled-element__label-star">*</span>}
         {labelElement.value}:
       </label>
-      <div className="labeled-element__element">{children}</div>
+      {children}
     </div>
   );
 };

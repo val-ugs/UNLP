@@ -4,5 +4,5 @@ export interface NlpTokenProps {
   id: number;
   token: string;
   pos: number;
-  ner_label: NerLabelProps;
+  nerLabel: NerLabelProps;
 }

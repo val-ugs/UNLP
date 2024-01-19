@@ -1,8 +1,10 @@
 import { NlpTextProps } from 'interfaces/nlpText.interface';
+import { NerLabelProps } from './nerLabel.interface';
 
-export interface NlpDataset {
-  id: string;
-  token_pattern_to_remove: string;
-  token_pattern_to_split: string;
-  nlp_texts: NlpTextProps[];
+export interface NlpDatasetProps {
+  id: number;
+  tokenPatternToRemove: string;
+  tokenPatternToSplit: string;
+  nlpTexts: NlpTextProps[];
+  nerLabels: NerLabelProps[];
 }

@@ -1,7 +1,9 @@
 import React, { ChangeEvent, FC, FormEvent, useId, useState } from 'react';
+import camelize from 'camelize';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { loadDataModalSlice } from 'store/reducers/loadDataModalSlice';
+import { nlpDatasetSlice } from 'store/reducers/nlpDatasetSlice';
 import ContentModal from 'components/interstitial/ContentModal';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import InputButton from 'components/common/Inputs/InputButton';
@@ -13,7 +15,7 @@ import './styles.scss';
 
 const emptyLoadingDataDto: LoadingDataDtoProps = {
   file: undefined,
-  text_pattern_to_split: '',
+  textPatternToSplit: '',
 };
 
 const LoadDataModal: FC = () => {
@@ -23,6 +25,7 @@ const LoadDataModal: FC = () => {
   const [post, {}] = nlpDatasetApi.usePostMutation();
   const { isActive } = useAppSelector((state) => state.loadDataModalReducer);
   const { deactivate } = loadDataModalSlice.actions;
+  const { setNlpDataset } = nlpDatasetSlice.actions;
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
@@ -36,13 +39,13 @@ const LoadDataModal: FC = () => {
   };
 
   const setPatternValue = (value: string) => {
-    setLoadingDataDto({ ...loadingDataDto, text_pattern_to_split: value });
+    setLoadingDataDto({ ...loadingDataDto, textPatternToSplit: value });
   };
   const patternInputField: InputFieldProps = {
     className: `load-data-modal__field-input `,
     type: 'text',
     name: 'pattern',
-    value: loadingDataDto.text_pattern_to_split,
+    value: loadingDataDto.textPatternToSplit,
     setValue: setPatternValue,
     maxLength: 30,
     disabled:
@@ -54,8 +57,12 @@ const LoadDataModal: FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const nlp_dataset = await post(loadingDataDto);
-    console.log(nlp_dataset);
+    try {
+      const nlpDataset = await post(loadingDataDto).unwrap();
+      dispatch(setNlpDataset(camelize(nlpDataset)));
+    } catch (error) {
+      console.log(error);
+    }
 
     dispatch(deactivate());
   };

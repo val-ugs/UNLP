@@ -7,6 +7,17 @@
     padding: 10px;
   }
 
+  &__up-labeled-element {
+    justify-content: center;
+  }
+
+  &__up-label {
+    flex: none;
+  }
+
+  &__up-input {
+  }
+
   &__down {
     height: 100%;
     padding: 0 20px 20px;
