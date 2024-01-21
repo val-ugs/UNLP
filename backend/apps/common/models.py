@@ -14,8 +14,12 @@ class NlpText(models.Model):
     classification_label = models.CharField(max_length=100, null=True, blank=True)
     nlp_dataset = models.ForeignKey(NlpDataset, on_delete=models.CASCADE)
     
+class NlpTokenNerLabel(models.Model):
+    ner_label = models.OneToOneField(NerLabel, null=True, blank=True, on_delete=models.CASCADE)
+    initial = models.BooleanField(default=True)
+
 class NlpToken(models.Model):
     token = models.TextField(null=True, blank=True)
     pos = models.IntegerField(null=True)
-    ner_label = models.OneToOneField(NerLabel, null=True, blank=True, on_delete=models.CASCADE)
+    ner_label = models.OneToOneField(NlpTokenNerLabel, null=True, blank=True, on_delete=models.CASCADE)
     text = models.ForeignKey(NlpText, on_delete=models.CASCADE)
