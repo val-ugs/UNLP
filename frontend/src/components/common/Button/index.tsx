@@ -2,7 +2,7 @@ import React, { FC, ReactNode } from 'react';
 import './styles.scss';
 
 export interface ButtonProps {
-  className: string;
+  className?: string;
   style?: React.CSSProperties;
   onClick: () => void;
   children: ReactNode;

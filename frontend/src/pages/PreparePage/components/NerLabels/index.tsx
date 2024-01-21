@@ -1,48 +1,49 @@
 import React, { FC } from 'react';
+import { useAppDispatch } from 'hooks/redux';
+import { skipToken } from '@reduxjs/toolkit/query';
 import { NerLabelProps } from 'interfaces/nerLabel.interface';
 import Button from 'components/common/Button';
+import { nerLabelApi } from 'services/nerLabelService';
+import NerLabelItem from './components/NerLabelItem';
+import { nerLabelFormModalSlice } from 'store/reducers/nerLabelFormModalSlice';
 import './styles.scss';
 
 export interface NerLabelsProps {
   className: string;
+  nlpDatasetId: number | undefined;
 }
 
-const nerLabels: NerLabelProps[] = [
-  {
-    id: 1,
-    name: 'Label 1',
-    color: 'red',
-  },
-  {
-    id: 2,
-    name: 'Label 2',
-    color: 'blue',
-  },
-];
+const NerLabels: FC<NerLabelsProps> = ({ className, nlpDatasetId }) => {
+  const { activate } = nerLabelFormModalSlice.actions;
+  const dispatch = useAppDispatch();
+  const {
+    data: nerLabels,
+    error,
+    isLoading,
+  } = nerLabelApi.useGetNerLabelsByNlpDatasetIdQuery(
+    nlpDatasetId ? Number(nlpDatasetId) : skipToken
+  );
 
-const NerLabels: FC<NerLabelsProps> = ({ className }) => {
+  const handleAddNerLabel = () => {
+    if (nlpDatasetId) dispatch(activate({ nlpDatasetId }));
+  };
+
   return (
     <div className={`ner-labels ${className}`}>
       <div className="ner-labels__title">Labels:</div>
       <div className="ner-labels__list">
         {nerLabels?.map((nerLabel: NerLabelProps) => (
-          <div className="ner-labels__item" key={nerLabel.id}>
-            <Button
-              className="ner-labels__item-button"
-              style={{ backgroundColor: nerLabel.color }}
-              onClick={() => {}}
-            >
-              {nerLabel.name}
-            </Button>
-            <Button className="ner-labels__item-delete" onClick={() => {}}>
-              -
-            </Button>
-          </div>
+          <NerLabelItem
+            className="ner-labels__item"
+            nerLabel={nerLabel}
+            NlpDatasetId={nlpDatasetId}
+            key={nerLabel.id}
+          />
         ))}
         <div className="ner-labels__item">
           <Button
-            className="ner-labels__item-button nerlabels__item-add"
-            onClick={() => {}}
+            className="ner-labels__add-button"
+            onClick={handleAddNerLabel}
           >
             +
           </Button>

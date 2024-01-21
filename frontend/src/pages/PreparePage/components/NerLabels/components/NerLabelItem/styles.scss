@@ -1,0 +1,18 @@
+.ner-label-item {
+  display: flex;
+  height: 30px;
+  border: none;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__button {
+    width: 100%;
+  }
+
+  &__delete {
+    width: 30px;
+    margin-left: 5px;
+  }
+}

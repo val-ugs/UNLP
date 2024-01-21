@@ -9,7 +9,7 @@ const initialState: LoadDataModalState = {
 };
 
 export const loadDataModalSlice = createSlice({
-  name: 'nlp-data-modal',
+  name: 'load-data-modal',
   initialState,
   reducers: {
     activate(state) {

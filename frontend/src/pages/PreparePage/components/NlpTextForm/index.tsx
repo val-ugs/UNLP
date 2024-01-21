@@ -7,17 +7,22 @@ import LabeledElement from 'components/interstitial/LabeledElement';
 import InputField, {
   InputFieldProps,
 } from 'components/common/Inputs/InputField';
+import Accordion from 'components/common/Accordion';
+import NlpTokenItem from './components/NlpTokenItem';
 import { NlpTextProps } from 'interfaces/nlpText.interface';
 import './styles.scss';
+import { NerLabelProps } from 'interfaces/nerLabel.interface';
 
 export interface NlpTextFormProps {
   className: string;
   selectedNlpTextId: number;
+  nerLabels: NerLabelProps[];
 }
 
 const NlpTextForm: FC<NlpTextFormProps> = ({
   className,
   selectedNlpTextId,
+  nerLabels,
 }) => {
   const [nlpText, setNlpText, nlpTextRef] = useStateRef<
     NlpTextProps | undefined
@@ -26,8 +31,8 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
     data: nlpTextData,
     error,
     isLoading,
-  } = nlpTextApi.useFetchNlpTextByIdQuery(Number(selectedNlpTextId));
-  const [updateNlpText, {}] = nlpTextApi.useUpdateNlpTextMutation();
+  } = nlpTextApi.useGetNlpTextByIdQuery(Number(selectedNlpTextId));
+  const [updateNlpText, {}] = nlpTextApi.usePutNlpTextMutation();
 
   useEffect(() => {
     setNlpText(camelize(nlpTextData));
@@ -64,13 +69,13 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
   }, []);
 
   return (
-    <div className={`text-nlp-form ${className}`}>
+    <div className={`nlp-text-form ${className}`}>
       <>
-        <div className="text-nlp-form__up">
+        <div className="nlp-text-form__fields">
           <LabeledElement
-            className="text-nlp-form__up-labeled-element"
+            className="nlp-text-form__fields-labeled-element"
             labelElement={{
-              className: 'text-nlp-form__up-label',
+              className: 'nlp-text-form__fields-label',
               value: 'Classification label',
             }}
           >
@@ -87,12 +92,36 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
             />
           </LabeledElement>
         </div>
-        <div className="text-nlp-form__down">
-          <textarea
-            className="text-nlp-form__textarea"
-            value={nlpText?.text}
-            onChange={setText}
-          />
+        <div className="nlp-text-form__text">
+          <Accordion
+            className="nlp-text-form__accordion nlp-text-form__text-accordion"
+            header={'Text:'}
+          >
+            <textarea
+              className="nlp-text-form__text-textarea"
+              value={nlpText?.text}
+              onChange={setText}
+            />
+          </Accordion>
+        </div>
+        <div className="nlp-text-form__tokens">
+          <Accordion
+            className="nlp-text-form__accordion nlp-text-form__tokens-accordion"
+            header={'Tokens:'}
+          >
+            <div className="nlp-text-form__tokens-area">
+              {nlpText?.nlpTokens
+                ? nlpText.nlpTokens.map((nlpToken) => (
+                    <NlpTokenItem
+                      className="nlp-text-form__tokens-item"
+                      key={nlpToken.pos}
+                      nlpToken={nlpToken}
+                      nerLabels={nerLabels}
+                    />
+                  ))
+                : 'Токены не найдены. Проверьте настройки.'}
+            </div>
+          </Accordion>
         </div>
       </>
     </div>

@@ -5,21 +5,21 @@ import { tagTypes } from './tagTypes';
 
 export const nlpTextApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
-    fetchNlpTextsByNlpDatasetId: build.query<NlpTextProps[], number>({
+    getNlpTextsByNlpDatasetId: build.query<NlpTextProps[], number>({
       query: (nlpDatasetId: number) => ({
         url: `/dataset-preparation/nlp-text/?nlp_dataset=${nlpDatasetId}`,
       }),
       providesTags: () => [tagTypes.NlpText],
     }),
-    fetchNlpTextById: build.query<NlpTextProps, number>({
+    getNlpTextById: build.query<NlpTextProps, number>({
       query: (id: number) => ({
-        url: `/dataset-preparation/nlp-text/${id}/`,
+        url: `/dataset-preparation/nlp-texts/${id}/`,
       }),
       providesTags: () => [tagTypes.NlpText],
     }),
-    updateNlpText: build.mutation<NlpTextProps, NlpTextProps>({
+    putNlpText: build.mutation<NlpTextProps, NlpTextProps>({
       query: ({ id, ...nlpText }) => ({
-        url: `/dataset-preparation/nlp-text/${id}/`,
+        url: `/dataset-preparation/nlp-texts/${id}/`,
         method: 'PUT',
         body: nlpText,
       }),

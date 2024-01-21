@@ -1,0 +1,95 @@
+@import 'variables.scss';
+@import 'media_mixin.scss';
+
+$select-color: $color-1;
+$select-background-color: $color-3;
+$select-background-active-color: $color-4;
+$select-border-color: $color-5;
+
+.select {
+  position: relative;
+  color: $select-color;
+  font-size: 20px;
+  font-family: $font-family;
+  background-color: $select-background-color;
+  border: 1px solid $select-border-color;
+
+  &__selected {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    background-color: inherit;
+    border: inherit;
+
+    &.disabled {
+      opacity: 0.5;
+    }
+  }
+
+  &__selected-value {
+  }
+
+  &__selected-arrow {
+  }
+
+  &__arrow {
+    border-color: $select-color;
+  }
+
+  &__items {
+    position: absolute;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    max-height: 150px;
+    overflow-y: scroll;
+    background-color: inherit;
+  }
+
+  @include media-1000 {
+    &__selected {
+      font-size: 16px;
+    }
+  }
+
+  @include media-700 {
+    &__selected {
+      font-size: 14px;
+    }
+  }
+}
+
+.select-item {
+  width: 100%;
+  padding: 5px;
+  color: $select-color;
+  font-size: 20px;
+  font-family: $font-family;
+  white-space: nowrap;
+  text-align: start;
+  background-color: $select-background-color;
+  border: 1px solid $select-border-color;
+  cursor: pointer;
+
+  &:hover,
+  &.active {
+    background-color: $select-background-active-color;
+  }
+
+  &__label {
+  }
+
+  @include media-1000 {
+    font-size: 16px;
+  }
+
+  @include media-700 {
+    font-size: 14px;
+  }
+}

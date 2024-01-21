@@ -22,7 +22,7 @@ const LoadDataModal: FC = () => {
   const [loadingDataDto, setLoadingDataDto] =
     useState<LoadingDataDtoProps>(emptyLoadingDataDto);
   const loadDataId = useId();
-  const [post, {}] = nlpDatasetApi.usePostMutation();
+  const [postNlpDataset, {}] = nlpDatasetApi.usePostNlpDatasetMutation();
   const { isActive } = useAppSelector((state) => state.loadDataModalReducer);
   const { deactivate } = loadDataModalSlice.actions;
   const { setNlpDataset } = nlpDatasetSlice.actions;
@@ -42,7 +42,7 @@ const LoadDataModal: FC = () => {
     setLoadingDataDto({ ...loadingDataDto, textPatternToSplit: value });
   };
   const patternInputField: InputFieldProps = {
-    className: `load-data-modal__field-input `,
+    className: `load-data-modal__input-field `,
     type: 'text',
     name: 'pattern',
     value: loadingDataDto.textPatternToSplit,
@@ -58,7 +58,7 @@ const LoadDataModal: FC = () => {
     e.preventDefault();
 
     try {
-      const nlpDataset = await post(loadingDataDto).unwrap();
+      const nlpDataset = await postNlpDataset(loadingDataDto).unwrap();
       dispatch(setNlpDataset(camelize(nlpDataset)));
     } catch (error) {
       console.log(error);
@@ -70,6 +70,7 @@ const LoadDataModal: FC = () => {
   return (
     <ContentModal
       className="load-data-modal"
+      title={'Load data'}
       isActive={isActive}
       handleClose={handleClose}
     >

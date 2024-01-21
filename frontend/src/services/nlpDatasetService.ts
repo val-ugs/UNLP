@@ -6,9 +6,9 @@ import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 
 export const nlpDatasetApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
-    post: build.mutation<NlpDatasetProps, LoadingDataDtoProps>({
+    postNlpDataset: build.mutation<NlpDatasetProps, LoadingDataDtoProps>({
       query: (loadingData) => ({
-        url: '/dataset-preparation/nlp-dataset/',
+        url: '/dataset-preparation/nlp-datasets/',
         method: 'POST',
         body: objectToFormData(loadingData),
         formData: true,

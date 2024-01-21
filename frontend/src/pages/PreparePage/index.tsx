@@ -53,13 +53,17 @@ const PreparePage: FC = () => {
               <NlpTextForm
                 className="prepare-page__text-nlp-form"
                 selectedNlpTextId={selectedNlpTextId}
+                nerLabels={nlpDataset?.nerLabels ?? []}
               />
             ) : (
               <div className="prepare-page__text-nlp-form">
                 Text not selected or not found
               </div>
             )}
-            <NerLabels className="prepare-page__sidebar-right" />
+            <NerLabels
+              className="prepare-page__sidebar-right"
+              nlpDatasetId={nlpDataset?.id}
+            />
           </div>
         </div>
       </div>

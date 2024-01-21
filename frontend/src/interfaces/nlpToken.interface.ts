@@ -1,8 +1,8 @@
-import { NerLabelProps } from './nerLabel.interface';
+import { NlpTokenNerLabelProps } from './nlpTokenNerLabel.interface';
 
 export interface NlpTokenProps {
   id: number;
   token: string;
   pos: number;
-  nerLabel: NerLabelProps;
+  nlpTokenNerLabel?: NlpTokenNerLabelProps;
 }

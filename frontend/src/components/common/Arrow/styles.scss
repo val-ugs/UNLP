@@ -1,0 +1,25 @@
+@import 'variables.scss';
+
+.arrow {
+  display: inline-block;
+  margin: 5px;
+  padding: 3px;
+  border: solid $color-1;
+  border-width: 0 3px 3px 0;
+
+  &.left {
+    transform: rotate(135deg);
+  }
+
+  &.up {
+    transform: rotate(-135deg);
+  }
+
+  &.right {
+    transform: rotate(-45deg);
+  }
+
+  &.down {
+    transform: rotate(45deg);
+  }
+}

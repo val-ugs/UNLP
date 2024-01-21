@@ -17,25 +17,10 @@
   }
 
   &__item {
-    display: flex;
-    height: 30px;
     margin: 0 5px 5px;
-    border: none;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
   }
 
-  &__item-button {
+  &__add-button {
     width: 100%;
-  }
-
-  &__item-delete {
-    width: 30px;
-    margin-left: 5px;
-  }
-
-  &__item-add {
   }
 }

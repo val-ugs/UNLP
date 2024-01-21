@@ -5,6 +5,7 @@ import './styles.scss';
 
 export interface ContentModalProps {
   className: string;
+  title: string;
   isActive: boolean;
   handleClose: () => void;
   children: ReactNode;
@@ -12,8 +13,9 @@ export interface ContentModalProps {
 
 const ContentModal: FC<ContentModalProps> = ({
   className,
-  handleClose,
+  title,
   isActive,
+  handleClose,
   children,
 }) => {
   return (
@@ -21,7 +23,10 @@ const ContentModal: FC<ContentModalProps> = ({
       <Button className="content-modal__close-button" onClick={handleClose}>
         x
       </Button>
-      {children}
+      <div className="content-modal__body">
+        <div className="content-modal__title">{title}</div>
+        <div className="content-modal__content">{children}</div>
+      </div>
     </Modal>
   );
 };
