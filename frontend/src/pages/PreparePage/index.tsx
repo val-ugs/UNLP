@@ -1,4 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { skipToken } from '@reduxjs/toolkit/query';
+import camelize from 'camelize';
 import Layout from 'pages/_layouts/Layout';
 import Button from 'components/common/Button';
 import NlpTexts from './components/NlpTexts';
@@ -6,15 +8,31 @@ import NlpTextForm from './components/NlpTextForm';
 import NerLabels from './components/NerLabels';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { loadDataModalSlice } from 'store/reducers/loadDataModalSlice';
+import { nlpDatasetApi } from 'services/nlpDatasetService';
 import './styles.scss';
+import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 
 const PreparePage: FC = () => {
-  const { nlpDataset } = useAppSelector((state) => state.nlpDatasetReducer);
+  const [nlpDataset, setNlpDataset] = useState<NlpDatasetProps | undefined>(
+    undefined
+  );
+  const { nlpDatasetId } = useAppSelector((state) => state.nlpDatasetReducer);
+  const {
+    data: nlpDatasetData,
+    error,
+    isLoading,
+  } = nlpDatasetApi.useGetNlpDatasetByIdQuery(
+    nlpDatasetId ? Number(nlpDatasetId) : skipToken
+  );
   const [selectedNlpTextId, setSelectedNlpTextId] = useState<
     number | undefined
   >(undefined);
   const { activate } = loadDataModalSlice.actions;
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setNlpDataset(camelize(nlpDatasetData));
+  }, [nlpDatasetData]);
 
   const handleLoadData = () => dispatch(activate());
 
@@ -45,15 +63,15 @@ const PreparePage: FC = () => {
           <div className="prepare-page__body">
             <NlpTexts
               className="prepare-page__sidebar-left"
-              nlpDataset={nlpDataset}
+              nlpDatasetId={nlpDataset?.id}
               selectedNlpTextId={selectedNlpTextId}
               setSelectedNlpTextId={setSelectedNlpTextId}
             />
-            {selectedNlpTextId ? (
+            {selectedNlpTextId && nlpDataset ? (
               <NlpTextForm
                 className="prepare-page__text-nlp-form"
                 selectedNlpTextId={selectedNlpTextId}
-                nerLabels={nlpDataset?.nerLabels ?? []}
+                nlpDataset={nlpDataset}
               />
             ) : (
               <div className="prepare-page__text-nlp-form">

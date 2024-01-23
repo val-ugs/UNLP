@@ -1,20 +1,19 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 
 interface NlpDatasetState {
-  nlpDataset: NlpDatasetProps | undefined;
+  nlpDatasetId: number | undefined;
 }
 
 const initialState: NlpDatasetState = {
-  nlpDataset: undefined,
+  nlpDatasetId: 0,
 };
 
 export const nlpDatasetSlice = createSlice({
   name: 'nlp-dataset',
   initialState,
   reducers: {
-    setNlpDataset(state, action: PayloadAction<NlpDatasetProps>) {
-      state.nlpDataset = action.payload;
+    setNlpDatasetId(state, action: PayloadAction<number>) {
+      state.nlpDatasetId = action.payload;
     },
   },
 });

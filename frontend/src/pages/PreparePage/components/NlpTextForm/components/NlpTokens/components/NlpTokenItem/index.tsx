@@ -19,12 +19,12 @@ const NlpTokenItem: FC<NlpTokenItemProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const setNerLabel = (value: number) => {};
+  const setNlpToken = (value: number) => {};
 
   const nerLabelSelect: SelectProps<number> = {
     className: `nlp-token-item__field-input`,
     selectedValue: nlpToken.nlpTokenNerLabel?.nerLabel?.id ?? 0,
-    setSelectedValue: setNerLabel,
+    setSelectedValue: setNlpToken,
     children: nerLabels.map((label: NerLabelProps) => {
       return (
         <Select.Item key={label.id} value={label.id}>

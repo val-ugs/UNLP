@@ -12,7 +12,7 @@ import { nerLabelFormModalSlice } from 'store/reducers/nerLabelFormModalSlice';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import './styles.scss';
 
-export interface NerLabelItemProps {
+export interface NerLabelFromModalProps {
   className?: string;
 }
 
@@ -22,7 +22,7 @@ const emptyNerLabel: NerLabelProps = {
   color: '#000000',
 };
 
-const NerLabelFormModal: FC<NerLabelItemProps> = ({ className }) => {
+const NerLabelFormModal: FC<NerLabelFromModalProps> = ({ className }) => {
   const [nerLabel, setNerLabel] = React.useState<NerLabelProps>(emptyNerLabel);
   const [postNerLabel, {}] = nerLabelApi.usePostNerLabelMutation();
   const [putNerLabel, {}] = nerLabelApi.usePutNerLabelMutation();
@@ -30,7 +30,7 @@ const NerLabelFormModal: FC<NerLabelItemProps> = ({ className }) => {
     isActive,
     nlpDatasetId,
     nerLabel: nerLabelData,
-  } = useAppSelector((state) => state.nerLabelFormModalSlice);
+  } = useAppSelector((state) => state.nerLabelFormModalReducer);
   const { deactivate } = nerLabelFormModalSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -45,7 +45,7 @@ const NerLabelFormModal: FC<NerLabelItemProps> = ({ className }) => {
     setNerLabel({ ...nerLabel, name: value });
   };
   const labelInputField: InputFieldProps = {
-    className: `ner-label-form__input-field `,
+    className: 'ner-label-form__input-field',
     type: 'text',
     name: 'pattern',
     value: nerLabel.name,
@@ -81,7 +81,7 @@ const NerLabelFormModal: FC<NerLabelItemProps> = ({ className }) => {
   return (
     <ContentModal
       className={`ner-label-form-modal ${className}`}
-      title={'Add label'}
+      title={'Ner label form'}
       isActive={isActive}
       handleClose={handleClose}
     >
@@ -113,7 +113,9 @@ const NerLabelFormModal: FC<NerLabelItemProps> = ({ className }) => {
             />
           </div>
         </LabeledElement>
-        <InputButton className="ner-label-form-modal__button">OK</InputButton>
+        <InputButton className="ner-label-form-modal__button">
+          Confirm
+        </InputButton>
       </form>
     </ContentModal>
   );

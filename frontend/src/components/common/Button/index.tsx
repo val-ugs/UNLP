@@ -4,7 +4,7 @@ import './styles.scss';
 export interface ButtonProps {
   className?: string;
   style?: React.CSSProperties;
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   children: ReactNode;
 }
 

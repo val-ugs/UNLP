@@ -7,7 +7,7 @@ export const nerLabelApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
     getNerLabelsByNlpDatasetId: build.query<NerLabelProps[], number>({
       query: (nlpDatasetId: number) => ({
-        url: `/dataset-preparation/ner-labels/?nlp_dataset=${nlpDatasetId}`,
+        url: `/dataset-preparation/nlp-datasets/${nlpDatasetId}/ner-labels/`,
       }),
       providesTags: () => [tagTypes.NerLabel],
     }),

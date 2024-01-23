@@ -1,0 +1,34 @@
+@import 'variables.scss';
+
+.nlp-token-settings-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__warning {
+    color: $color-7;
+    font-weight: bold;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item {
+    padding: 5px 0;
+  }
+
+  &__button {
+    align-self: center;
+  }
+
+  &__input-button {
+  }
+
+  &__pattern-to-remove {
+  }
+
+  &__pattern-to-split {
+  }
+}

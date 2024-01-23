@@ -7,9 +7,9 @@ export const nlpTextApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
     getNlpTextsByNlpDatasetId: build.query<NlpTextProps[], number>({
       query: (nlpDatasetId: number) => ({
-        url: `/dataset-preparation/nlp-text/?nlp_dataset=${nlpDatasetId}`,
+        url: `/dataset-preparation/nlp-datasets/${nlpDatasetId}/nlp-texts/`,
       }),
-      providesTags: () => [tagTypes.NlpText],
+      providesTags: () => [tagTypes.NlpText, tagTypes.NlpDataset],
     }),
     getNlpTextById: build.query<NlpTextProps, number>({
       query: (id: number) => ({

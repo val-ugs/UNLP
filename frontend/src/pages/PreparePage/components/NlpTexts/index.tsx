@@ -1,27 +1,43 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { skipToken } from '@reduxjs/toolkit/query';
 import Button from 'components/common/Button';
 import { NlpTextProps } from 'interfaces/nlpText.interface';
-import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import './styles.scss';
+import { nlpTextApi } from 'services/nlpTextService';
 
 export interface NlpTextsProps {
   className: string;
-  nlpDataset: NlpDatasetProps | undefined;
+  nlpDatasetId: number | undefined;
   selectedNlpTextId: number | undefined;
   setSelectedNlpTextId: (id: number) => void;
 }
 
 const NlpTexts: FC<NlpTextsProps> = ({
   className,
-  nlpDataset,
+  nlpDatasetId,
   selectedNlpTextId,
   setSelectedNlpTextId,
 }) => {
+  const {
+    data: nlpTexts,
+    error,
+    isLoading,
+  } = nlpTextApi.useGetNlpTextsByNlpDatasetIdQuery(
+    nlpDatasetId ? Number(nlpDatasetId) : skipToken
+  );
+
+  useEffect(() => {
+    if (nlpTexts)
+      selectedNlpTextId
+        ? setSelectedNlpTextId(selectedNlpTextId)
+        : setSelectedNlpTextId(nlpTexts[0].id);
+  }, [nlpTexts]);
+
   return (
     <div className={`nlp-texts ${className}`}>
       <div className="nlp-texts__title">Texts:</div>
       <div className="nlp-texts__list">
-        {nlpDataset?.nlpTexts.map((nlpText: NlpTextProps) => (
+        {nlpTexts?.map((nlpText: NlpTextProps) => (
           <Button
             className={`nlp-texts__item ${
               selectedNlpTextId == nlpText.id ? 'active' : ''

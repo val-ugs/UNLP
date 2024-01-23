@@ -1,15 +1,17 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import nerLabelFormModalSlice from './reducers/nerLabelFormModalSlice';
+import nerLabelFormModalReducer from './reducers/nerLabelFormModalSlice';
 import loadDataModalReducer from './reducers/loadDataModalSlice';
 import nlpDatasetReducer from './reducers/nlpDatasetSlice';
+import nlpTokenSettingsModalReducer from './reducers/nlpTokenSettingsModalSlice';
 import { nerLabelApi } from 'services/nerLabelService';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { nlpTextApi } from 'services/nlpTextService';
 
 const rootReducer = combineReducers({
-  nerLabelFormModalSlice,
+  nerLabelFormModalReducer,
   loadDataModalReducer,
   nlpDatasetReducer,
+  nlpTokenSettingsModalReducer,
   [nerLabelApi.reducerPath]: nerLabelApi.reducer,
   [nlpDatasetApi.reducerPath]: nlpDatasetApi.reducer,
   [nlpTextApi.reducerPath]: nlpTextApi.reducer,

@@ -1,5 +1,4 @@
 import React, { ChangeEvent, FC, FormEvent, useId, useState } from 'react';
-import camelize from 'camelize';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { loadDataModalSlice } from 'store/reducers/loadDataModalSlice';
@@ -25,7 +24,7 @@ const LoadDataModal: FC = () => {
   const [postNlpDataset, {}] = nlpDatasetApi.usePostNlpDatasetMutation();
   const { isActive } = useAppSelector((state) => state.loadDataModalReducer);
   const { deactivate } = loadDataModalSlice.actions;
-  const { setNlpDataset } = nlpDatasetSlice.actions;
+  const { setNlpDatasetId } = nlpDatasetSlice.actions;
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
@@ -59,7 +58,7 @@ const LoadDataModal: FC = () => {
 
     try {
       const nlpDataset = await postNlpDataset(loadingDataDto).unwrap();
-      dispatch(setNlpDataset(camelize(nlpDataset)));
+      dispatch(setNlpDatasetId(nlpDataset.id));
     } catch (error) {
       console.log(error);
     }

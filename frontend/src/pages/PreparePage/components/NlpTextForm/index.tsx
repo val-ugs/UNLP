@@ -1,6 +1,7 @@
-import React, { ChangeEvent, FC, useEffect } from 'react';
+import React, { ChangeEvent, FC, useEffect, MouseEvent, useState } from 'react';
 import camelize from 'camelize';
 import snakeize from 'snakeize';
+import { useAppDispatch } from 'hooks/redux';
 import useStateRef from 'hooks/useStateRef';
 import { nlpTextApi } from 'services/nlpTextService';
 import LabeledElement from 'components/interstitial/LabeledElement';
@@ -8,35 +9,53 @@ import InputField, {
   InputFieldProps,
 } from 'components/common/Inputs/InputField';
 import Accordion from 'components/common/Accordion';
-import NlpTokenItem from './components/NlpTokenItem';
+import NlpTokenItem from './components/NlpTokens/components/NlpTokenItem';
 import { NlpTextProps } from 'interfaces/nlpText.interface';
-import './styles.scss';
+import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
+import Button from 'components/common/Button';
+import { nlpTokenSettingsModalSlice } from 'store/reducers/nlpTokenSettingsModalSlice';
+import gear from 'images/icons/gear.svg';
 import { NerLabelProps } from 'interfaces/nerLabel.interface';
+import { nerLabelApi } from 'services/nerLabelService';
+import NlpTokens from './components/NlpTokens';
+import './styles.scss';
 
 export interface NlpTextFormProps {
   className: string;
   selectedNlpTextId: number;
-  nerLabels: NerLabelProps[];
+  nlpDataset: NlpDatasetProps;
 }
 
 const NlpTextForm: FC<NlpTextFormProps> = ({
   className,
   selectedNlpTextId,
-  nerLabels,
+  nlpDataset,
 }) => {
   const [nlpText, setNlpText, nlpTextRef] = useStateRef<
     NlpTextProps | undefined
   >(undefined);
+  const [nerLabels, setNerLabels] = useState<NerLabelProps[]>([]);
   const {
     data: nlpTextData,
-    error,
-    isLoading,
+    error: nlpTextError,
+    isLoading: nlpTextLoading,
   } = nlpTextApi.useGetNlpTextByIdQuery(Number(selectedNlpTextId));
+  const {
+    data: nerLabelsData,
+    error: nerLabelsError,
+    isLoading: nerLabelsLoading,
+  } = nerLabelApi.useGetNerLabelsByNlpDatasetIdQuery(Number(nlpDataset.id));
   const [updateNlpText, {}] = nlpTextApi.usePutNlpTextMutation();
+  const { activate } = nlpTokenSettingsModalSlice.actions;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setNlpText(camelize(nlpTextData));
   }, [nlpTextData]);
+
+  useEffect(() => {
+    setNerLabels(camelize(nerLabelsData));
+  }, [nerLabelsData]);
 
   const setClassificationLabel = (value: string) => {
     setNlpText({ ...nlpText!, classificationLabel: value });
@@ -68,6 +87,10 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
     };
   }, []);
 
+  const handleOpenNlpTokenSettings = () => {
+    dispatch(activate(nlpDataset));
+  };
+
   return (
     <div className={`nlp-text-form ${className}`}>
       <>
@@ -92,7 +115,7 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
             />
           </LabeledElement>
         </div>
-        <div className="nlp-text-form__text">
+        <div className="nlp-text-form__item nlp-text-form__text">
           <Accordion
             className="nlp-text-form__accordion nlp-text-form__text-accordion"
             header={'Text:'}
@@ -104,24 +127,20 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
             />
           </Accordion>
         </div>
-        <div className="nlp-text-form__tokens">
-          <Accordion
-            className="nlp-text-form__accordion nlp-text-form__tokens-accordion"
-            header={'Tokens:'}
+        <div className="nlp-text-form__item nlp-text-form__tokens-settings">
+          <Button
+            className="nlp-text-form__tokens-settings-button"
+            onClick={handleOpenNlpTokenSettings}
           >
-            <div className="nlp-text-form__tokens-area">
-              {nlpText?.nlpTokens
-                ? nlpText.nlpTokens.map((nlpToken) => (
-                    <NlpTokenItem
-                      className="nlp-text-form__tokens-item"
-                      key={nlpToken.pos}
-                      nlpToken={nlpToken}
-                      nerLabels={nerLabels}
-                    />
-                  ))
-                : 'Токены не найдены. Проверьте настройки.'}
-            </div>
-          </Accordion>
+            Token Settings
+          </Button>
+        </div>
+        <div className="nlp-text-form__item">
+          <NlpTokens
+            className="nlp-text-form__tokens"
+            nlpTextId={selectedNlpTextId}
+            nerLabels={nerLabels}
+          />
         </div>
       </>
     </div>

@@ -1,0 +1,16 @@
+@import 'variables.scss';
+
+.nlp-tokens {
+  &__accordion {
+  }
+
+  &__area {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: $color-4;
+  }
+
+  &__item {
+    margin: 5px;
+  }
+}
