@@ -8,15 +8,18 @@ from apps.common.models import NerLabel
 from apps.common.serializers import NerLabelSerializer
 
 class NerLabelView(APIView):
-    def get(self, request):
+    def get(self, request, nlp_dataset_pk=None):
         """
         get ner_labels
         """
-        if request.query_params:
-            ner_labels = NerLabel.objects.filter(**request.query_params.dict())
+        if nlp_dataset_pk:
+            ner_labels = NerLabel.objects.filter(nlp_dataset=nlp_dataset_pk)
         else:
-            ner_labels = NerLabel.objects.all()
-    
+            if request.query_params:
+                ner_labels = NerLabel.objects.filter(**request.query_params.dict())
+            else:
+                ner_labels = NerLabel.objects.all()
+        
         if ner_labels:
             ner_label_serializer = NerLabelSerializer(ner_labels, many=True)
             return Response(

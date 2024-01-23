@@ -22,4 +22,4 @@ class NlpToken(models.Model):
     token = models.TextField(null=True, blank=True)
     pos = models.IntegerField(null=True)
     ner_label = models.OneToOneField(NlpTokenNerLabel, null=True, blank=True, on_delete=models.CASCADE)
-    text = models.ForeignKey(NlpText, on_delete=models.CASCADE)
+    nlp_text = models.ForeignKey(NlpText, on_delete=models.CASCADE)

@@ -30,7 +30,7 @@ class NlpTextSerializer(ModelSerializer):
         fields = '__all__'
 
     def get_nlp_tokens(self, obj):
-        nlp_tokens = NlpToken.objects.filter(text=obj)
+        nlp_tokens = NlpToken.objects.filter(nlp_text=obj)
         return NlpTokenSerializer(nlp_tokens, many=True).data
 
 class NlpTokenSerializer(ModelSerializer):

@@ -11,7 +11,7 @@ from apps.common.serializers import NlpDatasetSerializer
 from ..serializers import LoadingDataSerializer
 
 class NlpDatasetView(APIView):
-    def post(self, request, pk = None):
+    def post(self, request, pk=None):
         """
         if json file then get nlp_dataset
         if txt file then add data to nlp_dataset (if not exists create nlp_dataset) and try tokenize 
@@ -78,21 +78,32 @@ class NlpDatasetView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
     
-    def get(self, request):
+    def get(self, request, pk=None):
         """
         get nlp_datasets
         """
-        if request.query_params:
-            nlp_datasets = NlpDataset.objects.filter(**request.query_params.dict())
-        else:
-            nlp_datasets = NlpDataset.objects.all()
-    
-        if nlp_datasets:
-            nlp_dataset_serializer = NlpDatasetSerializer(nlp_datasets, many=True)
-            return Response(
-                nlp_dataset_serializer.data,
-                status=status.HTTP_200_OK
-            )
+        if pk:
+            nlp_dataset = get_object_or_404(NlpDataset, pk=pk)
+        
+            if nlp_dataset:
+                nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset)
+                return Response(
+                    nlp_dataset_serializer.data,
+                    status=status.HTTP_200_OK
+                )
+                
+        elif pk == None:
+            if request.query_params:
+                nlp_datasets = NlpDataset.objects.filter(**request.query_params.dict())
+            else:
+                nlp_datasets = NlpDataset.objects.all()
+        
+            if nlp_datasets:
+                nlp_dataset_serializer = NlpDatasetSerializer(nlp_datasets, many=True)
+                return Response(
+                    nlp_dataset_serializer.data,
+                    status=status.HTTP_200_OK
+                )
         return Response("Nlp datasets not found", status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self, request, pk):
@@ -109,11 +120,15 @@ class NlpDatasetView(APIView):
 
             if nlp_texts:
                 for nlp_text in nlp_texts:
+                    # clear old tokens
+                    tokens = NlpToken.objects.filter(nlp_text=nlp_text)
+                    tokens.delete()
+
                     text = nlp_text.text
                     if nlp_dataset.token_pattern_to_remove:
                         text = re.sub(nlp_dataset.token_pattern_to_remove, '', text)
                     tokens = re.split(nlp_dataset.token_pattern_to_split, text)
                     pos = 0
                     for token in tokens:
-                        NlpToken.objects.get_or_create(token=token, pos=pos, text=nlp_text)
+                        NlpToken.objects.get_or_create(token=token, pos=pos, nlp_text=nlp_text)
                         pos += 1

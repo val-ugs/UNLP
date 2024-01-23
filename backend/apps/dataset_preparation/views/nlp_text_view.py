@@ -7,7 +7,7 @@ from apps.common.models import NlpText
 from apps.common.serializers import NlpTextSerializer
 
 class NlpTextView(APIView):
-    def get(self, request, pk):
+    def get(self, request, pk=None, nlp_dataset_pk=None):
         """
         get nlp_texts
         """
@@ -22,10 +22,13 @@ class NlpTextView(APIView):
                 )
                 
         elif pk == None:
-            if request.query_params:
-                nlp_texts = NlpText.objects.filter(**request.query_params.dict())
+            if nlp_dataset_pk:
+                nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk)
             else:
-                nlp_texts = NlpText.objects.all()
+                if request.query_params:
+                    nlp_texts = NlpText.objects.filter(**request.query_params.dict())
+                else:
+                    nlp_texts = NlpText.objects.all()
         
             if nlp_texts:
                 nlp_text_serializer = NlpTextSerializer(nlp_texts, many=True)

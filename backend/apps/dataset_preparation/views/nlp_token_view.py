@@ -7,7 +7,7 @@ from apps.common.models import NlpToken
 from apps.common.serializers import NlpTokenSerializer
 
 class NlpTokenView(APIView):
-    def get(self, request, pk=None):
+    def get(self, request, pk=None, nlp_text_pk=None):
         """
         get nlp_tokens
         """
@@ -22,10 +22,13 @@ class NlpTokenView(APIView):
                 )
         
         elif pk == None:
-            if request.query_params:
-                nlp_tokens = NlpToken.objects.filter(**request.query_params.dict())
+            if nlp_text_pk:
+                nlp_tokens = NlpToken.objects.filter(nlp_text=nlp_text_pk)
             else:
-                nlp_tokens = NlpToken.objects.all()
+                if request.query_params:
+                    nlp_tokens = NlpToken.objects.filter(**request.query_params.dict())
+                else:
+                    nlp_tokens = NlpToken.objects.all()
         
             if nlp_tokens:
                 nlp_token_serializer = NlpTokenSerializer(nlp_tokens, many=True)
