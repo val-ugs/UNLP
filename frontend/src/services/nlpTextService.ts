@@ -9,6 +9,14 @@ export const nlpTextApi = api.injectEndpoints({
       query: (nlpDatasetId: number) => ({
         url: `/dataset-preparation/nlp-datasets/${nlpDatasetId}/nlp-texts/`,
       }),
+      transformResponse: (response: any) => {
+        return response.map((nlpTextData: any) => ({
+          id: nlpTextData['id'],
+          text: nlpTextData['text'],
+          classificationLabel: nlpTextData['classification_label'],
+          nlpTokens: nlpTextData['nlp_tokens'],
+        }));
+      },
       providesTags: () => [tagTypes.NlpText, tagTypes.NlpDataset],
     }),
     getNlpTextById: build.query<NlpTextProps, number>({
@@ -21,7 +29,12 @@ export const nlpTextApi = api.injectEndpoints({
       query: ({ id, ...nlpText }) => ({
         url: `/dataset-preparation/nlp-texts/${id}/`,
         method: 'PUT',
-        body: nlpText,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: nlpText.text,
+          classification_label: nlpText.classificationLabel,
+          nlp_tokens: nlpText.nlpTokens,
+        }),
       }),
       invalidatesTags: [tagTypes.NlpText],
     }),

@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import camelize from 'camelize';
 import Button from 'components/common/Button';
 import Dropdown from 'components/common/Dropdown';
 import { NlpTokenProps } from 'interfaces/nlpToken.interface';
@@ -20,7 +19,7 @@ export interface NlpTokenItemProps {
 }
 
 const emptyNlpTokenNerLabel: NlpTokenNerLabelProps = {
-  id: 0,
+  nlpTokenId: 0,
   nerLabel: undefined,
   initial: true,
 };
@@ -46,6 +45,7 @@ const NlpTokenItem: FC<NlpTokenItemProps> = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log(nlpTokenNerLabelData);
     if (nlpTokenNerLabelData) setNlpTokenNerLabel(nlpTokenNerLabelData);
   }, [nlpTokenNerLabelData]);
 

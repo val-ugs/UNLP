@@ -9,6 +9,13 @@ export const nerLabelApi = api.injectEndpoints({
       query: (nlpDatasetId: number) => ({
         url: `/dataset-preparation/nlp-datasets/${nlpDatasetId}/ner-labels/`,
       }),
+      transformResponse: (response: any) => {
+        return response.map((nerLabelData: any) => ({
+          id: nerLabelData['id'],
+          name: nerLabelData['name'],
+          color: nerLabelData['color'],
+        }));
+      },
       providesTags: () => [tagTypes.NerLabel],
     }),
     postNerLabel: build.mutation<

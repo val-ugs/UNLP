@@ -1,6 +1,4 @@
 import React, { ChangeEvent, FC, useEffect, MouseEvent, useState } from 'react';
-import camelize from 'camelize';
-import snakeize from 'snakeize';
 import { useAppDispatch } from 'hooks/redux';
 import useStateRef from 'hooks/useStateRef';
 import { nlpTextApi } from 'services/nlpTextService';
@@ -9,12 +7,10 @@ import InputField, {
   InputFieldProps,
 } from 'components/common/Inputs/InputField';
 import Accordion from 'components/common/Accordion';
-import NlpTokenItem from './components/NlpTokens/components/NlpTokenItem';
 import { NlpTextProps } from 'interfaces/nlpText.interface';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import Button from 'components/common/Button';
 import { nlpTokenSettingsModalSlice } from 'store/reducers/nlpTokenSettingsModalSlice';
-import gear from 'images/icons/gear.svg';
 import { NerLabelProps } from 'interfaces/nerLabel.interface';
 import { nerLabelApi } from 'services/nerLabelService';
 import NlpTokens from './components/NlpTokens';
@@ -50,11 +46,11 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setNlpText(camelize(nlpTextData));
+    if (nlpTextData) setNlpText(nlpTextData);
   }, [nlpTextData]);
 
   useEffect(() => {
-    setNerLabels(camelize(nerLabelsData));
+    if (nerLabelsData) setNerLabels(nerLabelsData);
   }, [nerLabelsData]);
 
   const setClassificationLabel = (value: string) => {
@@ -76,14 +72,13 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
   };
 
   useEffect(() => {
-    if (nlpText && selectedNlpTextId != nlpText.id)
-      updateNlpText(snakeize(nlpText));
+    if (nlpText && selectedNlpTextId != nlpText.id) updateNlpText(nlpText);
   }, [selectedNlpTextId]);
 
   useEffect(() => {
     // when leave the component, call the function
     return () => {
-      if (nlpTextRef.current) updateNlpText(snakeize(nlpTextRef.current));
+      if (nlpTextRef.current) updateNlpText(nlpTextRef.current);
     };
   }, []);
 

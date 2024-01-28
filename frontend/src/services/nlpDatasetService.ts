@@ -11,6 +11,15 @@ export const nlpDatasetApi = api.injectEndpoints({
       query: (id: number) => ({
         url: `/dataset-preparation/nlp-datasets/${id}/`,
       }),
+      transformResponse: (response: any) => {
+        return {
+          id: response['id'],
+          nlpTexts: response['nlp_texts'],
+          nerLabels: response['ner_labels'],
+          tokenPatternToRemove: response['token_pattern_to_remove'],
+          tokenPatternToSplit: response['token_pattern_to_split'],
+        };
+      },
       providesTags: () => [tagTypes.NlpDataset],
     }),
     postNlpDataset: build.mutation<NlpDatasetProps, LoadingDataDtoProps>({
@@ -29,7 +38,13 @@ export const nlpDatasetApi = api.injectEndpoints({
       query: ({ id, ...nlpDataset }) => ({
         url: `/dataset-preparation/nlp-datasets/${id}/`,
         method: 'PUT',
-        body: nlpDataset,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nlp_texts: nlpDataset.nlpTexts,
+          ner_labels: nlpDataset.nerLabels,
+          token_pattern_to_remove: nlpDataset.tokenPatternToRemove,
+          token_pattern_to_split: nlpDataset.tokenPatternToSplit,
+        }),
       }),
       invalidatesTags: [tagTypes.NlpDataset],
     }),

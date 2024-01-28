@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
 import { skipToken } from '@reduxjs/toolkit/query';
-import camelize from 'camelize';
 import Layout from 'pages/_layouts/Layout';
 import Button from 'components/common/Button';
 import NlpTexts from './components/NlpTexts';
@@ -9,8 +8,8 @@ import NerLabels from './components/NerLabels';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { loadDataModalSlice } from 'store/reducers/loadDataModalSlice';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
-import './styles.scss';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
+import './styles.scss';
 
 const PreparePage: FC = () => {
   const [nlpDataset, setNlpDataset] = useState<NlpDatasetProps | undefined>(
@@ -31,7 +30,7 @@ const PreparePage: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setNlpDataset(camelize(nlpDatasetData));
+    setNlpDataset(nlpDatasetData);
   }, [nlpDatasetData]);
 
   const handleLoadData = () => dispatch(activate());

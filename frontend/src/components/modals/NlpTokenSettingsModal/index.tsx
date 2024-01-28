@@ -1,5 +1,4 @@
 import React, { FC, FormEvent, useEffect } from 'react';
-import snakeize from 'snakeize';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import ContentModal from 'components/interstitial/ContentModal';
 import InputButton from 'components/common/Inputs/InputButton';
@@ -69,7 +68,7 @@ const NlpTokenSettingsModal: FC<NlpTokenSettingsModalProps> = ({
     e.preventDefault();
 
     try {
-      if (nlpDataset) await putNlpDataset(snakeize(nlpDataset)).unwrap();
+      if (nlpDataset) await putNlpDataset(nlpDataset).unwrap();
     } catch (error) {
       console.log(error);
     }
