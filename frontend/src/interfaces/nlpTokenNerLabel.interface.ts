@@ -1,7 +1,5 @@
-import { NerLabelProps } from './nerLabel.interface';
-
 export interface NlpTokenNerLabelProps {
   nlpTokenId: number;
-  nerLabel: NerLabelProps | undefined;
+  nerLabelId: number;
   initial: boolean;
 }

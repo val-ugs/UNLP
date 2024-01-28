@@ -20,7 +20,7 @@ export interface NlpTokenItemProps {
 
 const emptyNlpTokenNerLabel: NlpTokenNerLabelProps = {
   nlpTokenId: 0,
-  nerLabel: undefined,
+  nerLabelId: 0,
   initial: true,
 };
 
@@ -31,6 +31,9 @@ const NlpTokenItem: FC<NlpTokenItemProps> = ({
 }) => {
   const [nlpTokenNerLabel, setNlpTokenNerLabel] =
     useState<NlpTokenNerLabelProps>(emptyNlpTokenNerLabel);
+  const [nerLabel, setNerLabel] = useState<NerLabelProps | undefined>(
+    undefined
+  );
   const {
     data: nlpTokenNerLabelData,
     error,
@@ -45,20 +48,28 @@ const NlpTokenItem: FC<NlpTokenItemProps> = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(nlpTokenNerLabelData);
-    if (nlpTokenNerLabelData) setNlpTokenNerLabel(nlpTokenNerLabelData);
+    if (nlpTokenNerLabelData) {
+      setNlpTokenNerLabel(nlpTokenNerLabelData);
+      if (nlpTokenNerLabelData.nerLabelId) {
+        setNerLabel(
+          nerLabels.find(
+            (nerLabel) => nerLabel.id == nlpTokenNerLabelData.nerLabelId
+          )
+        );
+      }
+    }
   }, [nlpTokenNerLabelData]);
 
   const setNlpTokenNerLabelValue = (value: number) => {
     setNlpTokenNerLabel({
       ...nlpTokenNerLabel,
-      nerLabel: nerLabels.find((nerLabel) => nerLabel.id == value),
+      nerLabelId: value,
     });
   };
 
   const nerLabelSelect: SelectProps<number> = {
     className: 'nlp-token-item__select',
-    selectedValue: nlpTokenNerLabel.nerLabel?.id ?? 0,
+    selectedValue: nlpTokenNerLabel.nerLabelId ?? 0,
     setSelectedValue: setNlpTokenNerLabelValue,
     children: nerLabels?.map((label: NerLabelProps) => {
       return (
@@ -98,18 +109,17 @@ const NlpTokenItem: FC<NlpTokenItemProps> = ({
 
   return (
     <div className={`nlp-token-item ${className}`}>
-      {nlpTokenNerLabel && nlpTokenNerLabel.nerLabel && (
+      {nlpTokenNerLabel && nerLabel && (
         <div
           className="nlp-token-item__label"
-          style={{ color: nlpTokenNerLabel.nerLabel.color }}
+          style={{ color: nerLabel.color }}
         >
-          {nlpTokenNerLabel.initial ? 'B' : 'I'}-
-          {nlpTokenNerLabel.nerLabel.name}
+          {nlpTokenNerLabel.initial ? 'B' : 'I'}-{nerLabel.name}
         </div>
       )}
       <Button
         className="nlp-token-item__button"
-        style={{ backgroundColor: nlpTokenNerLabel?.nerLabel?.color }}
+        style={{ backgroundColor: nerLabel?.color }}
         onClick={handleClick}
       >
         {nlpToken.token}

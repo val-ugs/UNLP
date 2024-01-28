@@ -13,7 +13,7 @@ export const nlpTokenNerLabelApi = api.injectEndpoints({
         transformResponse: (response: any) => {
           return {
             nlpTokenId: response['nlp_token'],
-            nerLabel: response['ner_label'],
+            nerLabelId: response['ner_label'],
             initial: response['initial'],
           };
         },
@@ -29,11 +29,7 @@ export const nlpTokenNerLabelApi = api.injectEndpoints({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ner_label: {
-            id: nlpTokenNerLabel.nerLabel?.id,
-            color: nlpTokenNerLabel.nerLabel?.color,
-            name: nlpTokenNerLabel.nerLabel?.name,
-          },
+          ner_label: nlpTokenNerLabel.nerLabelId,
           initial: nlpTokenNerLabel.initial,
         }),
       }),
@@ -48,11 +44,7 @@ export const nlpTokenNerLabelApi = api.injectEndpoints({
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ner_label: {
-            id: nlpTokenNerLabel.nerLabel?.id,
-            color: nlpTokenNerLabel.nerLabel?.color,
-            name: nlpTokenNerLabel.nerLabel?.name,
-          },
+          ner_label: nlpTokenNerLabel.nerLabelId,
           initial: nlpTokenNerLabel.initial,
         }),
       }),
