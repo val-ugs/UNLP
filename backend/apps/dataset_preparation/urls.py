@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ner_label_view, nlp_dataset_view, nlp_text_view, nlp_token_view
+from .views import ner_label_view, nlp_dataset_view, nlp_text_view, nlp_token_view, nlp_token_ner_label_view
 
 app_name = 'dataset_preparation'
 
@@ -15,4 +15,6 @@ urlpatterns = [
     path('nlp-tokens/', nlp_token_view.NlpTokenView.as_view(), name='nlp-tokens'),
     path('nlp-tokens/<int:pk>/', nlp_token_view.NlpTokenView.as_view(), name='nlp-tokens-pk'),
     path('nlp-texts/<int:nlp_text_pk>/nlp-tokens/', nlp_token_view.NlpTokenView.as_view(), name='nlp-texts-nlp-tokens'),
+    path('nlp-token-ner-labels/', nlp_token_ner_label_view.NlpTokenNerLabelView.as_view(), name='nlp-token-ner-labels'),
+    path('nlp-tokens/<int:nlp_token_pk>/nlp-token-ner-labels/', nlp_token_ner_label_view.NlpTokenNerLabelView.as_view(), name='nlp-tokens-nlp-token-ner-labels'),
 ]

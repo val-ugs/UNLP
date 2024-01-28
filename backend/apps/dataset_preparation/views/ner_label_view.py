@@ -64,6 +64,6 @@ class NerLabelView(APIView):
         """
         delete ner_label
         """
-        nlp_dataset = get_object_or_404(NerLabel, pk=pk)
-        nlp_dataset.delete()
+        ner_label = get_object_or_404(NerLabel, pk=pk)
+        ner_label.delete()
         return Response(status=status.HTTP_202_ACCEPTED)
