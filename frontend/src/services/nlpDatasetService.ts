@@ -48,5 +48,12 @@ export const nlpDatasetApi = api.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.NlpDataset],
     }),
+    downloadNlpDataset: build.mutation<any, number>({
+      query: (id: number) => ({
+        url: `/dataset-preparation/nlp-datasets/${id}/download`,
+        method: 'GET',
+        responseType: 'blob',
+      }),
+    }),
   }),
 });

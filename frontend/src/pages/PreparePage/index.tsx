@@ -23,6 +23,8 @@ const PreparePage: FC = () => {
   } = nlpDatasetApi.useGetNlpDatasetByIdQuery(
     nlpDatasetId ? Number(nlpDatasetId) : skipToken
   );
+  const [downloadNlpDataset, {}] =
+    nlpDatasetApi.useDownloadNlpDatasetMutation();
   const [selectedNlpTextId, setSelectedNlpTextId] = useState<
     number | undefined
   >(undefined);
@@ -36,7 +38,25 @@ const PreparePage: FC = () => {
   const handleLoadData = () => dispatch(activate());
 
   const handleSaveData = () => {
-    console.log(nlpDataset);
+    if (nlpDataset) {
+      downloadNlpDataset(nlpDataset.id)
+        .unwrap()
+        .then((data) => {
+          // create file link in browser's memory
+          const href = URL.createObjectURL(
+            new Blob([data], { type: 'application/json' })
+          );
+          const link = document.createElement('a');
+          link.href = href;
+          link.setAttribute('download', 'dataset.json');
+          document.body.appendChild(link);
+          link.click();
+
+          // clean up and remove ObjectURL
+          document.body.removeChild(link);
+          URL.revokeObjectURL(href);
+        });
+    }
   };
 
   const handleConvertNerLabelOrSummarizationToText = () => {};
