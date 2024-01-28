@@ -35,9 +35,18 @@ class NlpTextSerializer(ModelSerializer):
         return NlpTokenSerializer(nlp_tokens, many=True).data
 
 class NlpTokenSerializer(ModelSerializer):
+    nlp_token_ner_label = SerializerMethodField(method_name='get_nlp_token_ner_label')
+
     class Meta:
         model = NlpToken
         fields = '__all__'
+
+    def get_nlp_token_ner_label(self, obj):
+        try:
+            nlp_token_ner_label = NlpTokenNerLabel.objects.get(nlp_token=obj)
+        except NlpTokenNerLabel.DoesNotExist:
+            nlp_token_ner_label = None
+        return NlpTokenNerLabelSerializer(nlp_token_ner_label).data
 
 class NlpTokenNerLabelSerializer(ModelSerializer):
     ner_label = NerLabelSerializer()

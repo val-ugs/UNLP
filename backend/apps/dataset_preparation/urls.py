@@ -9,6 +9,7 @@ urlpatterns = [
     path('nlp-datasets/<int:nlp_dataset_pk>/ner-labels/', ner_label_view.NerLabelView.as_view(), name='nlp-datasets-ner-labels'),
     path('nlp-datasets/', nlp_dataset_view.NlpDatasetView.as_view(), name='nlp-datasets'),
     path('nlp-datasets/<int:pk>/', nlp_dataset_view.NlpDatasetView.as_view(), name='nlp-datasets-pk'),
+    path('nlp-datasets/<int:pk>/download', nlp_dataset_view.download_nlp_dataset, name='nlp-datasets-download'),
     path('nlp-texts/', nlp_text_view.NlpTextView.as_view(), name='nlp-texts'),
     path('nlp-texts/<int:pk>/', nlp_text_view.NlpTextView.as_view(), name='nlp-texts-pk'),
     path('nlp-datasets/<int:nlp_dataset_pk>/nlp-texts/', nlp_text_view.NlpTextView.as_view(), name='nlp-datasets-nlp-texts'),

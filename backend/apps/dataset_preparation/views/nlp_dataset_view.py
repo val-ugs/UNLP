@@ -2,6 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework.renderers import JSONRenderer
 import re
 import json
 
@@ -132,3 +134,22 @@ class NlpDatasetView(APIView):
                     for token in tokens:
                         NlpToken.objects.get_or_create(token=token, pos=pos, nlp_text=nlp_text)
                         pos += 1
+
+@api_view(['GET'])
+def download_nlp_dataset(request, pk):
+    if pk:
+        nlp_dataset = get_object_or_404(NlpDataset, pk=pk)
+    
+        if nlp_dataset:
+            nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset)
+            json_data = JSONRenderer().render(nlp_dataset_serializer.data)
+            return Response(
+                json_data,
+                content_type='application/octet-stream',
+                headers={
+                    'Content-Disposition': "attachment; filename=dataset.json"
+                },
+                status=status.HTTP_200_OK
+            )
+        
+    return Response("Nlp datasets not found", status=status.HTTP_400_BAD_REQUEST)
