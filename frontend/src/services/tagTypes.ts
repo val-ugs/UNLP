@@ -3,4 +3,5 @@ export enum tagTypes {
   NlpDataset = 'NlpDataset',
   NlpText = 'NlpText',
   NlpToken = 'NlpToken',
+  NlpTokenNerLabel = 'NlpTokenNerLabel',
 }

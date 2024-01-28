@@ -14,10 +14,13 @@ export const nlpDatasetApi = api.injectEndpoints({
       providesTags: () => [tagTypes.NlpDataset],
     }),
     postNlpDataset: build.mutation<NlpDatasetProps, LoadingDataDtoProps>({
-      query: (loadingData) => ({
+      query: (loadingDataDto) => ({
         url: '/dataset-preparation/nlp-datasets/',
         method: 'POST',
-        body: objectToFormData(loadingData),
+        body: objectToFormData({
+          file: loadingDataDto.file,
+          text_pattern_to_split: loadingDataDto.textPatternToSplit,
+        }),
         formData: true,
       }),
       invalidatesTags: [tagTypes.NlpDataset],

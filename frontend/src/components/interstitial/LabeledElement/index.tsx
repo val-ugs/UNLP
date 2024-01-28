@@ -17,7 +17,10 @@ const LabeledElement: FC<LabeledElementProps> = ({
 }) => {
   return (
     <div className={`labeled-element ${className}`}>
-      <label className={`labeled-element__label ${labelElement.className}`}>
+      <label
+        className={`labeled-element__label ${labelElement.className}`}
+        htmlFor={labelElement.htmlFor}
+      >
         {required && <span className="labeled-element__label-star">*</span>}
         {labelElement.value}:
       </label>

@@ -35,7 +35,7 @@ const NlpTokens: FC<NlpTokensItemProps> = ({
         header="Tokens:"
       >
         <div className="nlp-tokens__area">
-          {nlpTokens.length > 0 ? (
+          {nlpTokens && nlpTokens.length > 0 ? (
             nlpTokens.map((nlpToken) => (
               <NlpTokenItem
                 className="nlp-tokens__item"

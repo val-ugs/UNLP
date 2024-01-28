@@ -41,6 +41,8 @@ const NerLabelFormModal: FC<NerLabelFromModalProps> = ({ className }) => {
     };
   }, [nerLabelData]);
 
+  useEffect(() => {}, []);
+
   const setNerLabelNameValue = (value: string) => {
     setNerLabel({ ...nerLabel, name: value });
   };
@@ -75,6 +77,7 @@ const NerLabelFormModal: FC<NerLabelFromModalProps> = ({ className }) => {
       console.log(error);
     }
 
+    setNerLabel(emptyNerLabel);
     dispatch(deactivate());
   };
 

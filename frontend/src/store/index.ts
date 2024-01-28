@@ -6,6 +6,8 @@ import nlpTokenSettingsModalReducer from './reducers/nlpTokenSettingsModalSlice'
 import { nerLabelApi } from 'services/nerLabelService';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { nlpTextApi } from 'services/nlpTextService';
+import { nlpTokenApi } from 'services/nlpTokenService';
+import { nlpTokenNerLabelApi } from 'services/nlpTokenNerLabelService';
 
 const rootReducer = combineReducers({
   nerLabelFormModalReducer,
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
   [nerLabelApi.reducerPath]: nerLabelApi.reducer,
   [nlpDatasetApi.reducerPath]: nlpDatasetApi.reducer,
   [nlpTextApi.reducerPath]: nlpTextApi.reducer,
+  [nlpTokenApi.reducerPath]: nlpTokenApi.reducer,
+  [nlpTokenNerLabelApi.reducerPath]: nlpTokenNerLabelApi.reducer,
 });
 
 export const store = configureStore({
@@ -23,7 +27,9 @@ export const store = configureStore({
     getDefaultMiddleware().concat(
       nerLabelApi.middleware,
       nlpDatasetApi.middleware,
-      nlpTextApi.middleware
+      nlpTextApi.middleware,
+      nlpTokenApi.middleware,
+      nlpTokenNerLabelApi.middleware
     ),
 });
 

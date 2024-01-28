@@ -25,7 +25,7 @@ const NerLabels: FC<NerLabelsProps> = ({ className, nlpDatasetId }) => {
   );
 
   const handleAddNerLabel = () => {
-    if (nlpDatasetId) dispatch(activate({ nlpDatasetId }));
+    if (nlpDatasetId) dispatch(activate({ nlpDatasetId, nerLabel: undefined }));
   };
 
   return (
