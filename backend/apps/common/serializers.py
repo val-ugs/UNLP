@@ -55,16 +55,6 @@ class NlpTokenNerLabelSerializer(ModelSerializer):
     def update(self, instance, validated_data):
         ner_label_data = validated_data.pop('ner_label')
         instance.ner_label = get_object_or_404(NerLabel, **ner_label_data)
+        instance.initial = validated_data.get('initial', instance.initial)
         instance.save()
         return instance
-
-# class NlpTokenNerLabelReadSerializer(ModelSerializer):
-#     ner_label = NerLabelSerializer()
-#     # ner_label = SerializerMethodField(method_name='get_ner_label')
-
-#     class Meta:
-#         model = NlpTokenNerLabel
-#         fields = '__all__'
-
-#     # def get_ner_label(self, obj):
-#     #     return NerLabelSerializer(obj.ner_label).data
