@@ -14,4 +14,8 @@
   &:active {
     background-color: $color-2;
   }
+
+  &.active {
+    background-color: $color-3;
+  }
 }

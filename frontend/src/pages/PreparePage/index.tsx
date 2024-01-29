@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { skipToken } from '@reduxjs/toolkit/query';
 import Layout from 'pages/_layouts/Layout';
 import Button from 'components/common/Button';
+import NlpDatasets from './components/NlpDatasets';
 import NlpTexts from './components/NlpTexts';
 import NlpTextForm from './components/NlpTextForm';
 import NerLabels from './components/NerLabels';
@@ -15,13 +16,16 @@ const PreparePage: FC = () => {
   const [nlpDataset, setNlpDataset] = useState<NlpDatasetProps | undefined>(
     undefined
   );
+  const [selectedNlpDatasetId, setSelectedNlpDatasetId] = useState<
+    number | undefined
+  >(undefined);
   const { nlpDatasetId } = useAppSelector((state) => state.nlpDatasetReducer);
   const {
     data: nlpDatasetData,
     error,
     isLoading,
   } = nlpDatasetApi.useGetNlpDatasetByIdQuery(
-    nlpDatasetId ? Number(nlpDatasetId) : skipToken
+    selectedNlpDatasetId ? Number(selectedNlpDatasetId) : skipToken
   );
   const [downloadNlpDataset, {}] =
     nlpDatasetApi.useDownloadNlpDatasetMutation();
@@ -32,7 +36,12 @@ const PreparePage: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (nlpDatasetId) setSelectedNlpDatasetId(nlpDatasetId);
+  }, [nlpDatasetId]);
+
+  useEffect(() => {
     setNlpDataset(nlpDatasetData);
+    setSelectedNlpTextId(nlpDatasetData?.nlpTexts[0]?.id);
   }, [nlpDatasetData]);
 
   const handleLoadData = () => dispatch(activate());
@@ -79,6 +88,11 @@ const PreparePage: FC = () => {
               Convert NER Label or Summarization to text
             </Button>
           </div>
+          <NlpDatasets
+            className="prepare-page__datasets"
+            selectedNlpDatasetId={selectedNlpDatasetId}
+            setSelectedNlpDatasetId={setSelectedNlpDatasetId}
+          />
           <div className="prepare-page__body">
             <NlpTexts
               className="prepare-page__sidebar-left"

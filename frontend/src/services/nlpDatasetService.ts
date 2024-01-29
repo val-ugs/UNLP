@@ -7,6 +7,23 @@ import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 
 export const nlpDatasetApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
+    getNlpDatasets: build.query<NlpDatasetProps[], void>({
+      query: () => ({
+        url: `/dataset-preparation/nlp-datasets/`,
+      }),
+      transformResponse: (response: any) => {
+        return response.map((nlpDatasetData: any) => {
+          return {
+            id: nlpDatasetData['id'],
+            nlpTexts: nlpDatasetData['nlp_texts'],
+            nerLabels: nlpDatasetData['ner_labels'],
+            tokenPatternToRemove: nlpDatasetData['token_pattern_to_remove'],
+            tokenPatternToSplit: nlpDatasetData['token_pattern_to_split'],
+          };
+        });
+      },
+      providesTags: () => [tagTypes.NlpDataset],
+    }),
     getNlpDatasetById: build.query<NlpDatasetProps, number>({
       query: (id: number) => ({
         url: `/dataset-preparation/nlp-datasets/${id}/`,
@@ -45,6 +62,13 @@ export const nlpDatasetApi = api.injectEndpoints({
           token_pattern_to_remove: nlpDataset.tokenPatternToRemove,
           token_pattern_to_split: nlpDataset.tokenPatternToSplit,
         }),
+      }),
+      invalidatesTags: [tagTypes.NlpDataset],
+    }),
+    deleteNlpDataset: build.mutation<void, number>({
+      query: (id: number) => ({
+        url: `/dataset-preparation/nlp-datasets/${id}/`,
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.NlpDataset],
     }),

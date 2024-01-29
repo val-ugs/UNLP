@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from 'hooks/redux';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { NerLabelProps } from 'interfaces/nerLabel.interface';
@@ -14,15 +14,20 @@ export interface NerLabelsProps {
 }
 
 const NerLabels: FC<NerLabelsProps> = ({ className, nlpDatasetId }) => {
+  const [nerLabels, setNerLabels] = useState<NerLabelProps[]>([]);
   const { activate } = nerLabelFormModalSlice.actions;
   const dispatch = useAppDispatch();
   const {
-    data: nerLabels,
+    data: nerLabelsData,
     error,
     isLoading,
   } = nerLabelApi.useGetNerLabelsByNlpDatasetIdQuery(
     nlpDatasetId ? Number(nlpDatasetId) : skipToken
   );
+
+  useEffect(() => {
+    if (nerLabelsData) setNerLabels(nerLabelsData);
+  }, [nerLabelsData]);
 
   const handleAddNerLabel = () => {
     if (nlpDatasetId) dispatch(activate({ nlpDatasetId, nerLabel: undefined }));

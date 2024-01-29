@@ -1,0 +1,40 @@
+@import 'variables.scss';
+
+.nlp-datasets {
+  &__main {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__list {
+    display: flex;
+    padding: 5px;
+  }
+
+  &__item {
+    padding: 0 5px;
+  }
+
+  &__item-button {
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    border-left: 5px dashed $color-4;
+  }
+
+  &__delete {
+  }
+
+  &__delete-button {
+  }
+
+  &__not-found {
+    padding: 5px;
+  }
+}
