@@ -20,6 +20,7 @@
       "root": ["."],
       "alias": {
         "components": "./src/components",
+        "data": "./src/data",
         "helpers": "./src/helpers",
         "hooks": "./src/hooks",
         "images": "./src/images",

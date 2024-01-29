@@ -6,7 +6,7 @@
 
   &__sidebar {
     width: 300px;
-    border: 5px solid $color-4;
+    border-right: 5px solid $color-4;
   }
 
   &__title {
@@ -27,6 +27,9 @@
     &:last-child {
       margin-bottom: 0;
     }
+  }
+
+  &__add-component {
   }
 
   &__main {

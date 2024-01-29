@@ -1,45 +1,50 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
 import Button from 'components/common/Button';
+import AddNlpTrainComponent from './components/AddNlpTrainComponent';
 import './styles.scss';
 
-interface NlpTrainActionProps {
+interface NlpTrainComponentProps {
+  id: number;
   name: string;
-  action: () => void;
+  component: ReactNode;
 }
 
-const nlpActions: NlpTrainActionProps[] = [
-  {
-    name: 'Load data',
-    action: () => {},
-  },
-  {
-    name: 'Select NLP algorithm',
-    action: () => {},
-  },
-  {
-    name: 'Nlp algorithm results 1',
-    action: () => {},
-  },
-];
-
 const NlpTrain: FC = () => {
+  const [nlpTrainComponents, setNlpTrainComponents] = useState<
+    NlpTrainComponentProps[]
+  >([]);
+  const [selectedNlpTrainComponent, setSelectedNlpTrainComponent] = useState<
+    NlpTrainComponentProps | undefined
+  >(undefined);
+
   return (
     <div className="nlp-train">
       <div className="nlp-train__sidebar">
         <div className="nlp-train__title">Train:</div>
         <div className="nlp-train__list">
-          {nlpActions?.map((nlpAction: NlpTrainActionProps, index: number) => (
-            <Button
-              className="nlp-train__item"
-              onClick={nlpAction.action}
-              key={index}
-            >
-              {nlpAction.name}
-            </Button>
-          ))}
+          {nlpTrainComponents?.map(
+            (nlpComponent: NlpTrainComponentProps, index: number) => (
+              <Button
+                className="nlp-train__item"
+                onClick={() => {
+                  setSelectedNlpTrainComponent(nlpComponent);
+                }}
+                key={nlpComponent.id}
+              >
+                {index + 1}. {nlpComponent.name}
+              </Button>
+            )
+          )}
+          <AddNlpTrainComponent
+            className="nlp-train__item"
+            nlpTrainComponents={nlpTrainComponents}
+            setNlpTrainComponents={setNlpTrainComponents}
+          />
         </div>
       </div>
-      <div className="nlp-train__main">Algorithm</div>
+      <div className="nlp-train__main">
+        {selectedNlpTrainComponent?.component}
+      </div>
     </div>
   );
 };

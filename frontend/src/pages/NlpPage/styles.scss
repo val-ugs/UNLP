@@ -1,6 +1,8 @@
 @import 'variables.scss';
 
 .nlp-page {
+  display: flex;
+  flex-direction: column;
   height: 100%;
 
   &__methods {

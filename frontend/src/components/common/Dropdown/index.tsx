@@ -8,7 +8,7 @@ interface DropdownProps {
   contentClassName?: string;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onClose: () => void;
+  onClose?: () => void;
   children: ReactNode;
 }
 
@@ -22,17 +22,21 @@ const Dropdown: FC<DropdownProps> = ({
 }) => {
   const handleClick = () => {
     if (isOpen) {
-      onClose();
+      onClose?.();
       setIsOpen(false);
     }
   };
   const ref = useClickOutside(handleClick);
   return (
-    <div className={`dropdown ${className}`} ref={ref}>
-      <div className={`dropdown__content ${contentClassName}`}>
-        {isOpen && children}
-      </div>
-    </div>
+    <>
+      {isOpen && (
+        <div className={`dropdown ${className}`} ref={ref}>
+          <div className={`dropdown__content ${contentClassName}`}>
+            {children}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
