@@ -7,8 +7,8 @@ from rest_framework.renderers import JSONRenderer
 import re
 import json
 
-from apps.common.models import NlpDataset, NlpText, NlpToken
-from apps.common.serializers import NlpDatasetSerializer
+from apps.common.models import NerLabel, NlpDataset, NlpText, NlpToken, NlpTokenNerLabel
+from apps.common.serializers import NerLabelSerializer, NlpDatasetSerializer, NlpTextSerializer, NlpTokenNerLabelSerializer, NlpTokenSerializer
 
 from ..serializers import LoadingDataSerializer
 
@@ -48,10 +48,88 @@ class NlpDatasetView(APIView):
                 
             elif file.name.endswith('.json'):
                 data = json.load(f)
+                nlp_dataset_serializer = NlpDatasetSerializer(data=data)
+                if (nlp_dataset_serializer.is_valid()):
+                    nlp_dataset = NlpDataset.objects.create(
+                        token_pattern_to_remove=nlp_dataset_serializer.validated_data['token_pattern_to_remove'],
+                        token_pattern_to_split=nlp_dataset_serializer.validated_data['token_pattern_to_split']
+                    )
+
+                    ner_labels_data = data.pop('ner_labels')
+                    old_new_ner_label_dict = {}
+                    for ner_label_data in ner_labels_data:
+                        old_ner_label_id = ner_label_data.pop('id')
+                        ner_label_serializer = NerLabelSerializer(data=ner_label_data)
+                        if (ner_label_serializer.is_valid()):
+                            ner_label = NerLabel.objects.create(
+                                name=ner_label_serializer.validated_data['name'],
+                                color=ner_label_serializer.validated_data['color'],
+                                nlp_dataset=nlp_dataset
+                            )
+                            old_new_ner_label_dict[old_ner_label_id] = ner_label
+                        else:
+                            return Response(
+                                ner_label_serializer.errors,
+                                status=status.HTTP_400_BAD_REQUEST
+                            )
+
+                    nlp_texts_data = data.pop('nlp_texts')
+                    for nlp_text_data in nlp_texts_data:
+                        nlp_text_serializer = NlpTextSerializer(data=nlp_text_data)
+                        if (nlp_text_serializer.is_valid()):
+                            nlp_text = NlpText.objects.create(
+                                text=nlp_text_serializer.validated_data['text'],
+                                classification_label=nlp_text_serializer.validated_data['classification_label'],
+                                nlp_dataset=nlp_dataset
+                            )
+
+                            nlp_tokens_data = nlp_text_data.pop('nlp_tokens')
+                            for nlp_token_data in nlp_tokens_data:
+                                nlp_token_serializer = NlpTokenSerializer(data=nlp_token_data)
+                                if (nlp_token_serializer.is_valid()):
+                                    nlp_token = NlpToken.objects.create(
+                                        token=nlp_token_serializer.validated_data['token'],
+                                        pos=nlp_token_serializer.validated_data['pos'],
+                                        nlp_text=nlp_text
+                                    )
+                                    
+                                    nlp_token_ner_label_data = nlp_token_data.pop('nlp_token_ner_label')
+                                    old_nlp_token_ner_label_ner_label_id = nlp_token_ner_label_data.pop('ner_label')
+                                    nlp_token_ner_label_data.pop('nlp_token') # remove old nlp_token
+                                    nlp_token_ner_label_serializer = NlpTokenNerLabelSerializer(data=nlp_token_ner_label_data)
+                                    if (nlp_token_ner_label_serializer.is_valid()):
+                                        if (old_nlp_token_ner_label_ner_label_id != None):
+                                            NlpTokenNerLabel.objects.create(
+                                                initial=nlp_token_ner_label_serializer.validated_data['initial'],
+                                                nlp_token=nlp_token, 
+                                                ner_label=old_new_ner_label_dict.get(old_nlp_token_ner_label_ner_label_id),
+                                            )
+                                    else:
+                                        return Response(
+                                            nlp_token_ner_label_serializer.errors,
+                                            status=status.HTTP_400_BAD_REQUEST
+                                        )
+                                else:
+                                    return Response(
+                                        nlp_token_serializer.errors,
+                                        status=status.HTTP_400_BAD_REQUEST
+                                    )
+                        else:
+                            return Response(
+                                nlp_text_serializer.errors,
+                                status=status.HTTP_400_BAD_REQUEST
+                            )
+                    
+                    nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset)
+
+                    return Response(
+                        nlp_dataset_serializer.data,
+                        status=status.HTTP_200_OK
+                    )
 
                 return Response(
-                    data,
-                    status=status.HTTP_200_OK
+                    nlp_dataset_serializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST
                 )
         
         return Response(
