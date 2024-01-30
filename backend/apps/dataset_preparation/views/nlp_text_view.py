@@ -51,3 +51,11 @@ class NlpTextView(APIView):
             return Response(nlp_text_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(nlp_text_serializer.errors, status=status.HTTP_404_NOT_FOUND)
+        
+    def delete(self, request, pk):
+        """
+        delete nlp_text
+        """
+        nlp_dataset = get_object_or_404(NlpText, pk=pk)
+        nlp_dataset.delete()
+        return Response(status=status.HTTP_202_ACCEPTED)
