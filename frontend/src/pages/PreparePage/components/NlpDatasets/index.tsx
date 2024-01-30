@@ -31,15 +31,27 @@ const NlpDatasetList: FC<NlpDatasetListProps> = ({
 
   const handleDelete = () => {
     if (selectedNlpDatasetId) deleteNlpDataset(selectedNlpDatasetId);
-    if (nlpDatasets.length > 1)
-      setSelectedNlpDatasetId(nlpDatasets[nlpDatasets.length - 1].id);
-    else setNlpDatasets([]);
+    if (nlpDatasets.length > 1) {
+      const deletedNlpDataset = nlpDatasets.find(
+        (nlpDataset) => nlpDataset.id === selectedNlpDatasetId
+      );
+      if (deletedNlpDataset) {
+        const deletedNlpDatasetIndex = nlpDatasets.indexOf(deletedNlpDataset);
+        setSelectedNlpDatasetId(
+          nlpDatasets[
+            deletedNlpDatasetIndex > 0
+              ? deletedNlpDatasetIndex - 1
+              : deletedNlpDatasetIndex + 1
+          ].id
+        );
+      }
+    } else setNlpDatasets([]);
   };
 
   return (
     <div className={`nlp-datasets ${className}`}>
       {nlpDatasets && nlpDatasets.length > 0 ? (
-        <div className="nlp-datasets__main">
+        <div className="nlp-datasets__left">
           <div className="nlp-datasets__list">
             {nlpDatasets.map((nlpDataset) => (
               <div className="nlp-datasets__item" key={nlpDataset.id}>

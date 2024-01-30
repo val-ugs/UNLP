@@ -38,5 +38,12 @@ export const nlpTextApi = api.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.NlpText],
     }),
+    deleteNlpText: build.mutation<void, number>({
+      query: (id: number) => ({
+        url: `/dataset-preparation/nlp-texts/${id}/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [tagTypes.NlpText],
+    }),
   }),
 });
