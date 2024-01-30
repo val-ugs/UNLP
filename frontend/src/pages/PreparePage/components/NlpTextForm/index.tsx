@@ -54,7 +54,7 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
   }, [nerLabelsData]);
 
   const setClassificationLabel = (value: string) => {
-    setNlpText({ ...nlpText!, classificationLabel: value });
+    if (nlpText) setNlpText({ ...nlpText, classificationLabel: value });
   };
 
   const classificationLabelInputField: InputFieldProps = {

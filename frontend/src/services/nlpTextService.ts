@@ -23,6 +23,14 @@ export const nlpTextApi = api.injectEndpoints({
       query: (id: number) => ({
         url: `/dataset-preparation/nlp-texts/${id}/`,
       }),
+      transformResponse: (response: any) => {
+        return {
+          id: response['id'],
+          text: response['text'],
+          classificationLabel: response['classification_label'],
+          nlpTokens: response['nlp_tokens'],
+        };
+      },
       providesTags: () => [tagTypes.NlpText],
     }),
     putNlpText: build.mutation<NlpTextProps, NlpTextProps>({
