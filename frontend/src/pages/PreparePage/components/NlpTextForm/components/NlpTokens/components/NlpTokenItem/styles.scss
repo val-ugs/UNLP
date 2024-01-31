@@ -17,6 +17,7 @@
   &__dropdown {
     position: absolute;
     top: 100%;
+    z-index: 10;
   }
 
   &__dropdown-form {
