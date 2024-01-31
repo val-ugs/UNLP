@@ -73,49 +73,47 @@ const PreparePage: FC = () => {
   return (
     <Layout>
       <div className="prepare-page">
-        <div className="prepare-page__main">
-          <div className="prepare-page__buttons">
-            <Button className="prepare-page__button" onClick={handleLoadData}>
-              Load data
-            </Button>
-            <Button className="prepare-page__button" onClick={handleSaveData}>
-              Save data
-            </Button>
-            <Button
-              className="prepare-page__button"
-              onClick={handleConvertNerLabelOrSummarizationToText}
-            >
-              Convert NER Label or Summarization to text
-            </Button>
-          </div>
-          <NlpDatasets
-            className="prepare-page__datasets"
-            selectedNlpDatasetId={selectedNlpDatasetId}
-            setSelectedNlpDatasetId={setSelectedNlpDatasetId}
+        <div className="prepare-page__buttons">
+          <Button className="prepare-page__button" onClick={handleLoadData}>
+            Load data
+          </Button>
+          <Button className="prepare-page__button" onClick={handleSaveData}>
+            Save data
+          </Button>
+          <Button
+            className="prepare-page__button"
+            onClick={handleConvertNerLabelOrSummarizationToText}
+          >
+            Convert NER Label or Summarization to text
+          </Button>
+        </div>
+        <NlpDatasets
+          className="prepare-page__datasets"
+          selectedNlpDatasetId={selectedNlpDatasetId}
+          setSelectedNlpDatasetId={setSelectedNlpDatasetId}
+        />
+        <div className="prepare-page__body">
+          <NlpTexts
+            className="prepare-page__sidebar-left"
+            nlpDatasetId={nlpDataset?.id}
+            selectedNlpTextId={selectedNlpTextId}
+            setSelectedNlpTextId={setSelectedNlpTextId}
           />
-          <div className="prepare-page__body">
-            <NlpTexts
-              className="prepare-page__sidebar-left"
-              nlpDatasetId={nlpDataset?.id}
+          {selectedNlpTextId && nlpDataset ? (
+            <NlpTextForm
+              className="prepare-page__text-nlp-form"
               selectedNlpTextId={selectedNlpTextId}
-              setSelectedNlpTextId={setSelectedNlpTextId}
+              nlpDataset={nlpDataset}
             />
-            {selectedNlpTextId && nlpDataset ? (
-              <NlpTextForm
-                className="prepare-page__text-nlp-form"
-                selectedNlpTextId={selectedNlpTextId}
-                nlpDataset={nlpDataset}
-              />
-            ) : (
-              <div className="prepare-page__text-nlp-form">
-                Text not selected or not found
-              </div>
-            )}
-            <NerLabels
-              className="prepare-page__sidebar-right"
-              nlpDatasetId={nlpDataset?.id}
-            />
-          </div>
+          ) : (
+            <div className="prepare-page__text-nlp-form">
+              Text not selected or not found
+            </div>
+          )}
+          <NerLabels
+            className="prepare-page__sidebar-right"
+            nlpDatasetId={nlpDataset?.id}
+          />
         </div>
       </div>
     </Layout>

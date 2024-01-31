@@ -74,7 +74,6 @@ const NlpTexts: FC<NlpTextsProps> = ({
           </Button>
         ))}
       </div>
-
       <div className="nlp-texts__bottom">
         <div className="nlp-texts__delete">
           <Button className="nlp-texts__delete-button" onClick={handleDelete}>

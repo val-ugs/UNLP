@@ -13,11 +13,11 @@
   &__list {
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
   }
 
   &__item {
     max-height: 40px;
-    overflow: hidden;
     border: 2px solid $color-4;
     border-radius: 0;
 
