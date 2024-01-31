@@ -51,7 +51,7 @@ const NlpDatasetList: FC<NlpDatasetListProps> = ({
   return (
     <div className={`nlp-datasets ${className}`}>
       {nlpDatasets && nlpDatasets.length > 0 ? (
-        <div className="nlp-datasets__left">
+        <>
           <div className="nlp-datasets__list">
             {nlpDatasets.map((nlpDataset) => (
               <div className="nlp-datasets__item" key={nlpDataset.id}>
@@ -63,7 +63,7 @@ const NlpDatasetList: FC<NlpDatasetListProps> = ({
                     setSelectedNlpDatasetId(nlpDataset.id);
                   }}
                 >
-                  Dataset {nlpDataset.id}
+                  Dataset&nbsp;{nlpDataset.id}
                 </Button>
               </div>
             ))}
@@ -78,7 +78,7 @@ const NlpDatasetList: FC<NlpDatasetListProps> = ({
               </Button>
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <div className="nlp-datasets__not-found">Datasets not found</div>
       )}

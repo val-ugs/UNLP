@@ -1,14 +1,13 @@
 @import 'variables.scss';
 
 .nlp-datasets {
-  &__left {
-    display: flex;
-    justify-content: space-between;
-  }
+  display: flex;
+  justify-content: space-between;
 
   &__list {
     display: flex;
     padding: 5px;
+    overflow-x: scroll;
   }
 
   &__item {
@@ -24,7 +23,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 200px;
+    min-width: 200px;
     border-left: 5px dashed $color-4;
   }
 
