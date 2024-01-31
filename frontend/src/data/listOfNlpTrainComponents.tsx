@@ -1,3 +1,4 @@
+import PrepareNlpModel from 'components/interstitial/nlpTrainComponents/PrepareNlpModel';
 import { NlpTrainComponentProps } from 'interfaces/nlpTrainComponent.interface';
 
 export const listOfNlpTrainComponents: NlpTrainComponentProps[] = [
@@ -8,12 +9,12 @@ export const listOfNlpTrainComponents: NlpTrainComponentProps[] = [
   },
   {
     id: 2,
-    name: 'Prepare NLP algorithm',
-    component: <>Prepare NLP algorithm</>,
+    name: 'Prepare NLP model',
+    component: <PrepareNlpModel />,
   },
   {
     id: 3,
-    name: 'Nlp algorithm results',
+    name: 'Nlp model results',
     component: <>Nlp algorithm results</>,
   },
 ];
