@@ -1,11 +1,11 @@
 from django.urls import path
-from . import views
+from .views import classification_model_view, ner_model_view
+
+app_name = 'nlp'
 
 urlpatterns = [
-    path('get-classification-models/', views.get_classification_models),
-    path('classification-model-train/', views.classification_model_train),
-    path('classification-model-predict/', views.classification_model_predict),
-    path('get-ner-models/', views.get_ner_models),
-    path('ner-model-train/', views.ner_model_train),
-    path('ner-model-predict/', views.ner_model_predict),
+    path('classification-model/train/', classification_model_view.classification_model_train, name='classification-model-train'),
+    path('classification-model/predict/', classification_model_view.classification_model_predict, name='classification-model-predict'),
+    path('ner-model/train/', ner_model_view.ner_model_train, name='ner-model-train'),
+    path('ner-model/predict/', ner_model_view.ner_model_predict, name='ner-model-predict'),
 ]

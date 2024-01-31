@@ -1,32 +1,19 @@
 from rest_framework.serializers import ModelSerializer
-from .models import ClassificationModel, ClassificationModelTrain, ClassificationModelPredict, NerModel, NerModelTrain, NerModelPredict
+from .models import Trainer, TrainingArgs, Predictor
 
-class ClassificationModelSerializer(ModelSerializer):
+class TrainingArgsSerializer(ModelSerializer):
     class Meta:
-        model = ClassificationModel
+        model = TrainingArgs
         fields = '__all__'
 
-class ClassificationModelTrainSerializer(ModelSerializer):
+class TrainerSerializer(ModelSerializer):
+    training_args = TrainingArgsSerializer()
+
     class Meta:
-        model = ClassificationModelTrain
+        model = Trainer
         fields = '__all__'
 
-class ClassificationModelPredictSerializer(ModelSerializer):
+class PredictorSerializer(ModelSerializer):
     class Meta:
-        model = ClassificationModelPredict
-        fields = '__all__'
-
-class NerModelSerializer(ModelSerializer):
-    class Meta:
-        model = NerModel
-        fields = '__all__'
-
-class NerModelTrainSerializer(ModelSerializer):
-    class Meta:
-        model = NerModelTrain
-        fields = '__all__'
-
-class NerModelPredictSerializer(ModelSerializer):
-    class Meta:
-        model = NerModelPredict
+        model = Predictor
         fields = '__all__'
