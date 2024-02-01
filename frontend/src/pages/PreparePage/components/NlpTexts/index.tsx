@@ -21,22 +21,21 @@ const NlpTexts: FC<NlpTextsProps> = ({
   const [nlpTexts, setNlpTexts] = React.useState<NlpTextProps[]>([]);
   const {
     data: nlpTextsData,
-    error,
     isLoading,
+    isError,
   } = nlpTextApi.useGetNlpTextsByNlpDatasetIdQuery(
     nlpDatasetId ? Number(nlpDatasetId) : skipToken
   );
   const [deleteNlpText, {}] = nlpTextApi.useDeleteNlpTextMutation();
 
   useEffect(() => {
-    console.log(selectedNlpTextId);
-    if (nlpTextsData) {
+    if (nlpTextsData && !isError) {
       setNlpTexts(nlpTextsData);
       selectedNlpTextId
         ? setSelectedNlpTextId(selectedNlpTextId)
         : setSelectedNlpTextId(nlpTextsData[0].id);
     }
-  }, [nlpTextsData]);
+  }, [nlpTextsData, nlpDatasetId]);
 
   const handleDelete = () => {
     if (selectedNlpTextId) deleteNlpText(selectedNlpTextId);

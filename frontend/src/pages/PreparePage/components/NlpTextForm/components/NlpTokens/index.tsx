@@ -20,13 +20,14 @@ const NlpTokens: FC<NlpTokensItemProps> = ({
   const [nlpTokens, setNlpTokens] = useState<NlpTokenProps[]>([]);
   const {
     data: nlpTokensData,
-    error,
     isLoading,
+    isError,
   } = nlpTokenApi.useGetNlpTokenByNlpTextIdQuery(Number(nlpTextId));
 
   useEffect(() => {
-    if (nlpTokensData) setNlpTokens(nlpTokensData);
-  }, [nlpTokensData]);
+    if (nlpTokensData && !isError) setNlpTokens(nlpTokensData);
+    else setNlpTokens([]);
+  }, [nlpTokensData, nlpTextId]);
 
   return (
     <div className={`nlp-tokens ${className}`}>

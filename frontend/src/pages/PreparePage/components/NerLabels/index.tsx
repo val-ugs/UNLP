@@ -19,15 +19,16 @@ const NerLabels: FC<NerLabelsProps> = ({ className, nlpDatasetId }) => {
   const dispatch = useAppDispatch();
   const {
     data: nerLabelsData,
-    error,
     isLoading,
+    isError,
   } = nerLabelApi.useGetNerLabelsByNlpDatasetIdQuery(
     nlpDatasetId ? Number(nlpDatasetId) : skipToken
   );
 
   useEffect(() => {
-    if (nerLabelsData) setNerLabels(nerLabelsData);
-  }, [nerLabelsData]);
+    if (nerLabelsData && !isError) setNerLabels(nerLabelsData);
+    else setNerLabels([]);
+  }, [nerLabelsData, nlpDatasetId]);
 
   const handleAddNerLabel = () => {
     if (nlpDatasetId) dispatch(activate({ nlpDatasetId, nerLabel: undefined }));
