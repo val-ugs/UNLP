@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, FormEvent, useId, useState } from 'react';
+import JSZip from 'jszip';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { loadDataModalSlice } from 'store/reducers/loadDataModalSlice';
@@ -57,8 +58,39 @@ const LoadDataModal: FC = () => {
     e.preventDefault();
 
     try {
-      const nlpDataset = await postNlpDataset(loadingDataDto).unwrap();
-      dispatch(setNlpDatasetId(nlpDataset.id));
+      if (loadingDataDto.file) {
+        // const reader = new FileReader();
+        // reader.readAsText(loadingDataDto.file);
+        // reader.onload = () => {
+        //   console.log(reader.result);
+        // };
+        const loadingDataDtoToSend = { ...loadingDataDto };
+        const zip = new JSZip();
+        let arrayBuffer: any;
+        const fileReader = new FileReader();
+        fileReader.onload = function () {
+          arrayBuffer = this.result;
+          zip.file(loadingDataDto.file!.name, arrayBuffer);
+        };
+        fileReader.readAsArrayBuffer(loadingDataDto.file);
+        await zip
+          .generateAsync({
+            type: 'blob',
+            compression: 'DEFLATE',
+            compressionOptions: { level: 9 },
+          })
+          .then((content) => {
+            const file = new File(
+              [content],
+              `${loadingDataDto.file!.name}.zip`,
+              { type: 'application/x-zip-compressed' }
+            );
+            loadingDataDtoToSend.file = file;
+          });
+        console.log(loadingDataDtoToSend);
+        const nlpDataset = await postNlpDataset(loadingDataDtoToSend).unwrap();
+        dispatch(setNlpDatasetId(nlpDataset.id));
+      }
     } catch (error) {
       console.log(error);
     }

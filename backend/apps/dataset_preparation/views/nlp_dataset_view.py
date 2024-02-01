@@ -1,3 +1,4 @@
+from io import BytesIO
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
@@ -6,6 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 import re
 import json
+import zipfile
 
 from apps.common.models import NerLabel, NlpDataset, NlpText, NlpToken, NlpTokenNerLabel
 from apps.common.serializers import NerLabelSerializer, NlpDatasetSerializer, NlpTextSerializer, NlpTokenNerLabelSerializer, NlpTokenSerializer
@@ -22,6 +24,9 @@ class NlpDatasetView(APIView):
         if loading_data_serializer.is_valid():
             file = loading_data_serializer.validated_data['file']
             f = file.open('r')
+
+            if (file.name.endswith('.zip')):
+                print(file.name)
 
             if file.name.endswith('.txt'):
                 text_pattern_to_split = loading_data_serializer.validated_data.get('text_pattern_to_split', None)
