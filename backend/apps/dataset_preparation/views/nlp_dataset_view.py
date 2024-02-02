@@ -8,6 +8,7 @@ from rest_framework.renderers import JSONRenderer
 import re
 import json
 import zipfile
+from pathlib import Path
 
 from apps.common.models import NerLabel, NlpDataset, NlpText, NlpToken, NlpTokenNerLabel
 from apps.common.serializers import NerLabelSerializer, NlpDatasetSerializer, NlpTextSerializer, NlpTokenNerLabelSerializer, NlpTokenSerializer
@@ -24,13 +25,18 @@ class NlpDatasetView(APIView):
         if loading_data_serializer.is_valid():
             file = loading_data_serializer.validated_data['file']
             f = file.open('r')
+            content = None
 
             if (file.name.endswith('.zip')):
-                print(file.name)
+                zip_file = zipfile.ZipFile(file)
+                unpacked_file = zip_file.namelist()[0]
+                content = zip_file.read(unpacked_file).decode("utf-8") # Reading file content
+                file.name = Path(file.name).stem # remove the .zip extension and leave the original file extension
 
             if file.name.endswith('.txt'):
                 text_pattern_to_split = loading_data_serializer.validated_data.get('text_pattern_to_split', None)
-                content = f.read().decode()
+                if (content == None): # If not read at the unzip stage
+                    content = f.read().decode()
 
                 nlp_dataset, _ = NlpDataset.objects.get_or_create(pk=pk)
                 
@@ -52,15 +58,18 @@ class NlpDatasetView(APIView):
                 )
                 
             elif file.name.endswith('.json'):
-                data = json.load(f)
-                nlp_dataset_serializer = NlpDatasetSerializer(data=data)
+                if (content == None): # If not read at the unzip stage
+                    content = json.load(f)
+                else: # If read at the unzip stage then convert
+                    content = json.loads(content) 
+                nlp_dataset_serializer = NlpDatasetSerializer(data=content)
                 if (nlp_dataset_serializer.is_valid()):
                     nlp_dataset = NlpDataset.objects.create(
                         token_pattern_to_remove=nlp_dataset_serializer.validated_data['token_pattern_to_remove'],
                         token_pattern_to_split=nlp_dataset_serializer.validated_data['token_pattern_to_split']
                     )
 
-                    ner_labels_data = data.pop('ner_labels')
+                    ner_labels_data = content.pop('ner_labels')
                     old_new_ner_label_dict = {}
                     for ner_label_data in ner_labels_data:
                         old_ner_label_id = ner_label_data.pop('id')
@@ -78,7 +87,7 @@ class NlpDatasetView(APIView):
                                 status=status.HTTP_400_BAD_REQUEST
                             )
 
-                    nlp_texts_data = data.pop('nlp_texts')
+                    nlp_texts_data = content.pop('nlp_texts')
                     for nlp_text_data in nlp_texts_data:
                         nlp_text_serializer = NlpTextSerializer(data=nlp_text_data)
                         if (nlp_text_serializer.is_valid()):

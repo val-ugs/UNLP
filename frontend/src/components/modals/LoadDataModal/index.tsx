@@ -59,37 +59,29 @@ const LoadDataModal: FC = () => {
 
     try {
       if (loadingDataDto.file) {
-        // const reader = new FileReader();
-        // reader.readAsText(loadingDataDto.file);
-        // reader.onload = () => {
-        //   console.log(reader.result);
-        // };
-        const loadingDataDtoToSend = { ...loadingDataDto };
         const zip = new JSZip();
-        let arrayBuffer: any;
-        const fileReader = new FileReader();
-        fileReader.onload = function () {
-          arrayBuffer = this.result;
-          zip.file(loadingDataDto.file!.name, arrayBuffer);
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(loadingDataDto.file);
+        reader.onload = async () => {
+          zip.file(loadingDataDto.file!.name, reader.result);
+          zip
+            .generateAsync({
+              type: 'blob',
+              compression: 'DEFLATE',
+              compressionOptions: { level: 9 },
+            })
+            .then(async (content) => {
+              const file = new File(
+                [content],
+                `${loadingDataDto.file!.name}.zip`,
+                { type: 'application/x-zip-compressed' }
+              );
+              const loadingDataDtoToSend = { ...loadingDataDto, file: file };
+              const nlpDataset =
+                await postNlpDataset(loadingDataDtoToSend).unwrap();
+              dispatch(setNlpDatasetId(nlpDataset.id));
+            });
         };
-        fileReader.readAsArrayBuffer(loadingDataDto.file);
-        await zip
-          .generateAsync({
-            type: 'blob',
-            compression: 'DEFLATE',
-            compressionOptions: { level: 9 },
-          })
-          .then((content) => {
-            const file = new File(
-              [content],
-              `${loadingDataDto.file!.name}.zip`,
-              { type: 'application/x-zip-compressed' }
-            );
-            loadingDataDtoToSend.file = file;
-          });
-        console.log(loadingDataDtoToSend);
-        const nlpDataset = await postNlpDataset(loadingDataDtoToSend).unwrap();
-        dispatch(setNlpDatasetId(nlpDataset.id));
       }
     } catch (error) {
       console.log(error);
