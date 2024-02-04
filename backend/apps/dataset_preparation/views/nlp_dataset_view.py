@@ -11,7 +11,7 @@ import zipfile
 from pathlib import Path
 
 from apps.common.models import NerLabel, NlpDataset, NlpText, NlpToken, NlpTokenNerLabel
-from apps.common.serializers import NerLabelSerializer, NlpDatasetSerializer, NlpTextSerializer, NlpTokenNerLabelSerializer, NlpTokenSerializer
+from apps.common.serializers import NerLabelSerializer, NlpDatasetFullSerializer, NlpDatasetSerializer, NlpTextSerializer, NlpTokenNerLabelSerializer, NlpTokenSerializer
 
 from ..serializers import LoadingDataSerializer
 
@@ -233,7 +233,7 @@ def download_nlp_dataset(request, pk):
         nlp_dataset = get_object_or_404(NlpDataset, pk=pk)
     
         if nlp_dataset:
-            nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset)
+            nlp_dataset_serializer = NlpDatasetFullSerializer(nlp_dataset)
             json_data = JSONRenderer().render(nlp_dataset_serializer.data)
             return Response(
                 json_data,
