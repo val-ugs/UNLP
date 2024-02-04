@@ -14,7 +14,6 @@ export const nlpTextApi = api.injectEndpoints({
           id: nlpTextData['id'],
           text: nlpTextData['text'],
           classificationLabel: nlpTextData['classification_label'],
-          nlpTokens: nlpTextData['nlp_tokens'],
         }));
       },
       providesTags: () => [tagTypes.NlpText, tagTypes.NlpDataset],
@@ -28,7 +27,6 @@ export const nlpTextApi = api.injectEndpoints({
           id: response['id'],
           text: response['text'],
           classificationLabel: response['classification_label'],
-          nlpTokens: response['nlp_tokens'],
         };
       },
       providesTags: () => [tagTypes.NlpText],
@@ -41,7 +39,6 @@ export const nlpTextApi = api.injectEndpoints({
         body: JSON.stringify({
           text: nlpText.text,
           classification_label: nlpText.classificationLabel,
-          nlp_tokens: nlpText.nlpTokens,
         }),
       }),
       invalidatesTags: [tagTypes.NlpText],

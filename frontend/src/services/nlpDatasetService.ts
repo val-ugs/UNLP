@@ -15,8 +15,6 @@ export const nlpDatasetApi = api.injectEndpoints({
         return response.map((nlpDatasetData: any) => {
           return {
             id: nlpDatasetData['id'],
-            nlpTexts: nlpDatasetData['nlp_texts'],
-            nerLabels: nlpDatasetData['ner_labels'],
             tokenPatternToRemove: nlpDatasetData['token_pattern_to_remove'],
             tokenPatternToSplit: nlpDatasetData['token_pattern_to_split'],
           };
@@ -31,8 +29,6 @@ export const nlpDatasetApi = api.injectEndpoints({
       transformResponse: (response: any) => {
         return {
           id: response['id'],
-          nlpTexts: response['nlp_texts'],
-          nerLabels: response['ner_labels'],
           tokenPatternToRemove: response['token_pattern_to_remove'],
           tokenPatternToSplit: response['token_pattern_to_split'],
         };
@@ -57,8 +53,6 @@ export const nlpDatasetApi = api.injectEndpoints({
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          nlp_texts: nlpDataset.nlpTexts,
-          ner_labels: nlpDataset.nerLabels,
           token_pattern_to_remove: nlpDataset.tokenPatternToRemove,
           token_pattern_to_split: nlpDataset.tokenPatternToSplit,
         }),

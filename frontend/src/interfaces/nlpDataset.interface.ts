@@ -5,6 +5,6 @@ export interface NlpDatasetProps {
   id: number;
   tokenPatternToRemove: string;
   tokenPatternToSplit: string;
-  nlpTexts: NlpTextProps[];
-  nerLabels: NerLabelProps[];
+  nlpTexts?: NlpTextProps[];
+  nerLabels?: NerLabelProps[];
 }

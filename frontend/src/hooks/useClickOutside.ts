@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 
-export function useClickOutside(action: any) {
+const useClickOutside = (action: any) => {
   const ref = useRef(null);
   const refCb = useRef(action);
 
@@ -25,4 +25,6 @@ export function useClickOutside(action: any) {
   }, []);
 
   return ref;
-}
+};
+
+export default useClickOutside;

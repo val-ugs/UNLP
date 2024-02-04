@@ -41,7 +41,6 @@ const PreparePage: FC = () => {
 
   useEffect(() => {
     setNlpDataset(nlpDatasetData);
-    setSelectedNlpTextId(nlpDatasetData?.nlpTexts[0]?.id);
   }, [nlpDatasetData]);
 
   const handleLoadData = () => dispatch(activate());

@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 
 import './styles.scss';
-import { useClickOutside } from 'hooks/useClickOutside';
+import useClickOutside from 'hooks/useClickOutside';
 
 interface DropdownProps {
   className?: string;

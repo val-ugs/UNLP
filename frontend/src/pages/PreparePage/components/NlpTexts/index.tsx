@@ -1,9 +1,9 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { skipToken } from '@reduxjs/toolkit/query';
 import Button from 'components/common/Button';
 import { NlpTextProps } from 'interfaces/nlpText.interface';
-import './styles.scss';
 import { nlpTextApi } from 'services/nlpTextService';
+import './styles.scss';
 
 export interface NlpTextsProps {
   className: string;
@@ -18,7 +18,7 @@ const NlpTexts: FC<NlpTextsProps> = ({
   selectedNlpTextId,
   setSelectedNlpTextId,
 }) => {
-  const [nlpTexts, setNlpTexts] = React.useState<NlpTextProps[]>([]);
+  const [nlpTexts, setNlpTexts] = useState<NlpTextProps[]>([]);
   const {
     data: nlpTextsData,
     isLoading,
