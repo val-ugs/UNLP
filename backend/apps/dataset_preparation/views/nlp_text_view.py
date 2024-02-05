@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
+from apps.common.enums import Sort
 
 from apps.common.models import NlpText
 from apps.common.serializers import NlpTextSerializer
@@ -28,24 +29,24 @@ class NlpTextView(APIView):
 
             if nlp_dataset_pk:
                 if search: 
-                    if (sort == 'asc' or sort == 'desc'):
-                        nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk).filter(text__contains=search).order_by(f"{'' if sort == 'asc' else '-' }text")
+                    if (sort == Sort.ASC.value or sort == Sort.DESC.value):
+                        nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk).filter(text__contains=search).order_by(f"{'' if sort == Sort.ASC.value else '-' }text")
                     else:
                         nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk).filter(text__contains=search).order_by('id')
                 else:
-                    if (sort == 'asc' or sort == 'desc'):
-                        nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk).order_by(f"{'' if sort == 'asc' else '-' }text")
+                    if (sort == Sort.ASC.value or sort == Sort.DESC.value):
+                        nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk).order_by(f"{'' if sort == Sort.ASC.value else '-' }text")
                     else:
                         nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk).order_by('id')
             else:
                 if search:
-                    if (sort == 'asc' or sort == 'desc'):
-                        nlp_texts = NlpText.objects.filter(text__contains=search).order_by(f"{'' if sort == 'asc' else '-' }text")
+                    if (sort == Sort.ASC.value or sort == Sort.DESC.value):
+                        nlp_texts = NlpText.objects.filter(text__contains=search).order_by(f"{'' if sort == Sort.ASC.value else '-' }text")
                     else:
                         nlp_texts = NlpText.objects.filter(text__contains=search).order_by('id')
                 else:
-                    if (sort == 'asc' or sort == 'desc'):
-                        nlp_texts = NlpText.objects.order_by(f"{'' if sort == 'asc' else '-' }text")
+                    if (sort == Sort.ASC.value or sort == Sort.DESC.value):
+                        nlp_texts = NlpText.objects.order_by(f"{'' if sort == Sort.ASC.value else '-' }text")
                     else:
                         nlp_texts = NlpText.objects.all().order_by('id')
                 
