@@ -89,7 +89,7 @@ const NlpTokenSettingsModal: FC<NlpTokenSettingsModalProps> = ({
       <form className="nlp-token-settings-modal__form" onSubmit={handleSubmit}>
         <LabeledElement
           className="nlp-token-settings-modal__item"
-          labelElement={{ value: 'Pattern to remove:' }}
+          labelElement={{ value: 'Pattern to remove' }}
         >
           <InputField
             className={patternToRemoveInputField.className}
@@ -105,7 +105,7 @@ const NlpTokenSettingsModal: FC<NlpTokenSettingsModalProps> = ({
         </LabeledElement>
         <LabeledElement
           className="nlp-token-settings-modal__item"
-          labelElement={{ value: 'Pattern to split:' }}
+          labelElement={{ value: 'Pattern to split' }}
         >
           <InputField
             className={patternToSplitInputField.className}

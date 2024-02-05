@@ -1,0 +1,80 @@
+@import 'variables.scss';
+@import 'media_mixin.scss';
+
+// InputNumber variables
+$input-number-background-color: $color-6;
+$input-number-border-color: $color-2;
+$input-number-text-color: $color-5;
+$input-number-focus-border-color: $color-2;
+
+.input-number {
+  position: relative;
+  display: flex;
+  color: $input-number-text-color;
+  font-size: 20px;
+  background-color: $input-number-background-color;
+  border: 1px solid $input-number-border-color;
+  border-radius: 10px;
+
+  &:focus-within {
+    border-color: $input-number-focus-border-color;
+  }
+
+  &__input {
+    padding-right: 1.1em;
+    color: inherit;
+    font-size: inherit;
+    font-family: $font-family;
+    background-color: inherit;
+    border: none;
+    border-radius: inherit;
+
+    &::placeholder {
+      color: inherit;
+      opacity: 0.4;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-search-cancel-button {
+      display: none;
+    }
+
+    &::-ms-clear {
+      display: none;
+    }
+  }
+
+  &__clear {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    bottom: 2px;
+    display: flex;
+    justify-content: center;
+    width: 1em;
+  }
+
+  &__clear-button {
+  }
+
+  @include media-1000 {
+    font-size: 16px;
+  }
+
+  @include media-700 {
+    font-size: 14px;
+  }
+}
+
+.input-number input[type='number'] {
+  width: 100%;
+  appearance: none;
+}
+
+.input-number input[type='number']::-webkit-outer-spin-button,
+::-webkit-inner-spin-button {
+  appearance: none;
+}

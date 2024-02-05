@@ -2,6 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
+from apps.common.enums import Sort
 
 from apps.common.models import NlpText
 from apps.common.serializers import NlpTextSerializer
@@ -22,20 +24,39 @@ class NlpTextView(APIView):
                 )
                 
         elif pk == None:
+            search = request.GET.get('search')
+            sort = request.GET.get('sort')
+
             if nlp_dataset_pk:
-                nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk)
-            else:
-                if request.query_params:
-                    nlp_texts = NlpText.objects.filter(**request.query_params.dict())
+                if search: 
+                    if (sort == Sort.ASC.value or sort == Sort.DESC.value):
+                        nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk).filter(text__contains=search).order_by(f"{'' if sort == Sort.ASC.value else '-' }text")
+                    else:
+                        nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk).filter(text__contains=search).order_by('id')
                 else:
-                    nlp_texts = NlpText.objects.all()
-        
-            if nlp_texts:
-                nlp_text_serializer = NlpTextSerializer(nlp_texts, many=True)
-                return Response(
-                    nlp_text_serializer.data,
-                    status=status.HTTP_200_OK
-                )
+                    if (sort == Sort.ASC.value or sort == Sort.DESC.value):
+                        nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk).order_by(f"{'' if sort == Sort.ASC.value else '-' }text")
+                    else:
+                        nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk).order_by('id')
+            else:
+                if search:
+                    if (sort == Sort.ASC.value or sort == Sort.DESC.value):
+                        nlp_texts = NlpText.objects.filter(text__contains=search).order_by(f"{'' if sort == Sort.ASC.value else '-' }text")
+                    else:
+                        nlp_texts = NlpText.objects.filter(text__contains=search).order_by('id')
+                else:
+                    if (sort == Sort.ASC.value or sort == Sort.DESC.value):
+                        nlp_texts = NlpText.objects.order_by(f"{'' if sort == Sort.ASC.value else '-' }text")
+                    else:
+                        nlp_texts = NlpText.objects.all().order_by('id')
+                
+            page_size = request.GET.get('page_size', nlp_texts.count())
+            paginator = PageNumberPagination()
+            paginator.page_size = page_size
+            nlp_texts_page = paginator.paginate_queryset(nlp_texts, request)
+            if nlp_texts_page:
+                nlp_text_serializer = NlpTextSerializer(nlp_texts_page, many=True)
+                return paginator.get_paginated_response(nlp_text_serializer.data)
             
         return Response("Nlp texts not found", status=status.HTTP_400_BAD_REQUEST)
 

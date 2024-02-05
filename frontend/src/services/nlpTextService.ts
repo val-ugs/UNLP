@@ -1,21 +1,48 @@
 import { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 import { api } from './apiService';
 import { NlpTextProps } from 'interfaces/nlpText.interface';
+import {
+  GetNlpTextPageRequestProps,
+  GetNlpTextPageResponseProps,
+} from 'interfaces/dtos/getNlpTextPage.interface';
 import { tagTypes } from './tagTypes';
 
 export const nlpTextApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
-    getNlpTextsByNlpDatasetId: build.query<NlpTextProps[], number>({
-      query: (nlpDatasetId: number) => ({
-        url: `/dataset-preparation/nlp-datasets/${nlpDatasetId}/nlp-texts/`,
+    getNlpTexts: build.query<
+      GetNlpTextPageResponseProps,
+      GetNlpTextPageRequestProps
+    >({
+      query: (GetNlpTextPageRequest: GetNlpTextPageRequestProps) => ({
+        url: `/dataset-preparation/${
+          GetNlpTextPageRequest.nlpDatasetId
+            ? `nlp-datasets/${GetNlpTextPageRequest.nlpDatasetId}/`
+            : ''
+        }nlp-texts/?${
+          GetNlpTextPageRequest.search
+            ? `search=${GetNlpTextPageRequest.search}&`
+            : ''
+        }${
+          GetNlpTextPageRequest.sort
+            ? `sort=${GetNlpTextPageRequest.sort}&`
+            : ''
+        }${
+          GetNlpTextPageRequest.pageSize
+            ? `page_size=${GetNlpTextPageRequest.pageSize}&`
+            : ''
+        }${
+          GetNlpTextPageRequest.page ? `page=${GetNlpTextPageRequest.page}` : ''
+        }`,
       }),
       transformResponse: (response: any) => {
-        return response.map((nlpTextData: any) => ({
-          id: nlpTextData['id'],
-          text: nlpTextData['text'],
-          classificationLabel: nlpTextData['classification_label'],
-          nlpTokens: nlpTextData['nlp_tokens'],
-        }));
+        return {
+          nlpTextsCount: response['count'],
+          nlpTexts: response['results'].map((nlpTextData: any) => ({
+            id: nlpTextData['id'],
+            text: nlpTextData['text'],
+            classificationLabel: nlpTextData['classification_label'],
+          })),
+        };
       },
       providesTags: () => [tagTypes.NlpText, tagTypes.NlpDataset],
     }),
@@ -28,7 +55,6 @@ export const nlpTextApi = api.injectEndpoints({
           id: response['id'],
           text: response['text'],
           classificationLabel: response['classification_label'],
-          nlpTokens: response['nlp_tokens'],
         };
       },
       providesTags: () => [tagTypes.NlpText],
@@ -41,7 +67,6 @@ export const nlpTextApi = api.injectEndpoints({
         body: JSON.stringify({
           text: nlpText.text,
           classification_label: nlpText.classificationLabel,
-          nlp_tokens: nlpText.nlpTokens,
         }),
       }),
       invalidatesTags: [tagTypes.NlpText],

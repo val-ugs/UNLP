@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, MouseEvent, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useAppDispatch } from 'hooks/redux';
 import useStateRef from 'hooks/useStateRef';
 import { nlpTextApi } from 'services/nlpTextService';

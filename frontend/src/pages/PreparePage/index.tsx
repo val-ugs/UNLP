@@ -41,7 +41,6 @@ const PreparePage: FC = () => {
 
   useEffect(() => {
     setNlpDataset(nlpDatasetData);
-    setSelectedNlpTextId(nlpDatasetData?.nlpTexts[0]?.id);
   }, [nlpDatasetData]);
 
   const handleLoadData = () => dispatch(activate());
@@ -93,12 +92,18 @@ const PreparePage: FC = () => {
           setSelectedNlpDatasetId={setSelectedNlpDatasetId}
         />
         <div className="prepare-page__body">
-          <NlpTexts
-            className="prepare-page__sidebar-left"
-            nlpDatasetId={nlpDataset?.id}
-            selectedNlpTextId={selectedNlpTextId}
-            setSelectedNlpTextId={setSelectedNlpTextId}
-          />
+          {selectedNlpDatasetId ? (
+            <NlpTexts
+              className="prepare-page__sidebar-left"
+              nlpDatasetId={selectedNlpDatasetId}
+              selectedNlpTextId={selectedNlpTextId}
+              setSelectedNlpTextId={setSelectedNlpTextId}
+            />
+          ) : (
+            <div className="prepare-page__sidebar-left">
+              Database not selected or not found
+            </div>
+          )}
           {selectedNlpTextId && nlpDataset ? (
             <NlpTextForm
               className="prepare-page__text-nlp-form"
