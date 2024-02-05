@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.serializers import ModelSerializer, SerializerMethodField, IntegerField
 from .models import NerLabel, NlpDataset, NlpText, NlpToken, NlpTokenNerLabel
 
+# main serializers
 class NlpDatasetSerializer(ModelSerializer):
     class Meta:
         model = NlpDataset
@@ -42,12 +43,7 @@ class NlpDatasetFullSerializer(ModelSerializer):
     
     def get_ner_labels(self, obj):
         ner_labels = NerLabel.objects.filter(nlp_dataset=obj)
-        return NerLabelFullSerializer(ner_labels, many=True).data
-    
-class NerLabelFullSerializer(ModelSerializer):
-    class Meta:
-        model = NerLabel
-        fields = '__all__'
+        return NerLabelSerializer(ner_labels, many=True).data
 
 class NlpTextFullSerializer(ModelSerializer):
     nlp_tokens = SerializerMethodField(method_name='get_nlp_tokens')
@@ -72,9 +68,4 @@ class NlpTokenFullSerializer(ModelSerializer):
             nlp_token_ner_label = NlpTokenNerLabel.objects.get(nlp_token=obj)
         except NlpTokenNerLabel.DoesNotExist:
             nlp_token_ner_label = None
-        return NlpTokenNerLabelFullSerializer(nlp_token_ner_label).data
-
-class NlpTokenNerLabelFullSerializer(ModelSerializer):
-    class Meta:
-        model = NlpTokenNerLabel
-        fields = '__all__'
+        return NlpTokenNerLabelSerializer(nlp_token_ner_label).data
