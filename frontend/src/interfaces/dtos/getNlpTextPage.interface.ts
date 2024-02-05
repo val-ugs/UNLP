@@ -1,10 +1,10 @@
-import { Sort } from 'interfaces/enums/sort.interface';
+import { Sort } from 'data/enums/sort';
 import { NlpTextProps } from 'interfaces/nlpText.interface';
 
 export interface GetNlpTextPageRequestProps {
   nlpDatasetId?: number;
   search?: string;
-  sort?: Sort;
+  sort: Sort;
   pageSize?: number;
   page?: number;
 }
