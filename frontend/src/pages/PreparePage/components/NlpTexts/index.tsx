@@ -48,13 +48,18 @@ const NlpTexts: FC<NlpTextsProps> = ({
   const [deleteNlpText, {}] = nlpTextApi.useDeleteNlpTextMutation();
 
   useEffect(() => {
+    setGetNlpTextRequest({
+      ...getNlpTextRequest,
+      nlpDatasetId: nlpDatasetId,
+    });
+  }, [nlpDatasetId]);
+
+  useEffect(() => {
     if (getNlpTextsResponse?.nlpTexts && !isError) {
       setNlpTexts(getNlpTextsResponse.nlpTexts);
-      selectedNlpTextId
-        ? setSelectedNlpTextId(selectedNlpTextId)
-        : setSelectedNlpTextId(getNlpTextsResponse.nlpTexts[0].id);
+      setSelectedNlpTextId(getNlpTextsResponse.nlpTexts[0].id);
     }
-  }, [getNlpTextsResponse, nlpDatasetId]);
+  }, [getNlpTextsResponse]);
 
   const handleDelete = () => {
     if (selectedNlpTextId) deleteNlpText(selectedNlpTextId);
