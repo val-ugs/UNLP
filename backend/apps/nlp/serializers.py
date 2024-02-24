@@ -1,19 +1,21 @@
-from rest_framework.serializers import ModelSerializer
-from .models import Trainer, TrainingArgs, Predictor
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from .models import HuggingFaceModel, TrainingArgs
 
 class TrainingArgsSerializer(ModelSerializer):
     class Meta:
         model = TrainingArgs
         fields = '__all__'
 
-class TrainerSerializer(ModelSerializer):
-    training_args = TrainingArgsSerializer()
+class HuggingFaceModelSerializer(ModelSerializer):
+    training_args = SerializerMethodField(method_name='get_training_args')
 
     class Meta:
-        model = Trainer
+        model = HuggingFaceModel
         fields = '__all__'
 
-class PredictorSerializer(ModelSerializer):
-    class Meta:
-        model = Predictor
-        fields = '__all__'
+    def get_training_args(self, obj):
+        try:
+            training_args = TrainingArgs.objects.get(hugging_face_model=obj)
+        except TrainingArgs.DoesNotExist:
+            training_args = None
+        return TrainingArgsSerializer(training_args).data

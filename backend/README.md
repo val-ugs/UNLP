@@ -11,3 +11,6 @@ Run commands to loaddata:
 
 Run server:
 ./manage.py runserver
+
+Test Nlp:
+./manage.py test apps/nlp/
