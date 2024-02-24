@@ -163,3 +163,7 @@ cython_debug/
 # React
 dist/
 node_modules
+
+
+# App
+trained_models

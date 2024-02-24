@@ -14,7 +14,6 @@ import os
 
 from apps.nlp.utils.convert_nlp_dataset_to_df import convert_nlp_dataset_to_df
 from apps.nlp.utils.convert_training_args_to_training_arguments import convert_training_args_to_training_arguments
-from apps.nlp.utils.split_df import split_df
 
 class HuggingFaceModelView(APIView):
     def post(self, request, pk=None):
@@ -138,28 +137,20 @@ def predict(request, hugging_face_model_pk, nlp_dataset_pk):
     trainer.predict(test_df)
 
     return Response(status=status.HTTP_200_OK)
-#     predictor_serializer = PredictorSerializer(data=data)
-#     if predictor_serializer.is_valid():
-#         # predict
-#         return Response(predictor_serializer.data, status=status.HTTP_200_OK)
-#     else:
-#         return Response(predictor_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 def get_trainer(hugging_face_model_pk):
     hugging_face_model = get_object_or_404(HuggingFaceModel, pk=hugging_face_model_pk)
     output_dir=f"{NLP_FOLDER_NAME}\{hugging_face_model.type}\{hugging_face_model.train_nlp_dataset.pk}"
 
     # if trained model exist - take it
-    if os.path.exists(output_dir):
+    if os.path.exists(output_dir) and os.listdir(output_dir):
         hugging_face_model.model_name_or_path = output_dir
 
     training_args = get_object_or_404(TrainingArgs, hugging_face_model=hugging_face_model)
     training_arguments = convert_training_args_to_training_arguments(output_dir, training_args)
-    df = convert_nlp_dataset_to_df(hugging_face_model.train_nlp_dataset)
-    train_df, valid_df = split_df(df, 0.8) # TODO: move coefficient to parameter
-    evaluate_metric_name = 'accuracy' # classification # TODO: move to parameter
-    # evaluate_metric_name = 'seqeval' # ner
-    metric = evaluate.load(evaluate_metric_name)
+    train_df = convert_nlp_dataset_to_df(hugging_face_model.train_nlp_dataset)
+    valid_df = convert_nlp_dataset_to_df(hugging_face_model.valid_nlp_dataset)
+    metric = evaluate.load(hugging_face_model.evaluate_metric_name) # 'accuracy' for classification, 'seqeval' for ner
 
     trainer = None
     match hugging_face_model.type:

@@ -9,7 +9,9 @@ class ModelType(models.TextChoices):
 class HuggingFaceModel(models.Model):
     name = models.CharField(max_length=200)
     model_name_or_path = models.CharField(max_length=200)
-    train_nlp_dataset = models.ForeignKey(NlpDataset, null=True, blank=True, on_delete=models.CASCADE)
+    train_nlp_dataset = models.ForeignKey(NlpDataset, on_delete=models.CASCADE, related_name='train_nlp_dataset')
+    valid_nlp_dataset = models.ForeignKey(NlpDataset, on_delete=models.CASCADE, related_name='valid_nlp_dataset')
+    evaluate_metric_name = models.CharField(max_length=50)
     type = models.CharField(
         max_length=14,
         choices=ModelType.choices,
