@@ -4,11 +4,17 @@ import './styles.scss';
 export interface AccordionProps {
   className: string;
   header: ReactNode;
+  isOpenOnStart?: boolean;
   children: ReactNode;
 }
 
-const Accordion: FC<AccordionProps> = ({ className, header, children }) => {
-  const [isOpen, setIsOpen] = useState(true);
+const Accordion: FC<AccordionProps> = ({
+  className,
+  header,
+  isOpenOnStart = true,
+  children,
+}) => {
+  const [isOpen, setIsOpen] = useState(isOpenOnStart);
   const handleClick = () => {
     setIsOpen(!isOpen);
   };

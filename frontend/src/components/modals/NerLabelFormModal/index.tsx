@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import ContentModal from 'components/interstitial/ContentModal';
@@ -12,18 +12,14 @@ import { nerLabelFormModalSlice } from 'store/reducers/nerLabelFormModalSlice';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import './styles.scss';
 
-export interface NerLabelFromModalProps {
-  className?: string;
-}
-
 const emptyNerLabel: NerLabelProps = {
   id: 0,
   name: '',
   color: '#000000',
 };
 
-const NerLabelFormModal: FC<NerLabelFromModalProps> = ({ className }) => {
-  const [nerLabel, setNerLabel] = React.useState<NerLabelProps>(emptyNerLabel);
+const NerLabelFormModal: FC = () => {
+  const [nerLabel, setNerLabel] = useState<NerLabelProps>(emptyNerLabel);
   const [postNerLabel, {}] = nerLabelApi.usePostNerLabelMutation();
   const [putNerLabel, {}] = nerLabelApi.usePutNerLabelMutation();
   const {
@@ -83,7 +79,7 @@ const NerLabelFormModal: FC<NerLabelFromModalProps> = ({ className }) => {
 
   return (
     <ContentModal
-      className={`ner-label-form-modal ${className}`}
+      className="ner-label-form-modal"
       title={'Ner label form'}
       isActive={isActive}
       handleClose={handleClose}

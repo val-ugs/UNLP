@@ -83,7 +83,7 @@ const PreparePage: FC = () => {
             className="prepare-page__button"
             onClick={handleConvertNerLabelOrSummarizationToText}
           >
-            Convert NER Label or Summarization to text
+            Actions
           </Button>
         </div>
         <NlpDatasets

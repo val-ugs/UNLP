@@ -7,6 +7,7 @@ export interface InputNumberProps {
   name: string;
   value: number;
   setValue: (value: number) => void;
+  step?: number;
   placeholder?: string;
   disabled?: boolean;
   min?: number;
@@ -18,6 +19,7 @@ const InputNumber: FC<InputNumberProps> = ({
   name,
   value,
   setValue,
+  step,
   placeholder,
   disabled,
   min,
@@ -56,6 +58,7 @@ const InputNumber: FC<InputNumberProps> = ({
         name={name}
         value={value}
         onChange={handleChange}
+        step={step}
         placeholder={placeholder}
         disabled={disabled}
         min={min}

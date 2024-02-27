@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface NlpTrainComponentProps {
+export interface NlpComponentProps {
   id: number;
   name: string;
   component: ReactNode;

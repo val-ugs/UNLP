@@ -1,0 +1,30 @@
+.hugging-face-model-form-modal {
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item {
+    padding-bottom: 10px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &__button {
+    align-self: center;
+  }
+
+  &__input-field {
+  }
+
+  &__select {
+  }
+
+  &__input-number {
+  }
+
+  &__input-checkbox {
+  }
+}

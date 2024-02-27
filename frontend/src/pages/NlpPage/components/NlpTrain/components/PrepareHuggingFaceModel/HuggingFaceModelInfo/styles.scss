@@ -1,0 +1,20 @@
+@import 'variables.scss';
+
+.hugging-face-model-info {
+  &__info {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    background-color: $color-4;
+    border: 2px solid $color-3;
+  }
+
+  &__labeled-element {
+  }
+
+  &__training-args {
+  }
+
+  &__training-args-name {
+  }
+}

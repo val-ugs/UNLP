@@ -88,7 +88,7 @@ const NlpTokenItem: FC<NlpTokenItemProps> = ({
   };
   const initialInputCheckbox: InputCheckboxProps = {
     className: 'nlp-token-item__input-checkbox',
-    name: 'initial-input-checkbox',
+    name: 'initial',
     defaultChecked: nlpTokenNerLabel.initial,
     onChange: handleInitialChange,
   };

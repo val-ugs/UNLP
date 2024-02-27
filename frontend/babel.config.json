@@ -23,6 +23,7 @@
         "data": "./src/data",
         "helpers": "./src/helpers",
         "hooks": "./src/hooks",
+        "interfaces": "./src/interfaces",
         "images": "./src/images",
         "pages": "./src/pages",
         "services": "./src/services",

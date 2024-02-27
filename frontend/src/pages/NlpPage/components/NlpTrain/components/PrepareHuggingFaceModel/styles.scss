@@ -1,0 +1,56 @@
+.prepare-hugging-face-model {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+
+  &__item {
+    padding-bottom: 10px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &__add-button {
+  }
+
+  &__type {
+    display: flex;
+  }
+
+  &__type-item {
+    padding-right: 10px;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  &__type-button {
+  }
+
+  &__model {
+    display: flex;
+    align-items: center;
+  }
+
+  &__model-item {
+    padding-right: 10px;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  &__edit-button {
+  }
+
+  &__delete-button {
+  }
+
+  &__labeled-element {
+  }
+
+  &__select {
+  }
+}

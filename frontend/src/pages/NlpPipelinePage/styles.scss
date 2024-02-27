@@ -1,0 +1,38 @@
+@import 'variables.scss';
+
+.nlp-pipeline-page {
+  display: flex;
+  height: 100%;
+
+  &__sidebar {
+    width: 300px;
+    border-right: 5px solid $color-4;
+  }
+
+  &__title {
+    padding: 10px;
+    text-align: center;
+    background-color: $color-4;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+  }
+
+  &__item {
+    margin-bottom: 5px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__add-component {
+  }
+
+  &__main {
+    padding: 10px;
+  }
+}
