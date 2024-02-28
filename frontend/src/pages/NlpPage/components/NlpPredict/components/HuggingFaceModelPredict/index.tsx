@@ -10,38 +10,49 @@ import {
   HuggingFaceModelType,
 } from 'interfaces/huggingFaceModel.interface';
 import { huggingFaceModelApi } from 'services/huggingFaceModelService';
-import HuggingFaceModelInfo from './HuggingFaceModelInfo';
-import { huggingFaceModelFormModalSlice } from 'store/reducers/huggingFaceModelFormModalSlice';
+import HuggingFaceModelInfo from 'components/interstitial/HuggingFaceModelInfo';
+import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
+import { nlpDatasetApi } from 'services/nlpDatasetService';
 import './styles.scss';
 
-interface PrepareHuggingFaceModelProps {
+interface HuggingFaceModelPredictProps {
   className: string;
   huggingFaceModel: HuggingFaceModelProps | undefined;
   setHuggingFaceModel: React.Dispatch<
     React.SetStateAction<HuggingFaceModelProps | undefined>
   >;
+  testNlpDatasetId: number;
+  setTestNlpDatasetId: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const PrepareHuggingFaceModel: FC<PrepareHuggingFaceModelProps> = ({
+const HuggingFaceModelPredict: FC<HuggingFaceModelPredictProps> = ({
   className,
   huggingFaceModel,
   setHuggingFaceModel,
+  testNlpDatasetId,
+  setTestNlpDatasetId,
 }) => {
+  const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [huggingFaceModelType, setHuggingFaceModelType] =
     useState<HuggingFaceModelType>(HuggingFaceModelType.Classification);
   const [huggingFaceModels, setHuggingFaceModels] =
     useState<HuggingFaceModelProps[]>();
-  const { activate } = huggingFaceModelFormModalSlice.actions;
-  const dispatch = useAppDispatch();
   const {
     data: huggingFaceModelsData,
-    isLoading,
+    isLoading: huggingFaceModelsLoading,
     isError,
   } = huggingFaceModelApi.useGetHugginsFaceModelsByTypeQuery(
     huggingFaceModelType ?? skipToken
   );
-  const [deleteHuggingFaceModel, {}] =
-    huggingFaceModelApi.useDeleteHuggingFaceModelMutation();
+  const {
+    data: nlpDatasetsData,
+    error,
+    isLoading: nlpDatasetsLoading,
+  } = nlpDatasetApi.useGetNlpDatasetsQuery();
+
+  useEffect(() => {
+    if (nlpDatasetsData) setNlpDatasets(nlpDatasetsData);
+  }, [nlpDatasetsData]);
 
   useEffect(() => {
     if (huggingFaceModelsData) setHuggingFaceModels(huggingFaceModelsData);
@@ -53,7 +64,7 @@ const PrepareHuggingFaceModel: FC<PrepareHuggingFaceModelProps> = ({
     if (huggingFaceModel) setHuggingFaceModel(huggingFaceModel);
   };
   const huggingFaceModelSelect: SelectProps<number> = {
-    className: 'prepare-hugging-face-model__select',
+    className: 'hugging-face-model-predict__select',
     selectedValue: huggingFaceModel?.id ?? 0,
     setSelectedValue: setHuggingFaceModelValue,
     children: huggingFaceModels?.map(
@@ -67,36 +78,31 @@ const PrepareHuggingFaceModel: FC<PrepareHuggingFaceModelProps> = ({
     ),
   };
 
-  const handleAdd = () => {
-    dispatch(activate({ huggingFaceModel: undefined }));
+  const setTestNlpDatasetIdValue = (value: number) => {
+    setTestNlpDatasetId(value);
   };
-
-  const handleEdit = () => {
-    dispatch(activate({ huggingFaceModel: huggingFaceModel }));
-  };
-
-  const handleDelete = () => {
-    if (huggingFaceModel) deleteHuggingFaceModel(huggingFaceModel.id);
-    setHuggingFaceModel(undefined);
+  const testNlpDatasetSelect: SelectProps<number> = {
+    className: 'hugging-face-model-__select',
+    selectedValue: testNlpDatasetId ?? 0,
+    setSelectedValue: setTestNlpDatasetIdValue,
+    children: nlpDatasets?.map((nlpDataset: NlpDatasetProps) => {
+      return (
+        <Select.Item key={nlpDataset.id} value={nlpDataset.id}>
+          {`Dataset ${nlpDataset.id}`}
+        </Select.Item>
+      );
+    }),
   };
 
   return (
-    <div className={`prepare-hugging-face-model ${className}`}>
-      <div className="prepare-hugging-face-model__item">
-        <Button
-          className="prepare-hugging-face-model__add-button"
-          onClick={handleAdd}
-        >
-          Create hugging face model
-        </Button>
-      </div>
-      <div className="prepare-hugging-face-model__item">
-        <div className="prepare-hugging-face-model__type">
+    <div className={`hugging-face-model-predict ${className}`}>
+      <div className="hugging-face-model-predict__item">
+        <div className="hugging-face-model-predict__type">
           {enumToArray(HuggingFaceModelType).map(
             (hfmt: HuggingFaceModelType) => (
-              <div className="prepare-hugging-face-model__type-item" key={hfmt}>
+              <div className="hugging-face-model-predict__type-item" key={hfmt}>
                 <Button
-                  className={`prepare-hugging-face-model__type-button ${
+                  className={`hugging-face-model-predict__type-button ${
                     hfmt == huggingFaceModelType ? 'active' : ''
                   }`}
                   onClick={() => {
@@ -111,11 +117,11 @@ const PrepareHuggingFaceModel: FC<PrepareHuggingFaceModelProps> = ({
           )}
         </div>
       </div>
-      <div className="prepare-hugging-face-model__item">
+      <div className="hugging-face-model-predict__item">
         {huggingFaceModels ? (
-          <div className="prepare-hugging-face-model__model">
+          <div className="hugging-face-model-predict__model">
             <LabeledElement
-              className="prepare-hugging-face-model__model-item prepare-hugging-face-model__labeled-element"
+              className="hugging-face-model-predict__model-item hugging-face-model-predict__labeled-element"
               labelElement={{ value: 'Select hugging face model' }}
             >
               <Select
@@ -127,34 +133,31 @@ const PrepareHuggingFaceModel: FC<PrepareHuggingFaceModelProps> = ({
                 {huggingFaceModelSelect.children}
               </Select>
             </LabeledElement>
-            {huggingFaceModel && (
-              <>
-                <div className="prepare-hugging-face-model__model-item">
-                  <Button
-                    className="prepare-hugging-face-model__edit-button"
-                    onClick={handleEdit}
-                  >
-                    Edit
-                  </Button>
-                </div>
-                <div className="prepare-hugging-face-model__model-item">
-                  <Button
-                    className="prepare-hugging-face-model__delete-button"
-                    onClick={handleDelete}
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </>
-            )}
           </div>
         ) : (
           'Hugging face models not found'
         )}
-        <HuggingFaceModelInfo huggingFaceModel={huggingFaceModel} />
+        <div className="hugging-face-model-predict__item">
+          <HuggingFaceModelInfo huggingFaceModel={huggingFaceModel} />
+        </div>
+        <div className="hugging-face-model-predict__item">
+          <LabeledElement
+            className="hugging-face-model-predict__labeled-element"
+            labelElement={{ value: 'Select test nlp dataset' }}
+          >
+            <Select
+              className={testNlpDatasetSelect.className}
+              selectedValue={testNlpDatasetSelect.selectedValue}
+              setSelectedValue={testNlpDatasetSelect.setSelectedValue}
+              disabled={testNlpDatasetSelect.disabled}
+            >
+              {testNlpDatasetSelect.children}
+            </Select>
+          </LabeledElement>
+        </div>
       </div>
     </div>
   );
 };
 
-export default PrepareHuggingFaceModel;
+export default HuggingFaceModelPredict;

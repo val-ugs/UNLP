@@ -1,1 +1,46 @@
 @import 'variables.scss';
+
+.nlp-predict {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  &__title {
+    padding: 10px;
+    text-align: center;
+    background-color: $color-4;
+  }
+
+  &__item {
+    flex: 1;
+    overflow-y: scroll;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__predict {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  &__predict-item {
+    padding-bottom: 10px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &__hugging-face-modal-predict {
+  }
+
+  &__train-button {
+  }
+
+  &__results {
+  }
+}

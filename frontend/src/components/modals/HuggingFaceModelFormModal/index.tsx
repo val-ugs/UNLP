@@ -46,7 +46,7 @@ const emptyHuggingFaceModel: HuggingFaceModelProps = {
 };
 
 const HuggingFaceModelFormModal: FC = () => {
-  const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>();
+  const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [huggingFaceModel, setHuggingFaceModel] =
     useState<HuggingFaceModelProps>(emptyHuggingFaceModel);
   const [postHuggingFaceModel, {}] =

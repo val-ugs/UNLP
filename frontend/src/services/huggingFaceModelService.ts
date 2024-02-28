@@ -131,5 +131,17 @@ export const huggingFaceModelApi = api.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.HuggingFaceModel],
     }),
+    trainHuggingFaceModel: build.mutation<void, HuggingFaceModelProps>({
+      query: (huggingFaceModel: HuggingFaceModelProps) => ({
+        url: `/nlp/hugging-face-models/${huggingFaceModel.id}/train`,
+        method: 'GET',
+      }),
+    }),
+    predictHuggingFaceModel: build.mutation<void, any>({
+      query: ({ huggingFaceModel, testNlpDatasetId }) => ({
+        url: `/nlp/hugging-face-models/${huggingFaceModel.id}/predict/nlp-datasets/${testNlpDatasetId}/`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
