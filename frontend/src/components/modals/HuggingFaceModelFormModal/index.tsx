@@ -303,19 +303,17 @@ const HuggingFaceModelFormModal: FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    console.log(huggingFaceModel);
-
     try {
       if (huggingFaceModelData) {
         await putHuggingFaceModel(huggingFaceModel).unwrap();
       } else {
         await postHuggingFaceModel(huggingFaceModel).unwrap();
+        setHuggingFaceModel(emptyHuggingFaceModel);
       }
     } catch (error) {
       console.log(error);
     }
 
-    setHuggingFaceModel(emptyHuggingFaceModel);
     dispatch(deactivate());
   };
 
