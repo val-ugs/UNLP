@@ -22,8 +22,8 @@ import InputNumber, {
 import InputCheckbox, {
   InputCheckboxProps,
 } from 'components/common/Inputs/InputCheckbox';
-import './styles.scss';
 import { enumToArray } from 'helpers/enumToArray';
+import './styles.scss';
 
 const emptyHuggingFaceModel: HuggingFaceModelProps = {
   id: 0,
@@ -74,8 +74,6 @@ const HuggingFaceModelFormModal: FC = () => {
       setHuggingFaceModel(emptyHuggingFaceModel);
     };
   }, [huggingFaceModelData]);
-
-  console.log(huggingFaceModel);
 
   const setNameValue = (value: string) => {
     setHuggingFaceModel({ ...huggingFaceModel, name: value });

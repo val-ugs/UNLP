@@ -7,7 +7,7 @@ from apps.nlp.utils.get_id2label_label2id import get_id2label_label2id
 #  Importance!!! DataFrame has columns: 'text', 'labels'
 
 class NerTrainer:
-    def __init__(self, model_name_or_path, training_args, metric, train_df, val_df, output_dir):
+    def __init__(self, model_name_or_path, training_args, metric, train_df, val_df, output_dir, callbacks):
         self.metric = metric
         self.train_df = train_df
         self.output_dir = output_dir
@@ -37,11 +37,13 @@ class NerTrainer:
             tokenizer=tokenizer,
             data_collator=data_collator,
             compute_metrics=self.__compute_metrics,
+            callbacks=callbacks
         )
 
     def train(self):
         self.trainer.train()
         self.trainer.save_model(self.output_dir)
+        return self.trainer.state.log_history
 
     def predict(self, test_df):
         test_dataset = self.preparation.get_dataset(test_df)

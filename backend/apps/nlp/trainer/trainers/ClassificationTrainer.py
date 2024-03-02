@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import pandas as pd
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, DataCollatorWithPadding, Trainer
 from apps.nlp.preparers.ClassificationPreparer import ClassificationPreparer
 from apps.nlp.utils.get_id2label_label2id import get_id2label_label2id
@@ -7,7 +8,7 @@ from apps.nlp.utils.get_id2label_label2id import get_id2label_label2id
 #  Importance!!! DataFrame has columns: 'text', 'labels'
 
 class ClassificationTrainer:
-    def __init__(self, model_name_or_path, training_args, metric, train_df, val_df, output_dir):
+    def __init__(self, model_name_or_path, training_args, metric, train_df, val_df, output_dir, callbacks):
         self.metric = metric
         self.train_df = train_df
         self.output_dir = output_dir
@@ -36,11 +37,13 @@ class ClassificationTrainer:
             tokenizer=tokenizer,
             data_collator=data_collator,
             compute_metrics=self.__compute_metrics,
+            callbacks=callbacks
         )
 
     def train(self):
         self.trainer.train()
         self.trainer.save_model(self.output_dir)
+        return self.trainer.state.log_history
 
     def predict(self, test_df):
         test_dataset = self.preparer.get_dataset(test_df)

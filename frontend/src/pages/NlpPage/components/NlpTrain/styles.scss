@@ -43,4 +43,15 @@
 
   &__results {
   }
+
+  &__result {
+    padding-bottom: 10px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &__result-item {
+  }
 }

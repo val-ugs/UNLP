@@ -5,6 +5,7 @@ import {
   HuggingFaceModelProps,
   HuggingFaceModelType,
 } from 'interfaces/huggingFaceModel.interface';
+import { TrainResultsDto } from 'interfaces/dtos/trainResultsDto.interface';
 
 export const huggingFaceModelApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
@@ -131,11 +132,28 @@ export const huggingFaceModelApi = api.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.HuggingFaceModel],
     }),
-    trainHuggingFaceModel: build.mutation<void, HuggingFaceModelProps>({
+    trainHuggingFaceModel: build.mutation<
+      TrainResultsDto[],
+      HuggingFaceModelProps
+    >({
       query: (huggingFaceModel: HuggingFaceModelProps) => ({
         url: `/nlp/hugging-face-models/${huggingFaceModel.id}/train`,
         method: 'GET',
       }),
+      transformResponse: (response: any) => {
+        return response.map((trainResult: any) => ({
+          epoch: trainResult['epoch'],
+          step: trainResult['step'],
+          loss: trainResult['loss'],
+          gradNorm: trainResult['grad_norm'],
+          learningRate: trainResult['learning_rate'],
+          trainRuntime: trainResult['train_runtime'],
+          trainSamplesPerSecond: trainResult['train_samples_per_second'],
+          trainStepsPerSecond: trainResult['train_steps_per_second'],
+          totalFlos: trainResult['total_flos'],
+          trainLoss: trainResult['train_loss'],
+        }));
+      },
     }),
     predictHuggingFaceModel: build.mutation<void, any>({
       query: ({ huggingFaceModel, testNlpDatasetId }) => ({
