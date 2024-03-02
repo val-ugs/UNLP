@@ -75,6 +75,8 @@ const HuggingFaceModelFormModal: FC = () => {
     };
   }, [huggingFaceModelData]);
 
+  console.log(huggingFaceModel);
+
   const setNameValue = (value: string) => {
     setHuggingFaceModel({ ...huggingFaceModel, name: value });
   };
@@ -291,8 +293,8 @@ const HuggingFaceModelFormModal: FC = () => {
   };
   const loadBestModelAtEndInputCheckbox: InputCheckboxProps = {
     className: 'hugging-face-model-form-modal__input-checkbox',
-    name: '',
-    defaultChecked: huggingFaceModel.trainingArgs.loadBestModelAtEnd,
+    name: 'loadBestModelAtEndInput',
+    checked: huggingFaceModel.trainingArgs.loadBestModelAtEnd,
     onChange: handleLoadBestModelAtEndChange,
   };
 
@@ -528,7 +530,7 @@ const HuggingFaceModelFormModal: FC = () => {
           <InputCheckbox
             className={loadBestModelAtEndInputCheckbox.className}
             name={loadBestModelAtEndInputCheckbox.name}
-            defaultChecked={loadBestModelAtEndInputCheckbox.defaultChecked}
+            checked={loadBestModelAtEndInputCheckbox.checked}
             onChange={loadBestModelAtEndInputCheckbox.onChange}
           />
         </LabeledElement>

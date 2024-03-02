@@ -5,7 +5,8 @@ export interface InputCheckboxProps {
   className?: string;
   name: string;
   value?: number | string;
-  defaultChecked: boolean;
+  checked: boolean;
+  defaultChecked?: boolean;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -13,6 +14,7 @@ const InputCheckbox: FC<InputCheckboxProps> = ({
   className,
   name,
   value,
+  checked,
   defaultChecked,
   onChange,
 }) => {
@@ -23,6 +25,7 @@ const InputCheckbox: FC<InputCheckboxProps> = ({
         type={'checkbox'}
         name={name}
         value={value}
+        checked={checked}
         defaultChecked={defaultChecked}
         onChange={onChange}
       />
