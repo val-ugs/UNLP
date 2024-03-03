@@ -9,7 +9,6 @@ from apps.nlp.trainer.trainers.NerTrainer import NerTrainer
 import evaluate
 import os
 
-from apps.nlp.utils.convert_nlp_dataset_to_df import convert_nlp_dataset_to_df
 from apps.nlp.utils.convert_training_args_to_training_arguments import convert_training_args_to_training_arguments
 
 from transformers import TrainerCallback
@@ -36,8 +35,6 @@ class CommonTrainer:
 
         training_args = get_object_or_404(TrainingArgs, hugging_face_model=hugging_face_model)
         training_arguments = convert_training_args_to_training_arguments(output_dir, training_args)
-        train_df = convert_nlp_dataset_to_df(hugging_face_model.train_nlp_dataset)
-        valid_df = convert_nlp_dataset_to_df(hugging_face_model.valid_nlp_dataset)
         metric = evaluate.load(hugging_face_model.evaluate_metric_name) # 'accuracy' for classification, 'seqeval' for ner
 
         match hugging_face_model.type:
@@ -46,8 +43,8 @@ class CommonTrainer:
                     model_name_or_path=hugging_face_model.model_name_or_path,
                     training_args=training_arguments,
                     metric=metric,
-                    train_df=train_df,
-                    val_df=valid_df,
+                    train_nlp_dataset=hugging_face_model.train_nlp_dataset,
+                    valid_nlp_dataset=hugging_face_model.valid_nlp_dataset,
                     output_dir=output_dir,
                     callbacks=[MyCallback]
                 )
@@ -56,8 +53,8 @@ class CommonTrainer:
                     model_name_or_path=hugging_face_model.model_name_or_path,
                     training_args=training_arguments,
                     metric=metric,
-                    train_df=train_df,
-                    val_df=valid_df,
+                    train_nlp_dataset=hugging_face_model.train_nlp_dataset,
+                    valid_nlp_dataset=hugging_face_model.valid_nlp_dataset,
                     output_dir=output_dir,
                     callbacks=[MyCallback]
                 )
@@ -67,5 +64,4 @@ class CommonTrainer:
         return log_history
 
     def predict(self, test_nlp_dataset: NlpDataset):
-        test_df = convert_nlp_dataset_to_df(test_nlp_dataset)
-        self.trainer.predict(test_df)
+        self.trainer.predict(test_nlp_dataset)

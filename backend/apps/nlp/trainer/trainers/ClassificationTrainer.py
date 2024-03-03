@@ -1,14 +1,31 @@
 import os
+import string
 import numpy as np
 import pandas as pd
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, DataCollatorWithPadding, Trainer
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, DataCollatorWithPadding, Trainer, TrainingArguments, TrainerCallback
+from apps.common.models import NlpDataset, NlpText
+from apps.common.serializers import NlpTextSerializer
 from apps.nlp.preparers.ClassificationPreparer import ClassificationPreparer
+from apps.nlp.utils.convert_nlp_dataset_to_df import convert_nlp_dataset_to_df
 from apps.nlp.utils.get_id2label_label2id import get_id2label_label2id
+from evaluate import EvaluationModule
+from typing import List
 
 #  Importance!!! DataFrame has columns: 'text', 'labels'
 
 class ClassificationTrainer:
-    def __init__(self, model_name_or_path, training_args, metric, train_df, val_df, output_dir, callbacks):
+    def __init__(
+            self, 
+            model_name_or_path: string, 
+            training_args: TrainingArguments, 
+            metric: EvaluationModule,
+            train_nlp_dataset: NlpDataset,
+            valid_nlp_dataset: NlpDataset,
+            output_dir: string,
+            callbacks: List[TrainerCallback]
+        ):
+        train_df = convert_nlp_dataset_to_df(train_nlp_dataset)
+        valid_df = convert_nlp_dataset_to_df(valid_nlp_dataset)
         self.metric = metric
         self.train_df = train_df
         self.output_dir = output_dir
@@ -25,7 +42,7 @@ class ClassificationTrainer:
         self.preparer = ClassificationPreparer(tokenizer)
 
         tokenized_train_dataset = self.preparer.get_dataset(train_df)
-        tokenized_val_dataset = self.preparer.get_dataset(val_df)
+        tokenized_val_dataset = self.preparer.get_dataset(valid_df)
 
         data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
@@ -45,22 +62,29 @@ class ClassificationTrainer:
         self.trainer.save_model(self.output_dir)
         return self.trainer.state.log_history
 
-    def predict(self, test_df):
+    def predict(self, test_nlp_dataset: NlpDataset):
+        self.__validate_nlp_dataset(test_nlp_dataset)
+
+        test_df = convert_nlp_dataset_to_df(test_nlp_dataset)
         test_dataset = self.preparer.get_dataset(test_df)
-        predictions, labels, metrics = self.trainer.predict(test_dataset, metric_key_prefix='predict')
+        predictions, label_ids, metrics = self.trainer.predict(test_dataset, metric_key_prefix='predict')
 
-        predictions = np.argmax(predictions, axis=1)
-        output_predict_file = os.path.join(self.output_dir, "predictions.txt")
-        prediction_labels = []
-        if self.trainer.is_world_process_zero():
-            with open(output_predict_file, "w") as writer:
-                writer.write("index\tprediction\n")
-                for index, item in enumerate(predictions):
-                    item = self.id2label[item]
-                    prediction_labels.append(item)
-                    writer.write(f"{index}\t{item}\n")
+        for text_index, text_row in test_df.iterrows():
+            classification_label = self.id2label[label_ids[text_index]]
+            nlp_text = NlpText.objects.get(id=text_row['id'])
+            if not nlp_text.classification_label: #  set classification label if not defined
+                # print(f'text id without classification_label: {nlp_text.id}')
+                nlp_text_serializer = NlpTextSerializer(instance=nlp_text, classification_label=classification_label)
+                if nlp_text_serializer.is_valid():
+                    nlp_text_serializer.save()            
 
-        return prediction_labels
+        return metrics
+    
+    def __validate_nlp_dataset(self, test_nlp_dataset):
+        nlp_texts = NlpText.objects.filter(nlp_dataset=test_nlp_dataset)
+        for nlp_text in nlp_texts:
+            if nlp_text.classification_label:
+                raise Exception('Test dataset has classifications labels.')
 
     def __compute_metrics(self, eval_pred):
         predictions, labels = eval_pred
