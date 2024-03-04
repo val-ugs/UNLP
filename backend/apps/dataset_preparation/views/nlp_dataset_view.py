@@ -94,6 +94,7 @@ class NlpDatasetView(APIView):
                             nlp_text = NlpText.objects.create(
                                 text=nlp_text_serializer.validated_data['text'],
                                 classification_label=nlp_text_serializer.validated_data['classification_label'],
+                                summarization=nlp_text_serializer.validated_data['summarization'],
                                 nlp_dataset=nlp_dataset
                             )
 

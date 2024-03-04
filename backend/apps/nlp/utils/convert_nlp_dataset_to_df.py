@@ -18,6 +18,6 @@ def convert_nlp_dataset_to_df(nlp_dataset):
             else:
                 ner_tags.append("O")
         
-        data.append([nlp_text.id, nlp_text.text, nlp_text.classification_label, [nlp_token.id for nlp_token in nlp_tokens], [nlp_token.token for nlp_token in nlp_tokens], ner_tags])
-    df = pd.DataFrame(data, columns=['id', 'text', 'labels', 'tokens_ids', 'tokens', 'tags'])
+        data.append([nlp_text.id, nlp_text.text, nlp_text.classification_label, nlp_text.summarization, [nlp_token.id for nlp_token in nlp_tokens], [nlp_token.token for nlp_token in nlp_tokens], ner_tags])
+    df = pd.DataFrame(data, columns=['id', 'text', 'labels', 'summary', 'tokens_ids', 'tokens', 'tags'])
     return df

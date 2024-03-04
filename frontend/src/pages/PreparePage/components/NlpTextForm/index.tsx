@@ -56,15 +56,18 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
   const setClassificationLabel = (value: string) => {
     if (nlpText) setNlpText({ ...nlpText, classificationLabel: value });
   };
-
   const classificationLabelInputField: InputFieldProps = {
-    className: `text-nlp-form__up-input `,
+    className: 'nlp-text-form__input',
     type: 'text',
-    name: 'nlp-text',
+    name: 'classification-label',
     value: nlpText?.classificationLabel ?? '',
     setValue: setClassificationLabel,
     maxLength: 30,
     disabled: false,
+  };
+
+  const setSummarization = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    if (nlpText) setNlpText({ ...nlpText, summarization: e.target.value });
   };
 
   const setText = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -107,6 +110,19 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
               placeholder={classificationLabelInputField.placeholder}
               disabled={classificationLabelInputField.disabled}
               autocomplete={classificationLabelInputField.autocomplete}
+            />
+          </LabeledElement>
+          <LabeledElement
+            className="nlp-text-form__fields-labeled-element"
+            labelElement={{
+              className: 'nlp-text-form__fields-label',
+              value: 'Summarization',
+            }}
+          >
+            <textarea
+              className="nlp-text-form__summarization-textarea"
+              value={nlpText?.summarization}
+              onChange={setSummarization}
             />
           </LabeledElement>
         </div>

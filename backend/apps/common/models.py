@@ -12,6 +12,7 @@ class NerLabel(models.Model):
 class NlpText(models.Model):
     text = models.TextField()
     classification_label = models.CharField(max_length=100, null=True, blank=True)
+    summarization = models.TextField(null=True, blank=True)
     nlp_dataset = models.ForeignKey(NlpDataset, null=True, blank=True, on_delete=models.CASCADE)
 
 class NlpToken(models.Model):

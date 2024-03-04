@@ -1,6 +1,7 @@
 export enum HuggingFaceModelType {
   Classification = 'Classification',
   Ner = 'Ner',
+  Summarization = 'Summarization',
 }
 
 export interface TrainingArgsProps {

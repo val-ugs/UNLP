@@ -5,11 +5,12 @@ from apps.nlp.models import ModelType
 from apps.nlp.models import HuggingFaceModel, ModelType, TrainingArgs
 from apps.nlp.trainer.trainers.ClassificationTrainer import ClassificationTrainer
 from apps.nlp.trainer.trainers.NerTrainer import NerTrainer
+from apps.nlp.trainer.trainers.SummarizationTrainer import SummarizationTrainer
 
 import evaluate
 import os
 
-from apps.nlp.utils.convert_training_args_to_training_arguments import convert_training_args_to_training_arguments
+from apps.nlp.utils.convert_training_args_to_training_arguments import convert_training_args_to_training_arguments, convert_training_args_to_seq_2_seq_training_arguments
 
 from transformers import TrainerCallback
 
@@ -34,11 +35,11 @@ class CommonTrainer:
             hugging_face_model.model_name_or_path = output_dir
 
         training_args = get_object_or_404(TrainingArgs, hugging_face_model=hugging_face_model)
-        training_arguments = convert_training_args_to_training_arguments(output_dir, training_args)
-        metric = evaluate.load(hugging_face_model.evaluate_metric_name) # 'accuracy' for classification, 'seqeval' for ner
+        metric = evaluate.load(hugging_face_model.evaluate_metric_name) # 'accuracy' for classification, 'seqeval' for ner, 'rouge' for summarization
 
         match hugging_face_model.type:
             case ModelType.CLASSIFICATION:
+                training_arguments = convert_training_args_to_training_arguments(output_dir, training_args)
                 self.trainer = ClassificationTrainer(
                     model_name_or_path=hugging_face_model.model_name_or_path,
                     training_args=training_arguments,
@@ -49,7 +50,19 @@ class CommonTrainer:
                     callbacks=[MyCallback]
                 )
             case ModelType.NER:
+                training_arguments = convert_training_args_to_training_arguments(output_dir, training_args)
                 self.trainer = NerTrainer(
+                    model_name_or_path=hugging_face_model.model_name_or_path,
+                    training_args=training_arguments,
+                    metric=metric,
+                    train_nlp_dataset=hugging_face_model.train_nlp_dataset,
+                    valid_nlp_dataset=hugging_face_model.valid_nlp_dataset,
+                    output_dir=output_dir,
+                    callbacks=[MyCallback]
+                )
+            case ModelType.SUMMARIZATION:
+                training_arguments = convert_training_args_to_seq_2_seq_training_arguments(output_dir, training_args)
+                self.trainer = SummarizationTrainer(
                     model_name_or_path=hugging_face_model.model_name_or_path,
                     training_args=training_arguments,
                     metric=metric,

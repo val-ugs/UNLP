@@ -41,6 +41,7 @@ export const nlpTextApi = api.injectEndpoints({
             id: nlpTextData['id'],
             text: nlpTextData['text'],
             classificationLabel: nlpTextData['classification_label'],
+            summarization: nlpTextData['summarization'],
           })),
         };
       },
@@ -55,6 +56,7 @@ export const nlpTextApi = api.injectEndpoints({
           id: response['id'],
           text: response['text'],
           classificationLabel: response['classification_label'],
+          summarization: response['summarization'],
         };
       },
       providesTags: () => [tagTypes.NlpText],
@@ -67,6 +69,7 @@ export const nlpTextApi = api.injectEndpoints({
         body: JSON.stringify({
           text: nlpText.text,
           classification_label: nlpText.classificationLabel,
+          summarization: nlpText.summarization,
         }),
       }),
       invalidatesTags: [tagTypes.NlpText],

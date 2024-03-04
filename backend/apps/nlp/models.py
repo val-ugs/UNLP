@@ -4,7 +4,8 @@ from apps.common.models import NlpDataset
 
 class ModelType(models.TextChoices):
     CLASSIFICATION = 'Classification',
-    NER = 'Ner'
+    NER = 'Ner',
+    SUMMARIZATION = 'Summarization'
 
 class HuggingFaceModel(models.Model):
     name = models.CharField(max_length=200)

@@ -11,13 +11,24 @@
 
   &__fields-labeled-element {
     justify-content: center;
+    padding-bottom: 10px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
   }
 
   &__fields-label {
     flex: none;
   }
 
-  &__up-input {
+  &__input {
+  }
+
+  &__summarization-textarea {
+    box-sizing: border-box;
+    width: 100%;
+    resize: none;
   }
 
   &__item {

@@ -10,7 +10,7 @@ from apps.nlp.utils.get_id2label_label2id import get_id2label_label2id
 from evaluate import EvaluationModule
 from typing import List
 
-#  Importance!!! DataFrame has columns: 'text', 'labels'
+#  Importance!!! DataFrame has columns: 'text', 'tokens', 'tags'
 
 class NerTrainer:
     def __init__(
@@ -69,7 +69,7 @@ class NerTrainer:
         test_dataset = self.preparation.get_dataset(test_df)
         predictions, labels, metrics = self.trainer.predict(test_dataset, metric_key_prefix='predict')
 
-        print(test_df[['tokens_ids', 'tokens']])
+        # print(test_df[['tokens_ids', 'tokens']])
 
         predictions = np.argmax(predictions, axis=2)
 
