@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'apps.common',
+    'apps.actions',
     'apps.dataset_preparation',
     'apps.nlp',
 ]

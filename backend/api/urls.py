@@ -21,6 +21,7 @@ from .views import get_api
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', get_api),
+    path('api/actions/', include('apps.actions.urls', namespace='actions')),
     path('api/dataset-preparation/', include('apps.dataset_preparation.urls', namespace='dataset_preparation')),
-    path('api/nlp/', include('apps.nlp.urls')),
+    path('api/nlp/', include('apps.nlp.urls', namespace='nlp')),
 ]
