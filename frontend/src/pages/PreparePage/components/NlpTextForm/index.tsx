@@ -121,7 +121,7 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
           >
             <textarea
               className="nlp-text-form__summarization-textarea"
-              value={nlpText?.summarization}
+              value={nlpText?.summarization ?? ''}
               onChange={setSummarization}
             />
           </LabeledElement>
@@ -133,7 +133,7 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
           >
             <textarea
               className="nlp-text-form__text-textarea"
-              value={nlpText?.text}
+              value={nlpText?.text ?? ''}
               onChange={setText}
             />
           </Accordion>
