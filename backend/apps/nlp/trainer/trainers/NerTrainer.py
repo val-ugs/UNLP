@@ -3,7 +3,6 @@ import string
 import numpy as np
 from transformers import AutoModelForTokenClassification, AutoTokenizer, DataCollatorForTokenClassification, Trainer, TrainingArguments, TrainerCallback
 from apps.common.models import NerLabel, NlpDataset, NlpToken, NlpTokenNerLabel
-from apps.common.serializers import NlpTokenNerLabelSerializer
 from apps.nlp.preparers.NerPreparer import NerPreparer
 from apps.nlp.utils.convert_nlp_dataset_to_df import convert_nlp_dataset_to_df
 from apps.nlp.utils.get_id2label_label2id import get_id2label_label2id
@@ -53,7 +52,7 @@ class NerTrainer:
             eval_dataset=tokenized_val_dataset,
             tokenizer=tokenizer,
             data_collator=data_collator,
-            compute_metrics=self.__compute_metrics,
+            # compute_metrics=self.__compute_metrics,
             callbacks=callbacks
         )
 
@@ -86,22 +85,21 @@ class NerTrainer:
                 if label != 'O':
                     initial = label.split('-')[0] == 'B'
                     label_name = label.split('-')[1]
-                    ner_label = NerLabel.objects.get(nlp_dataset=test_nlp_dataset, name=label_name)
+                    ner_label, _ = NerLabel.objects.get_or_create(nlp_dataset=test_nlp_dataset, name=label_name)
                     # print(f'initial: {initial}, ner_label: {ner_label.name}')
 
                     nlp_token = NlpToken.objects.get(id=token_id)
                     nlp_token_ner_label, _ = NlpTokenNerLabel.objects.get_or_create(nlp_token=nlp_token)
                     if not nlp_token_ner_label.ner_label: #  set ner label if not defined
                         # print(f'token id without ner_label: {nlp_token.id}')
-                        nlp_token_ner_label_serializer = NlpTokenNerLabelSerializer(instance=nlp_token_ner_label, ner_label=ner_label, initial=initial)
-                        if nlp_token_ner_label_serializer.is_valid():
-                            nlp_token_ner_label_serializer.save()
+                        nlp_token_ner_label.ner_label = ner_label
+                        nlp_token_ner_label.save()
 
         return metrics
     
     def __validate_nlp_dataset(self, test_nlp_dataset):
         if NerLabel.objects.filter(nlp_dataset=test_nlp_dataset).exists():
-            raise Exception('Test dataset has NER labels.');
+            raise Exception('Test dataset has NER labels.')
 
     def __compute_metrics(self, eval_pred):
         predictions, labels = eval_pred

@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, DataCollatorWithPadding, Trainer, TrainingArguments, TrainerCallback
 from apps.common.models import NlpDataset, NlpText
-from apps.common.serializers import NlpTextSerializer
 from apps.nlp.preparers.ClassificationPreparer import ClassificationPreparer
 from apps.nlp.utils.convert_nlp_dataset_to_df import convert_nlp_dataset_to_df
 from apps.nlp.utils.get_id2label_label2id import get_id2label_label2id
