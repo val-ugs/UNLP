@@ -39,7 +39,7 @@ class ClassificationTrainer:
         )
 
         tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path=model_name_or_path)
-        self.preparer = ClassificationPreparer(tokenizer)
+        self.preparer = ClassificationPreparer(tokenizer, self.label2id)
 
         tokenized_train_dataset = self.preparer.get_dataset(train_df)
         tokenized_val_dataset = self.preparer.get_dataset(valid_df)
@@ -76,9 +76,8 @@ class ClassificationTrainer:
             nlp_text = NlpText.objects.get(id=text_row['id'])
             if not nlp_text.classification_label: #  set classification label if not defined
                 # print(f'text id without classification_label: {nlp_text.id}')
-                nlp_text_serializer = NlpTextSerializer(instance=nlp_text, classification_label=classification_label)
-                if nlp_text_serializer.is_valid():
-                    nlp_text_serializer.save()            
+                nlp_text.classification_label = classification_label
+                nlp_text.save()
 
         return metrics
     
