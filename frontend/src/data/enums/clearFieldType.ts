@@ -1,5 +1,5 @@
 export enum clearFieldType {
-  ClassificationLabel = 'classification-label',
-  NerLabel = 'ner-label',
+  ClassificationLabel = 'classification_label',
+  NerLabel = 'ner_label',
   summarization = 'summarization',
 }

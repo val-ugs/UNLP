@@ -52,7 +52,7 @@ class NerTrainer:
             eval_dataset=tokenized_val_dataset,
             tokenizer=tokenizer,
             data_collator=data_collator,
-            # compute_metrics=self.__compute_metrics,
+            compute_metrics=self.__compute_metrics,
             callbacks=callbacks
         )
 
