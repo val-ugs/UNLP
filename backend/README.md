@@ -14,3 +14,6 @@ Run server:
 
 Test Nlp:
 ./manage.py test apps/nlp/
+
+Save requirements:
+pip freeze > requirements.txt
