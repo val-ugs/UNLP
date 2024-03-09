@@ -10,11 +10,11 @@ class ClassificationPreparer:
 
     def get_dataset(self, df):
         new_df = df.copy()
-        if 'labels' in new_df.columns:
-            if new_df['labels'].any():
-                new_df['labels'] = self.__convert_to_label_int(new_df['labels'])
-            else:
-                new_df.pop('labels')
+        new_df = new_df.loc[:, ['text', 'labels']] # take required fields
+        if new_df['labels'].any():
+            new_df['labels'] = self.__convert_to_label_int(new_df['labels'])
+        else:
+            new_df.pop('labels')
         dataset = datasets.Dataset.from_pandas(new_df)
         tokenized_dataset = dataset.map(self.__preprocess_function, batched=True)
     

@@ -9,8 +9,8 @@ class NerPreparer:
     
     def get_dataset(self, df):
         new_df = df.copy()
-        if 'tags' in df.columns:
-            new_df['tags'] = self.__convert_to_label_int(new_df['tags'])
+        new_df = df.loc[:, ['tokens', 'tags']] # take required fields
+        new_df['tags'] = self.__convert_to_label_int(new_df['tags'])
         dataset = datasets.Dataset.from_pandas(new_df)
         tokenized_dataset = dataset.map(self.__preprocess_function, batched=True)
 

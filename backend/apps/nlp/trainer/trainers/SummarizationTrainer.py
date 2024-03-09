@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, DataCollatorForSeq2Seq, Seq2SeqTrainer, Seq2SeqTrainingArguments, TrainerCallback
 from apps.common.models import NlpDataset, NlpText
-from apps.common.serializers import NlpTextSerializer
 from apps.nlp.preparers.SummarizationPreparer import SummarizationPreparer
 from apps.nlp.utils.convert_nlp_dataset_to_df import convert_nlp_dataset_to_df
 from apps.nlp.utils.get_id2label_label2id import get_id2label_label2id
@@ -60,7 +59,7 @@ class SummarizationTrainer:
 
     def predict(self, test_nlp_dataset: NlpDataset):
         self.__validate_nlp_dataset(test_nlp_dataset)
-
+        
         test_df = convert_nlp_dataset_to_df(test_nlp_dataset)
         test_dataset = self.preparer.get_dataset(test_df)
         predictions, labels, metrics = self.trainer.predict(test_dataset, metric_key_prefix='predict')
@@ -72,9 +71,8 @@ class SummarizationTrainer:
             nlp_text = NlpText.objects.get(id=text_row['id'])
             if not nlp_text.summarization: #  set classification label if not defined
                 # print(f'text id without summarization: {nlp_text.id}')
-                nlp_text_serializer = NlpTextSerializer(instance=nlp_text, summarization=summarization)
-                if nlp_text_serializer.is_valid():
-                    nlp_text_serializer.save()            
+                nlp_text.summarization = summarization
+                nlp_text.save()         
 
         return metrics
     
