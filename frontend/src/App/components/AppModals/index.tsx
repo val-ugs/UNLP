@@ -1,13 +1,15 @@
 import { FC } from 'react';
-import NerLabelFormModal from 'components/modals/NerLabelFormModal';
+import ActionModal from 'components/modals/ActionModal';
+import HuggingFaceModelFormModal from 'components/modals/HuggingFaceModelFormModal';
 import LoadDataModal from 'components/modals/LoadDataModal';
+import NerLabelFormModal from 'components/modals/NerLabelFormModal';
 import NlpTokenSettingsModal from 'components/modals/NlpTokenSettingsModal';
 import './styles.scss';
-import HuggingFaceModelFormModal from 'components/modals/HuggingFaceModelFormModal';
 
 const AppModals: FC = () => {
   return (
     <>
+      <ActionModal />
       <HuggingFaceModelFormModal />
       <LoadDataModal />
       <NerLabelFormModal />

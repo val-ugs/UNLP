@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import actionModalReducer from './reducers/actionModalSlice';
 import huggingFaceModelFormModalReducer from './reducers/huggingFaceModelFormModalSlice';
 import nerLabelFormModalReducer from './reducers/nerLabelFormModalSlice';
 import loadDataModalReducer from './reducers/loadDataModalSlice';
@@ -12,6 +13,7 @@ import { nlpTokenNerLabelApi } from 'services/nlpTokenNerLabelService';
 import { huggingFaceModelApi } from 'services/huggingFaceModelService';
 
 const rootReducer = combineReducers({
+  actionModalReducer,
   huggingFaceModelFormModalReducer,
   loadDataModalReducer,
   nerLabelFormModalReducer,

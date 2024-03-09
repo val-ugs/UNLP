@@ -5,21 +5,8 @@
   flex-direction: column;
   height: 100%;
 
-  &__buttons {
-    padding: 5px;
-    border-bottom: 5px solid $color-4;
-  }
-
   &__datasets {
     border-bottom: 5px solid $color-4;
-  }
-
-  &__button {
-    margin-right: 5px;
-
-    &:last-child {
-      margin-right: 0;
-    }
   }
 
   &__body {

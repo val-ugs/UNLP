@@ -1,20 +1,15 @@
-import React, { FC, ReactNode, useState } from 'react';
+import React, { FC, useState } from 'react';
 import Layout from 'pages/_layouts/Layout';
 import Button from 'components/common/Button';
-import AddNlpComponent from './components/AddNlpComponent';
+import { ActionProps } from 'interfaces/action.interface';
+import AddAction from './components/AddAction';
 import './styles.scss';
 
-interface NlpComponentProps {
-  id: number;
-  name: string;
-  component: ReactNode;
-}
-
 const NlpPipelinePage: FC = () => {
-  const [nlpComponents, setNlpComponents] = useState<NlpComponentProps[]>([]);
-  const [selectedNlpComponent, setSelectedNlpComponent] = useState<
-    NlpComponentProps | undefined
-  >(undefined);
+  const [actions, setActions] = useState<ActionProps[]>([]);
+  const [selectedAction, setSelectedAction] = useState<ActionProps | undefined>(
+    undefined
+  );
 
   return (
     <Layout>
@@ -22,28 +17,26 @@ const NlpPipelinePage: FC = () => {
         <div className="nlp-pipeline-page__sidebar">
           <div className="nlp-pipeline-page__title">Pipeline:</div>
           <div className="nlp-pipeline-page__list">
-            {nlpComponents?.map(
-              (nlpComponent: NlpComponentProps, index: number) => (
-                <Button
-                  className="nlp-pipeline-page__item"
-                  onClick={() => {
-                    setSelectedNlpComponent(nlpComponent);
-                  }}
-                  key={nlpComponent.id}
-                >
-                  {index + 1}. {nlpComponent.name}
-                </Button>
-              )
-            )}
-            <AddNlpComponent
+            {actions?.map((action: ActionProps, index: number) => (
+              <Button
+                className="nlp-pipeline-page__item"
+                onClick={() => {
+                  setSelectedAction(action);
+                }}
+                key={action.name}
+              >
+                {index + 1}. {action.name}
+              </Button>
+            ))}
+            <AddAction
               className="nlp-pipeline-page__item"
-              nlpComponents={nlpComponents}
-              setNlpComponents={setNlpComponents}
+              actions={actions}
+              setActions={setActions}
             />
           </div>
         </div>
         <div className="nlp-pipeline-page__main">
-          {selectedNlpComponent?.component}
+          {selectedAction?.component}
         </div>
       </div>
     </Layout>

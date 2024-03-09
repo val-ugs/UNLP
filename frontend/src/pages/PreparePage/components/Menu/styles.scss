@@ -1,0 +1,38 @@
+@import 'variables.scss';
+
+.menu {
+  display: flex;
+  padding: 5px;
+  border-bottom: 5px solid $color-4;
+
+  &__item {
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__button {
+  }
+
+  &__actions {
+    position: relative;
+  }
+
+  &__actions-dropdown {
+    position: absolute;
+    max-height: 500px;
+    overflow-y: scroll;
+    background-color: $color-3;
+    border: 2px solid $color-2;
+  }
+
+  &__actions-item {
+  }
+
+  &__actions-button {
+    background: none;
+    border-radius: 0;
+  }
+}

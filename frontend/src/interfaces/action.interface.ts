@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface NlpComponentProps {
-  id: number;
+export interface ActionProps {
   name: string;
   component: ReactNode;
 }

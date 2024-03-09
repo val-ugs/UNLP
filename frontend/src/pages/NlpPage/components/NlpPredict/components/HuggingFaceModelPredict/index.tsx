@@ -82,7 +82,7 @@ const HuggingFaceModelPredict: FC<HuggingFaceModelPredictProps> = ({
     setTestNlpDatasetId(value);
   };
   const testNlpDatasetSelect: SelectProps<number> = {
-    className: 'hugging-face-model-__select',
+    className: 'hugging-face-model-predict__select',
     selectedValue: testNlpDatasetId ?? 0,
     setSelectedValue: setTestNlpDatasetIdValue,
     children: nlpDatasets?.map((nlpDataset: NlpDatasetProps) => {
