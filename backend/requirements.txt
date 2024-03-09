@@ -85,9 +85,9 @@ sympy==1.12
 threadpoolctl==3.3.0
 tinycss2==1.2.1
 tokenizers==0.15.1
-torch==2.0.1+cu117
-torchaudio==2.0.2+cu117
-torchvision==0.15.2+cu117
+# torch==2.0.1+cu117
+# torchaudio==2.0.2+cu117
+# torchvision==0.15.2+cu117
 tornado==6.4
 tqdm==4.66.1
 traitlets==5.14.1

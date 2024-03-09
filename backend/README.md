@@ -1,5 +1,10 @@
 First, run env:
+python -m venv .env
 source ./env/Scripts/activate
+pip install -r requirements.txt (install cuda from the internet)
+
+Save requirements:
+pip freeze > requirements.txt
 
 Run command to migrate models:
 ./manage.py makemigrations
@@ -14,6 +19,3 @@ Run server:
 
 Test Nlp:
 ./manage.py test apps/nlp/
-
-Save requirements:
-pip freeze > requirements.txt
