@@ -1,6 +1,6 @@
 First, run env:
-python -m venv .env
-source .env/Scripts/activate
+python -m venv env
+source ./env/Scripts/activate
 pip install -r requirements.txt (install cuda from the internet)
 
 Save requirements:
