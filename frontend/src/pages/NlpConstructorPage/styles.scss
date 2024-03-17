@@ -1,0 +1,17 @@
+@import 'variables.scss';
+
+.nlp-constructor-page {
+  display: flex;
+  height: 100%;
+}
+
+// override react-flow styles
+.react-flow {
+  &__edge-path {
+    stroke: $color-3;
+  }
+
+  &__connection-path {
+    stroke: $color-3;
+  }
+}

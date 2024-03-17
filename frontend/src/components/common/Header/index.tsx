@@ -13,8 +13,8 @@ const navLinkButtons: NavLinkButtonProps[] = [
     children: 'NLP',
   },
   {
-    to: '/nlp-pipeline',
-    children: 'NLP Pipeline',
+    to: '/nlp-constructor',
+    children: 'NLP Constructor',
   },
 ];
 

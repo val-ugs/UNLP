@@ -1,0 +1,13 @@
+@import 'variables.scss';
+
+.nlp-dataset-node {
+  padding: 10px;
+  background-color: $color-3;
+  border: 3px solid $color-2;
+
+  &__name {
+  }
+
+  &__handle {
+  }
+}
