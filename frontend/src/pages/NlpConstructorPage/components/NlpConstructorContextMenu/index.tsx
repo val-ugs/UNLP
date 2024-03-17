@@ -53,7 +53,7 @@ const NlpConstructorContextMenu: FC<NlpConstructorContextMenuProps> = ({
   return (
     <div
       className="nlp-constructor-context-menu"
-      style={{ top: flowCoords.y, left: flowCoords.x }}
+      style={{ top: coords.y, left: coords.x }}
     >
       <div className="nlp-constructor-context-menu__title">Add node</div>
       <OrderedList className="nlp-constructor-context-menu__nodes" type="none">

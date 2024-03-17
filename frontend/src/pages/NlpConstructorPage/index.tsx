@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useRef } from 'react';
 import Layout from 'pages/_layouts/Layout';
 import ReactFlow, {
   Background,
@@ -19,6 +19,7 @@ import 'reactflow/dist/style.css';
 import './styles.scss';
 
 const NlpConstructorPage: FC = () => {
+  const ref = useRef(null);
   const { clicked, setClicked, coords, setCoords } = useContextMenu();
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -46,13 +47,16 @@ const NlpConstructorPage: FC = () => {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     e.preventDefault();
-    setClicked(true);
-    setCoords({ x: e.pageX, y: e.pageY });
+    if (ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      setClicked(true);
+      setCoords({ x: e.pageX - rect.x, y: e.pageY - rect.y });
+    }
   };
 
   return (
     <Layout>
-      <div className="nlp-constructor-page">
+      <div className="nlp-constructor-page" ref={ref}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
