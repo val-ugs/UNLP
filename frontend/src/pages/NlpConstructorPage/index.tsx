@@ -101,9 +101,7 @@ const NlpConstructorPage: FC = () => {
           onPaneContextMenu={handlePaneContextMenu}
           onNodeContextMenu={handleNodeContextMenu}
         >
-          {paneClicked && (
-            <PaneContextMenu setNodes={setNodes} coords={paneCoords} />
-          )}
+          {paneClicked && <PaneContextMenu coords={paneCoords} />}
           {nodeClicked && (
             <NodeContextMenu nodeId={nodeId} coords={nodeCoords} />
           )}

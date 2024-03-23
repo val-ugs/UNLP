@@ -9,24 +9,14 @@ import {
 import './styles.scss';
 
 interface PaneContextMenuProps {
-  setNodes: React.Dispatch<
-    React.SetStateAction<
-      Node<
-        {
-          label: string;
-          value?: undefined;
-        },
-        string | undefined
-      >[]
-    >
-  >;
   coords: { x: number; y: number };
 }
 
 let id = 1;
 const getId = () => `node-${id++}`;
 
-const PaneContextMenu: FC<PaneContextMenuProps> = ({ setNodes, coords }) => {
+const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
+  const { setNodes } = useReactFlow();
   const { screenToFlowPosition } = useReactFlow();
   const flowCoords = screenToFlowPosition({
     x: coords.x,
