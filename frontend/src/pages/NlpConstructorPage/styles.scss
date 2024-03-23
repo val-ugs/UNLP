@@ -7,6 +7,10 @@
 
 // override react-flow styles
 .react-flow {
+  &__controls-button {
+    width: 30px;
+  }
+
   &__edge-path {
     stroke: $color-3;
   }

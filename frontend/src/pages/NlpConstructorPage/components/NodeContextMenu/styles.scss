@@ -1,6 +1,6 @@
 @import 'variables.scss';
 
-.nlp-constructor-context-menu {
+.node-context-menu {
   position: absolute;
   z-index: 100;
   background-color: $color-4;
@@ -9,13 +9,6 @@
   &__title {
     padding: 5px;
     text-align: center;
-  }
-
-  &__nodes {
-    padding-left: 0;
-  }
-
-  &__node {
   }
 
   &__button {

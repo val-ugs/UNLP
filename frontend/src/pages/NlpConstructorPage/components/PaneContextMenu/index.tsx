@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import OrderedList from 'components/common/OrderedList';
 import Button from 'components/common/Button';
 import { Node, useReactFlow } from 'reactflow';
@@ -8,7 +8,7 @@ import {
 } from 'pages/NlpConstructorPage/nodes/nlpConstructorNodeTypes';
 import './styles.scss';
 
-interface NlpConstructorContextMenuProps {
+interface PaneContextMenuProps {
   setNodes: React.Dispatch<
     React.SetStateAction<
       Node<
@@ -26,44 +26,41 @@ interface NlpConstructorContextMenuProps {
 let id = 1;
 const getId = () => `node-${id++}`;
 
-const NlpConstructorContextMenu: FC<NlpConstructorContextMenuProps> = ({
-  setNodes,
-  coords,
-}) => {
+const PaneContextMenu: FC<PaneContextMenuProps> = ({ setNodes, coords }) => {
   const { screenToFlowPosition } = useReactFlow();
   const flowCoords = screenToFlowPosition({
     x: coords.x,
     y: coords.y,
   });
 
-  const addNode = (nodeType: string) => {
-    const id = getId();
-    const newNode: Node = {
-      id,
-      position: {
-        x: flowCoords.x,
-        y: flowCoords.y,
-      },
-      data: { label: `Node ${id}` },
-      type: nodeType,
-    };
-    setNodes((nds) => nds.concat(newNode));
-  };
+  const addNode = useCallback(
+    (nodeType: string) => {
+      const id = getId();
+      const newNode: Node = {
+        id,
+        position: {
+          x: flowCoords.x,
+          y: flowCoords.y,
+        },
+        data: { label: `Node ${id}` },
+        type: nodeType,
+      };
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [flowCoords.x, flowCoords.y, setNodes]
+  );
 
   return (
     <div
-      className="nlp-constructor-context-menu"
+      className="pane-context-menu"
       style={{ top: coords.y, left: coords.x }}
     >
-      <div className="nlp-constructor-context-menu__title">Add node</div>
-      <OrderedList className="nlp-constructor-context-menu__nodes" type="none">
+      <div className="pane-context-menu__title">Add node</div>
+      <OrderedList className="pane-context-menu__nodes" type="none">
         {listOfNlpConstructorNodes.map((node: NlpConstructorNode) => (
-          <OrderedList.Item
-            className="nlp-constructor-context-menu__node"
-            key={node.name}
-          >
+          <OrderedList.Item className="pane-context-menu__node" key={node.name}>
             <Button
-              className="nlp-constructor-context-menu__button"
+              className="pane-context-menu__button"
               onClick={() => {
                 addNode(node.type);
               }}
@@ -77,4 +74,4 @@ const NlpConstructorContextMenu: FC<NlpConstructorContextMenuProps> = ({
   );
 };
 
-export default NlpConstructorContextMenu;
+export default PaneContextMenu;
