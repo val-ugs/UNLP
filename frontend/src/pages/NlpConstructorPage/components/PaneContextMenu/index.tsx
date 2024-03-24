@@ -32,7 +32,7 @@ const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
           x: flowCoords.x,
           y: flowCoords.y,
         },
-        data: { label: `Node ${id}` },
+        data: null,
         type: nodeType,
       };
       setNodes((nds) => nds.concat(newNode));

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Handle, Position } from 'reactflow';
+import React, { FC, useEffect, useState } from 'react';
+import { Handle, NodeProps, Position } from 'reactflow';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import './styles.scss';
 
-const NlpDatasetNode = () => {
+const NlpDatasetNode: FC<NodeProps> = ({ data }) => {
   const [nlpDatasetId, setNlpDatasetId] = useState<number>();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const {

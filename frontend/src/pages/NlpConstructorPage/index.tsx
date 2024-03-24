@@ -84,7 +84,8 @@ const NlpConstructorPage: FC = () => {
   );
 
   const handleRun = () => {
-    console.log('run');
+    console.log(nodes);
+    console.log(edges);
   };
 
   return (

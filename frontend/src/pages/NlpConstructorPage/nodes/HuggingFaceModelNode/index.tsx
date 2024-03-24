@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Handle, Position } from 'reactflow';
+import React, { FC, useEffect, useState } from 'react';
+import { Handle, NodeProps, Position } from 'reactflow';
 import './styles.scss';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import Select, { SelectProps } from 'components/common/Select';
@@ -12,7 +12,7 @@ import { skipToken } from '@reduxjs/toolkit/query';
 import Button from 'components/common/Button';
 import { enumToArray } from 'helpers/enumToArray';
 
-const HuggingFaceModelNode = ({ data }) => {
+const HuggingFaceModelNode: FC<NodeProps> = ({ data }) => {
   const [huggingFaceModelId, setHuggingFaceModelId] = useState<number>();
   const [huggingFaceModelType, setHuggingFaceModelType] =
     useState<HuggingFaceModelType>(HuggingFaceModelType.Classification);

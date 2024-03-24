@@ -23,7 +23,9 @@ const NodeContextMenu: FC<NodeContextMenuProps> = ({ nodeId, coords }) => {
 
   const handleDeleteNode = useCallback(() => {
     setNodes((nodes) => nodes.filter((node) => node.id !== nodeId));
-    setEdges((edges) => edges.filter((edge) => edge.source !== nodeId));
+    setEdges((edges) =>
+      edges.filter((edge) => edge.source !== nodeId && edge.target !== nodeId)
+    );
   }, [nodeId, setNodes, setEdges]);
 
   return (
