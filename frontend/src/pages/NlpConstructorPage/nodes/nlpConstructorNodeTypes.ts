@@ -1,10 +1,12 @@
 import HuggingFaceModelNode from './HuggingFaceModelNode';
 import NlpDatasetNode from './NlpDatasetNode';
+import PredictNode from './PredictNode';
 
 // custom nodes
 export const nlpConstructorNodeTypes = {
   HuggingFaceModelNode,
   NlpDatasetNode,
+  PredictNode,
 };
 
 export interface NlpConstructorNode {

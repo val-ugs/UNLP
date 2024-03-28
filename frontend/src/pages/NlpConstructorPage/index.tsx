@@ -11,6 +11,8 @@ import ReactFlow, {
   MiniMap,
   Node,
   addEdge,
+  getIncomers,
+  getOutgoers,
   useEdgesState,
   useNodesState,
 } from 'reactflow';
@@ -20,6 +22,8 @@ import PaneContextMenu from './components/PaneContextMenu';
 import NodeContextMenu from './components/NodeContextMenu';
 import 'reactflow/dist/style.css';
 import './styles.scss';
+import { runNode } from './nodes/nodeRunners';
+import { editNode } from './nodes/nodeUtils';
 
 const NlpConstructorPage: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -86,6 +90,14 @@ const NlpConstructorPage: FC = () => {
   const handleRun = () => {
     console.log(nodes);
     console.log(edges);
+    const sourceNodes = getIncomers(nodes[0], nodes, edges);
+    const targetNodes = getOutgoers(nodes[0], nodes, edges);
+    console.log(sourceNodes);
+    console.log(targetNodes);
+    // Проверка конкретного сценария, где node[0] - nlpDatasetNode, node[1] - HuggingFaceModelNode, node[2] - PredictNode
+    editNode(setNodes, nodes[2].id, { input: nodes[1].data.output });
+    console.log(nodes[2]);
+    console.log(runNode(nodes[2]));
   };
 
   return (

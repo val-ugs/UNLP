@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import actionModalReducer from './reducers/actionModalSlice';
 import huggingFaceModelFormModalReducer from './reducers/huggingFaceModelFormModalSlice';
-import nerLabelFormModalReducer from './reducers/nerLabelFormModalSlice';
 import loadDataModalReducer from './reducers/loadDataModalSlice';
+import nerLabelFormModalReducer from './reducers/nerLabelFormModalSlice';
 import nlpDatasetReducer from './reducers/nlpDatasetSlice';
 import nlpTokenSettingsModalReducer from './reducers/nlpTokenSettingsModalSlice';
 import { nerLabelApi } from 'services/nerLabelService';
