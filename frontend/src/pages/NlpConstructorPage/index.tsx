@@ -1,29 +1,25 @@
-import React, { FC, useCallback, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import Layout from 'pages/_layouts/Layout';
 import ReactFlow, {
   Background,
   BackgroundVariant,
-  Connection,
   ControlButton,
   Controls,
-  Edge,
-  MarkerType,
   MiniMap,
   Node,
-  addEdge,
+  getConnectedEdges,
   getIncomers,
   getOutgoers,
-  useEdgesState,
-  useNodesState,
 } from 'reactflow';
 import useContextMenu from 'hooks/useContextMenu';
 import { nlpConstructorNodeTypes } from './nodes/nlpConstructorNodeTypes';
 import PaneContextMenu from './components/PaneContextMenu';
 import NodeContextMenu from './components/NodeContextMenu';
+import { reactFlowSlice, runNodeAsync } from 'store/reducers/reactFlowSlice';
+import { runNode } from './nodes/nodeRunners';
 import 'reactflow/dist/style.css';
 import './styles.scss';
-import { runNode } from './nodes/nodeRunners';
-import { editNode } from './nodes/nodeUtils';
 
 const NlpConstructorPage: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -40,27 +36,10 @@ const NlpConstructorPage: FC = () => {
     setCoords: setNodeCoords,
   } = useContextMenu();
   const [nodeId, setNodeId] = useState<string>('');
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
-  const onConnect = useCallback(
-    (params: Edge | Connection) =>
-      setEdges((eds) =>
-        addEdge(
-          {
-            ...params,
-            markerEnd: {
-              type: MarkerType.ArrowClosed,
-              width: 20,
-              height: 20,
-              color: '#787878',
-            },
-          },
-          eds
-        )
-      ),
-    [setEdges]
-  );
+  const { nodes, edges } = useAppSelector((state) => state.reactFlowReducer);
+  const { onNodesChange, onEdgesChange, onConnect, editNode } =
+    reactFlowSlice.actions;
+  const dispatch = useAppDispatch();
 
   const handlePaneContextMenu = useCallback(
     (e: React.MouseEvent<Element, MouseEvent>) => {
@@ -87,18 +66,126 @@ const NlpConstructorPage: FC = () => {
     [setNodeClicked, setNodeCoords]
   );
 
-  const handleRun = () => {
-    console.log(nodes);
-    console.log(edges);
-    const sourceNodes = getIncomers(nodes[0], nodes, edges);
-    const targetNodes = getOutgoers(nodes[0], nodes, edges);
-    console.log(sourceNodes);
-    console.log(targetNodes);
-    // Проверка конкретного сценария, где node[0] - nlpDatasetNode, node[1] - HuggingFaceModelNode, node[2] - PredictNode
-    editNode(setNodes, nodes[2].id, { input: nodes[1].data.output });
-    console.log(nodes[2]);
-    console.log(runNode(nodes[2]));
+  const handleRun = async () => {
+    try {
+      dispatch(runNodeAsync());
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  // // const handleRun = async () => {
+  // //   const processNode = async (node: Node) => {
+  // //     const sourceNodes = getIncomers(node, nodes, edges);
+
+  // //     const sourcePromises = sourceNodes.map((n) => {
+  // //       console.log(`Resolving source node ${n.id}`);
+  // //       return processNode(n);
+  // //     });
+  // //     if (sourcePromises.length) {
+  // //       console.log(`Waiting for ${sourcePromises} sources to resolve`);
+  // //       await Promise.all(sourcePromises);
+  // //       console.log(`Sources resolved`);
+  // //     }
+
+  // //     const sourceEdges = getConnectedEdges([node], edges);
+  // //     // populate the node's input with the output of the sources
+  // //     const input = sourceEdges.reduce((acc, edge) => {
+  // //       const sourceNode = sourceNodes.find((node) => node.id === edge.source);
+  // //       if (sourceNode) {
+  // //         // @ts-ignore
+  // //         acc[edge.targetHandle.split('-').pop()] =
+  // //           // @ts-ignore
+  // //           sourceNode.data.output[edge.sourceHandle.split('-').pop()];
+  // //       }
+  // //       return acc;
+  // //     }, {});
+  // //     // set the node's input
+
+  // //     dispatch(
+  // //       editNode({
+  // //         id: node.id,
+  // //         newData: {
+  // //           input: {
+  // //             ...node.data?.input,
+  // //             ...input,
+  // //           },
+  // //         },
+  // //       })
+  // //     ); // locally
+
+  // //     // run the node
+  // //     const output = await runNode(node);
+  // //     console.log('output:');
+  // //     console.log(output);
+  // //     // update the node's output
+  // //     dispatch(
+  // //       editNode({
+  // //         id: node.id,
+  // //         newData: {
+  // //           input: {
+  // //             ...node.data?.input,
+  // //             ...input,
+  // //           },
+  // //           output: output,
+  // //         },
+  // //       })
+  // //     );
+
+  // //     console.log(
+  // //       'returning output for node',
+  // //       node.id,
+  // //       output,
+  // //       'had input',
+  // //       input
+  // //     );
+  // //   };
+
+  // //   const endNodes: Node[] = nodes.filter(
+  // //     (node: Node) =>
+  // //       getIncomers(node, nodes, edges).length > 0 &&
+  // //       getOutgoers(node, nodes, edges).length == 0
+  // //   );
+  // //   for (const node of endNodes) {
+  // //     processNode(node);
+  // //   }
+  // // };
+
+  // // const handleRun1 = async () => {
+  // //   const CreatePipeline = (endNodes: Node[], nodePipeline: Node[]) => {
+  // //     endNodes.map((node: Node) => {
+  // //       CreatePipeline(getIncomers(node, nodes, edges), nodePipeline);
+  // //       if (nodePipeline.indexOf(node) === -1) nodePipeline.push(node); // if not found add node
+  // //     });
+  // //   };
+
+  // //   // find all start nodes
+  // //   const endNodes: Node[] = nodes.filter(
+  // //     (node: Node) =>
+  // //       getIncomers(node, nodes, edges).length > 0 &&
+  // //       getOutgoers(node, nodes, edges).length == 0
+  // //   );
+
+  // //   const nodePipeline: Node[] = []; // array of nodes from start to finish
+
+  // //   CreatePipeline(endNodes, nodePipeline);
+
+  // //   for (const node of nodePipeline) {
+  // //     console.log(node);
+  // //     await runNode(node);
+  // //     const output = node.data?.output;
+  // //     getOutgoers(node, nodes, edges).map((outgoer: Node) => {
+  // //       editNode(setNodes, outgoer.id, {
+  // //         input: {
+  // //           ...outgoer.data?.input,
+  // //           ...output,
+  // //         },
+  // //       });
+  // //     });
+  // //   }
+
+  // //   console.log(nodePipeline);
+  // // };
 
   return (
     <Layout>
@@ -107,9 +194,9 @@ const NlpConstructorPage: FC = () => {
           ref={ref}
           nodes={nodes}
           edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
+          onNodesChange={(e) => dispatch(onNodesChange(e))}
+          onEdgesChange={(e) => dispatch(onEdgesChange(e))}
+          onConnect={(e) => dispatch(onConnect(e))}
           nodeTypes={nlpConstructorNodeTypes}
           onPaneContextMenu={handlePaneContextMenu}
           onNodeContextMenu={handleNodeContextMenu}

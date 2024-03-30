@@ -5,6 +5,7 @@ import loadDataModalReducer from './reducers/loadDataModalSlice';
 import nerLabelFormModalReducer from './reducers/nerLabelFormModalSlice';
 import nlpDatasetReducer from './reducers/nlpDatasetSlice';
 import nlpTokenSettingsModalReducer from './reducers/nlpTokenSettingsModalSlice';
+import reactFlowReducer from './reducers/reactFlowSlice';
 import { nerLabelApi } from 'services/nerLabelService';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { nlpTextApi } from 'services/nlpTextService';
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   nerLabelFormModalReducer,
   nlpDatasetReducer,
   nlpTokenSettingsModalReducer,
+  reactFlowReducer,
   [huggingFaceModelApi.reducerPath]: huggingFaceModelApi.reducer,
   [nerLabelApi.reducerPath]: nerLabelApi.reducer,
   [nlpDatasetApi.reducerPath]: nlpDatasetApi.reducer,

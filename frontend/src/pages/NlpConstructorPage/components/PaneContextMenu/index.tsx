@@ -1,4 +1,5 @@
 import React, { FC, useCallback } from 'react';
+import { useAppDispatch } from 'hooks/redux';
 import OrderedList from 'components/common/OrderedList';
 import Button from 'components/common/Button';
 import { Node, useReactFlow } from 'reactflow';
@@ -6,6 +7,7 @@ import {
   NlpConstructorNode,
   listOfNlpConstructorNodes,
 } from 'pages/NlpConstructorPage/nodes/nlpConstructorNodeTypes';
+import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
 import './styles.scss';
 
 interface PaneContextMenuProps {
@@ -16,14 +18,15 @@ let id = 1;
 const getId = () => `node-${id++}`;
 
 const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
-  const { setNodes } = useReactFlow();
+  const { addNode } = reactFlowSlice.actions;
+  const dispatch = useAppDispatch();
   const { screenToFlowPosition } = useReactFlow();
   const flowCoords = screenToFlowPosition({
     x: coords.x,
     y: coords.y,
   });
 
-  const addNode = useCallback(
+  const addNodeByType = useCallback(
     (nodeType: string) => {
       const id = getId();
       const newNode: Node = {
@@ -35,9 +38,9 @@ const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
         data: null,
         type: nodeType,
       };
-      setNodes((nds) => nds.concat(newNode));
+      dispatch(addNode(newNode));
     },
-    [flowCoords.x, flowCoords.y, setNodes]
+    [flowCoords.x, flowCoords.y, dispatch, addNode]
   );
 
   return (
@@ -52,7 +55,7 @@ const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
             <Button
               className="pane-context-menu__button"
               onClick={() => {
-                addNode(node.type);
+                addNodeByType(node.type);
               }}
             >
               {node.name}
