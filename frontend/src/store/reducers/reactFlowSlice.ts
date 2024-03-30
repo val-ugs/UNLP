@@ -8,7 +8,6 @@ import {
   AsyncThunkConfig,
   GetThunkAPI,
 } from '@reduxjs/toolkit/dist/createAsyncThunk';
-import { runNode } from 'pages/NlpConstructorPage/nodes/nodeRunners';
 import {
   Connection,
   Edge,
@@ -23,6 +22,7 @@ import {
   getIncomers,
   getOutgoers,
 } from 'reactflow';
+import { runNode } from './reactflowRunners/runNode';
 
 export const editNodeAsync = createAsyncThunk(
   'reactflow/editNode',
@@ -105,7 +105,7 @@ export const runNodeAsync = createAsyncThunk(
       console.log('11111');
       console.log(node2);
       // run the node
-      const output = node2 ? await runNode(node2) : node.data?.output;
+      const output = node2 ? await runNode(node2, thunkApi) : node.data?.output;
       // update the node's output
       await thunkApi.dispatch(
         editNodeAsync({
