@@ -1,0 +1,19 @@
+@import 'variables.scss';
+
+.base-node {
+  display: flex;
+  background-color: $color-3;
+  border: 3px solid $color-2;
+
+  &__input-handles {
+    border-right: 2px solid $color-2;
+  }
+
+  &__main {
+    padding: 10px;
+  }
+
+  &__output-handles {
+    border-left: 2px solid $color-2;
+  }
+}

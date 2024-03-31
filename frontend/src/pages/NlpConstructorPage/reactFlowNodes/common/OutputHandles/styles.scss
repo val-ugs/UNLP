@@ -1,0 +1,18 @@
+.output-handles {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.output-handles-item {
+  padding: 5px;
+
+  &__labeled-element {
+  }
+
+  &__handle {
+  }
+
+  &__value {
+  }
+}

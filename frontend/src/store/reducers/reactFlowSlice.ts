@@ -25,7 +25,6 @@ const editNodeAsync = createAppAsyncThunk(
   'reactflow/editNode',
   async ({ id, newData }: EditNodeProps, thunkApi) => {
     const { nodes } = thunkApi.getState().reactFlowReducer;
-    console.log('edit node......');
 
     return nodes.map((node: Node) => {
       if (node.id === id) {
@@ -71,7 +70,6 @@ export const runNodeAsync = createAppAsyncThunk(
         const sourceNode = sourceNodes2.find((node) => node.id === edge.source);
         if (sourceNode && edge.targetHandle) {
           acc[edge.targetHandle!] = sourceNode.data.output[edge.sourceHandle!];
-          console.log(sourceNode.data.output);
         }
         return acc;
       }, {});
@@ -93,8 +91,7 @@ export const runNodeAsync = createAppAsyncThunk(
       const node2: Node = thunkApi
         .getState()
         .reactFlowReducer.nodes.find((n: Node) => n.id === node.id);
-      console.log('11111');
-      console.log(node2);
+
       // run the node
       const output = node2 ? await runNode(node2, thunkApi) : node.data?.output;
       // update the node's output

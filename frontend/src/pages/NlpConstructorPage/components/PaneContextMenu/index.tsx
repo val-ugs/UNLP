@@ -6,7 +6,7 @@ import { Node, useReactFlow } from 'reactflow';
 import {
   NlpConstructorNode,
   listOfNlpConstructorNodes,
-} from 'pages/NlpConstructorPage/nodes/nlpConstructorNodeTypes';
+} from 'pages/NlpConstructorPage/reactFlowNodes/nodes/nlpConstructorNodeTypes';
 import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
 import './styles.scss';
 

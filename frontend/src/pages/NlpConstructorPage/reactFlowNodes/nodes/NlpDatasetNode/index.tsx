@@ -1,11 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from 'hooks/redux';
-import { Handle, Node, NodeProps, Position } from 'reactflow';
+import { NodeProps } from 'reactflow';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
+import BaseNode from '../../common/BaseNode';
+import { OutputHandlesItemProps } from '../../common/OutputHandles';
 import './styles.scss';
 
 interface NlpDatasetNodeProps {
@@ -53,8 +55,14 @@ const NlpDatasetNode: FC<NodeProps<NlpDatasetNodeProps>> = (node) => {
     }),
   };
 
+  const outputHandles: OutputHandlesItemProps[] = [
+    {
+      id: 'nlpDataset',
+    },
+  ];
+
   return (
-    <div className="nlp-dataset-node nopan">
+    <BaseNode className="nlp-dataset-node nopan" outputHandles={outputHandles}>
       <div className="nlp-dataset-node__main">
         <LabeledElement
           className="nlp-dataset-node__labeled-element"
@@ -70,13 +78,7 @@ const NlpDatasetNode: FC<NodeProps<NlpDatasetNodeProps>> = (node) => {
           </Select>
         </LabeledElement>
       </div>
-      <Handle
-        id="nlpDataset"
-        className="nlp-dataset-node__handle"
-        type={'source'}
-        position={Position.Right}
-      />
-    </div>
+    </BaseNode>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from 'hooks/redux';
 import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
-import { Handle, Node, NodeProps, Position } from 'reactflow';
+import { NodeProps } from 'reactflow';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import Select, { SelectProps } from 'components/common/Select';
 import {
@@ -12,6 +12,8 @@ import { huggingFaceModelApi } from 'services/huggingFaceModelService';
 import { skipToken } from '@reduxjs/toolkit/query';
 import Button from 'components/common/Button';
 import { enumToArray } from 'helpers/enumToArray';
+import BaseNode from '../../common/BaseNode';
+import { OutputHandlesItemProps } from '../../common/OutputHandles';
 import './styles.scss';
 
 interface HuggingFaceModelNodeProps {
@@ -70,8 +72,17 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
     ),
   };
 
+  const outputHandles: OutputHandlesItemProps[] = [
+    {
+      id: 'huggingFaceModel',
+    },
+  ];
+
   return (
-    <div className="hugging-face-model-node nopan">
+    <BaseNode
+      className="hugging-face-model-node nopan"
+      outputHandles={outputHandles}
+    >
       <div className="hugging-face-model-node__main">
         <div className="hugging-face-model-node__main-item">
           <div className="hugging-face-model-node__type">
@@ -117,19 +128,13 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
                   {huggingFaceModelSelect.children}
                 </Select>
               </LabeledElement>
-              <Handle
-                id="huggingFaceModel"
-                className="hugging-face-model-node__handle"
-                type={'source'}
-                position={Position.Right}
-              />
             </>
           ) : (
             'Hugging face models not found'
           )}
         </div>
       </div>
-    </div>
+    </BaseNode>
   );
 };
 
