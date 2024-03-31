@@ -1,15 +1,8 @@
-import {
-  AsyncThunkConfig,
-  GetThunkAPI,
-} from '@reduxjs/toolkit/dist/createAsyncThunk';
 import { Node } from 'reactflow';
 import { huggingFaceModelApi } from 'services/huggingFaceModelService';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 
-export const run = async (
-  node: Node,
-  thunkApi: GetThunkAPI<AsyncThunkConfig>
-) => {
+export const run = async (node: Node, thunkApi: any) => {
   console.log('-----');
   console.log('predict');
   console.log(node);
