@@ -41,31 +41,3 @@ const PredictNode: FC<NodeProps<PredictNodeProps>> = (node) => {
 };
 
 export default PredictNode;
-
-import { store } from 'store';
-import { huggingFaceModelApi } from 'services/huggingFaceModelService';
-
-export const run = async (node: Node) => {
-  console.log('-----');
-  console.log('predict');
-  console.log(node);
-  // const p = store.dispatch(
-  //   huggingFaceModelApi.endpoints.predictHuggingFaceModel.initiate({
-  //     huggingFaceModel: node.data?.input?.huggingFaceModel,
-  //     testNlpDatasetId: 12, //node.data?.input?.nlpDataset?.id
-  //   })
-  // );
-  // console.log(p);
-  // try {
-  //   const response = await p.unwrap();
-  //   return response;
-  // } catch (e) {
-  //   console.log(e);
-  // }
-  // console.log('-----');
-
-  return {
-    nlpDataset: node.data.input?.nlpDataset,
-  };
-  //return node.data.output;
-};

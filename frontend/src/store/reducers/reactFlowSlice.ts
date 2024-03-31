@@ -1,13 +1,4 @@
-import {
-  Dispatch,
-  PayloadAction,
-  createAsyncThunk,
-  createSlice,
-} from '@reduxjs/toolkit';
-import {
-  AsyncThunkConfig,
-  GetThunkAPI,
-} from '@reduxjs/toolkit/dist/createAsyncThunk';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
   Connection,
   Edge,
@@ -23,10 +14,16 @@ import {
   getOutgoers,
 } from 'reactflow';
 import { runNode } from './reactflowRunners/runNode';
+import { createAppAsyncThunk } from 'store/createAppAsyncThunk';
 
-export const editNodeAsync = createAsyncThunk(
+interface EditNodeProps {
+  id: string;
+  newData: any;
+}
+
+const editNodeAsync = createAppAsyncThunk(
   'reactflow/editNode',
-  async ({ id, newData }, thunkApi) => {
+  async ({ id, newData }: EditNodeProps, thunkApi) => {
     const { nodes } = thunkApi.getState().reactFlowReducer;
     console.log('edit node......');
 
@@ -45,13 +42,10 @@ export const editNodeAsync = createAsyncThunk(
   }
 );
 
-export const runNodeAsync = createAsyncThunk(
+export const runNodeAsync = createAppAsyncThunk(
   'reactflow/run',
-  async (_, thunkApi: GetThunkAPI<AsyncThunkConfig>) => {
-    const processNode = async (
-      node: Node,
-      thunkApi: GetThunkAPI<AsyncThunkConfig>
-    ) => {
+  async (_, thunkApi) => {
+    const processNode = async (node: Node, thunkApi: any) => {
       const { nodes, edges } = thunkApi.getState().reactFlowReducer;
 
       const sourceNodes = getIncomers(node, nodes, edges);
@@ -73,13 +67,10 @@ export const runNodeAsync = createAsyncThunk(
       );
       const sourceEdges2 = getConnectedEdges([node], newSources.edges);
       // populate the node's input with the output of the sources
-      const input = sourceEdges2.reduce((acc, edge) => {
+      const input = sourceEdges2.reduce<Record<string, string>>((acc, edge) => {
         const sourceNode = sourceNodes2.find((node) => node.id === edge.source);
-        if (sourceNode) {
-          // @ts-ignore
-          acc[edge.targetHandle.split('-').pop()] =
-            // @ts-ignore
-            sourceNode.data.output[edge.sourceHandle.split('-').pop()];
+        if (sourceNode && edge.targetHandle) {
+          acc[edge.targetHandle!] = sourceNode.data.output[edge.sourceHandle!];
           console.log(sourceNode.data.output);
         }
         return acc;
