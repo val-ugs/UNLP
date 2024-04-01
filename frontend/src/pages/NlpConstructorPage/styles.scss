@@ -3,6 +3,33 @@
 .nlp-constructor-page {
   display: flex;
   height: 100%;
+
+  &__react-flow {
+  }
+
+  &__error {
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: 300px;
+    padding: 5px;
+    color: $color-7;
+    opacity: 0;
+
+    &.animate {
+      animation: smooth 2s ease-in;
+    }
+  }
+}
+
+@keyframes smooth {
+  0% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 // override react-flow styles

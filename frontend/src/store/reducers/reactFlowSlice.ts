@@ -48,13 +48,18 @@ export const runNodeAsync = createAppAsyncThunk(
       const { nodes, edges } = thunkApi.getState().reactFlowReducer;
 
       const sourceNodes = getIncomers(node, nodes, edges);
-      const sourcePromises = sourceNodes.map((n) => {
+      const sourcePromises = sourceNodes.map(async (n) => {
         console.log(`Resolving source node ${node.id}`);
-        return processNode(n, thunkApi);
+        return await processNode(n, thunkApi).catch((e) => {
+          throw e;
+        });
       });
       if (sourcePromises.length) {
         console.log(`Waiting for ${sourcePromises} sources to resolve`);
-        await Promise.all(sourcePromises);
+        await Promise.all(sourcePromises).catch((e) => {
+          console.log(e);
+          throw e;
+        });
         console.log(`Sources resolved`);
       }
 
@@ -75,17 +80,22 @@ export const runNodeAsync = createAppAsyncThunk(
       }, {});
 
       // set the node's input
-      await thunkApi.dispatch(
-        editNodeAsync({
-          id: node.id,
-          newData: {
-            input: {
-              ...node.data?.input,
-              ...input,
+      await thunkApi
+        .dispatch(
+          editNodeAsync({
+            id: node.id,
+            newData: {
+              input: {
+                ...node.data?.input,
+                ...input,
+              },
             },
-          },
-        })
-      );
+          })
+        )
+        .unwrap()
+        .catch((e) => {
+          throw e;
+        });
 
       // get the node again
       const node2: Node = thunkApi
@@ -93,14 +103,23 @@ export const runNodeAsync = createAppAsyncThunk(
         .reactFlowReducer.nodes.find((n: Node) => n.id === node.id);
 
       // run the node
-      const output = node2 ? await runNode(node2, thunkApi) : node.data?.output;
+      const output = node2
+        ? await runNode(node2, thunkApi).catch((e) => {
+            throw e;
+          })
+        : node.data?.output;
       // update the node's output
-      await thunkApi.dispatch(
-        editNodeAsync({
-          id: node.id,
-          newData: { output: output },
-        })
-      );
+      await thunkApi
+        .dispatch(
+          editNodeAsync({
+            id: node.id,
+            newData: { output: output },
+          })
+        )
+        .unwrap()
+        .catch((e) => {
+          throw e;
+        });
       console.log(
         'returning output for node',
         node.id,
@@ -117,7 +136,9 @@ export const runNodeAsync = createAppAsyncThunk(
         getOutgoers(node, nodes, edges).length == 0
     );
     for (const node of endNodes) {
-      processNode(node, thunkApi);
+      await processNode(node, thunkApi).catch((e) => {
+        throw e;
+      });
     }
   }
 );

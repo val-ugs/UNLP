@@ -32,6 +32,9 @@ const NlpConstructorPage: FC = () => {
     setCoords: setNodeCoords,
   } = useContextMenu();
   const [nodeId, setNodeId] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [animationErrorActive, setAnimationErrorActive] =
+    useState<boolean>(false);
   const { nodes, edges } = useAppSelector((state) => state.reactFlowReducer);
   const { onNodesChange, onEdgesChange, onConnect } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
@@ -62,17 +65,26 @@ const NlpConstructorPage: FC = () => {
   );
 
   const handleRun = async () => {
-    try {
-      dispatch(runNodeAsync());
-    } catch (e) {
-      console.log(e);
-    }
+    dispatch(runNodeAsync())
+      .unwrap()
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+        // restart animation
+        setAnimationErrorActive(false);
+        setTimeout(() => setAnimationErrorActive(true), 0.1);
+      });
+  };
+
+  const handleAnimationErrorEnd = () => {
+    setAnimationErrorActive(false);
   };
 
   return (
     <Layout>
       <div className="nlp-constructor-page">
         <ReactFlow
+          className="nlp-constructor-page__react-flow"
           ref={ref}
           nodes={nodes}
           edges={edges}
@@ -90,11 +102,21 @@ const NlpConstructorPage: FC = () => {
           {nodeClicked && (
             <NodeContextMenu nodeId={nodeId} coords={nodeCoords} />
           )}
-          <Controls>
+          <Controls position={'top-left'}>
             <ControlButton onClick={handleRun}>Run</ControlButton>
           </Controls>
           <MiniMap />
           <Background variant={BackgroundVariant.Cross} gap={12} size={1} />
+          {error && (
+            <div
+              className={`nlp-constructor-page__error ${
+                animationErrorActive ? 'animate' : ''
+              }`}
+              onAnimationEnd={handleAnimationErrorEnd}
+            >
+              Error: {error}
+            </div>
+          )}
         </ReactFlow>
       </div>
     </Layout>
