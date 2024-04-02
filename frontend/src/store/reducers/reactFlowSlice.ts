@@ -204,6 +204,10 @@ export const reactFlowSlice = createSlice({
         (edge) => edge.source !== id && edge.target !== id
       );
     },
+    deleteEdge: (state, action: PayloadAction<string>) => {
+      const id = action.payload;
+      state.edges = state.edges.filter((edge) => edge.id !== id);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(editNodeAsync.fulfilled, (state, action) => {

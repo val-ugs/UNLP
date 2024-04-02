@@ -6,6 +6,7 @@ import ReactFlow, {
   BackgroundVariant,
   ControlButton,
   Controls,
+  Edge,
   MiniMap,
   Node,
 } from 'reactflow';
@@ -13,6 +14,7 @@ import useContextMenu from 'hooks/useContextMenu';
 import { nlpConstructorNodeTypes } from './reactFlowNodes/nodes/nlpConstructorNodeTypes';
 import PaneContextMenu from './components/PaneContextMenu';
 import NodeContextMenu from './components/NodeContextMenu';
+import EdgeContextMenu from './components/EdgeContextMenu';
 import { reactFlowSlice, runNodeAsync } from 'store/reducers/reactFlowSlice';
 import 'reactflow/dist/style.css';
 import './styles.scss';
@@ -31,7 +33,14 @@ const NlpConstructorPage: FC = () => {
     coords: nodeCoords,
     setCoords: setNodeCoords,
   } = useContextMenu();
+  const {
+    clicked: edgeClicked,
+    setClicked: setEdgeClicked,
+    coords: edgeCoords,
+    setCoords: setEdgeCoords,
+  } = useContextMenu();
   const [nodeId, setNodeId] = useState<string>('');
+  const [edgeId, setEdgeId] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [animationErrorActive, setAnimationErrorActive] =
     useState<boolean>(false);
@@ -52,16 +61,29 @@ const NlpConstructorPage: FC = () => {
   );
 
   const handleNodeContextMenu = useCallback(
-    (e: React.MouseEvent<Element, MouseEvent>, n: Node) => {
+    (e: React.MouseEvent<Element, MouseEvent>, currentNode: Node) => {
       e.preventDefault();
       if (ref.current) {
         const rect = ref.current.getBoundingClientRect();
-        setNodeId(n.id);
+        setNodeId(currentNode.id);
         setNodeClicked(true);
         setNodeCoords({ x: e.pageX - rect.x, y: e.pageY - rect.y });
       }
     },
     [setNodeClicked, setNodeCoords]
+  );
+
+  const handleEdgeContextMenu = useCallback(
+    (e: React.MouseEvent<Element, MouseEvent>, currentEdge: Edge) => {
+      e.preventDefault();
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        setEdgeId(currentEdge.id);
+        setEdgeClicked(true);
+        setEdgeCoords({ x: e.pageX - rect.x, y: e.pageY - rect.y });
+      }
+    },
+    [setEdgeClicked, setEdgeCoords]
   );
 
   const handleRun = async () => {
@@ -97,10 +119,14 @@ const NlpConstructorPage: FC = () => {
           nodeTypes={nlpConstructorNodeTypes}
           onPaneContextMenu={handlePaneContextMenu}
           onNodeContextMenu={handleNodeContextMenu}
+          onEdgeContextMenu={handleEdgeContextMenu}
         >
           {paneClicked && <PaneContextMenu coords={paneCoords} />}
           {nodeClicked && (
             <NodeContextMenu nodeId={nodeId} coords={nodeCoords} />
+          )}
+          {edgeClicked && (
+            <EdgeContextMenu edgeId={edgeId} coords={edgeCoords} />
           )}
           <Controls position={'top-left'}>
             <ControlButton onClick={handleRun}>Run</ControlButton>
