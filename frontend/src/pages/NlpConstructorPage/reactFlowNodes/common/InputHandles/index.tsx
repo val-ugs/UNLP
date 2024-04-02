@@ -40,7 +40,9 @@ const Handle: FC<InputHandlesItemProps> = ({
 
   const { nodes, edges } = useAppSelector((state) => state.reactFlowReducer);
   const isHandleConnectable = useMemo(() => {
-    const node = nodes.find((n) => n.id == nodeId)!;
+    const node = nodes.find((n) => n.id == nodeId);
+    if (!node) return false;
+
     const connectedEdges = getConnectedEdges([node], edges);
 
     return connectedEdges.length < limit;
