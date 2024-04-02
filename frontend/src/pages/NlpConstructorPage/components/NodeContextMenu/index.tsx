@@ -1,5 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { v4 as uuidv4 } from 'uuid';
 import Button from 'components/common/Button';
 import { Node } from 'reactflow';
 import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
@@ -22,7 +23,7 @@ const NodeContextMenu: FC<NodeContextMenuProps> = ({ nodeId, coords }) => {
       y: node.position.y + 50,
     };
 
-    dispatch(addNode({ ...node, id: `${node.id}-copy`, position }));
+    dispatch(addNode({ ...node, id: uuidv4(), position }));
   }, [nodes, dispatch, addNode, nodeId]);
 
   const handleDeleteNode = useCallback(() => {
