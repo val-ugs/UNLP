@@ -1,5 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { useAppDispatch } from 'hooks/redux';
+import { v4 as uuidv4 } from 'uuid';
 import OrderedList from 'components/common/OrderedList';
 import Button from 'components/common/Button';
 import { Node, useReactFlow } from 'reactflow';
@@ -14,9 +15,6 @@ interface PaneContextMenuProps {
   coords: { x: number; y: number };
 }
 
-let id = 1;
-const getId = () => `node-${id++}`;
-
 const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
   const { addNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
@@ -28,7 +26,7 @@ const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
 
   const addNodeByType = useCallback(
     (nodeType: string) => {
-      const id = getId();
+      const id = uuidv4();
       const newNode: Node = {
         id,
         position: {

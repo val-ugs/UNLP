@@ -178,6 +178,12 @@ export const reactFlowSlice = createSlice({
       };
       state.edges = addEdge(connection, state.edges);
     },
+    setNodes: (state, action: PayloadAction<Node[]>) => {
+      state.nodes = action.payload;
+    },
+    setEdges: (state, action: PayloadAction<Edge[]>) => {
+      state.edges = action.payload;
+    },
     addNode: (state, action: PayloadAction<Node>) => {
       const node = action.payload;
       state.nodes = [...state.nodes, node];
