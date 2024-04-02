@@ -42,10 +42,12 @@ const Handle: FC<OutputHandlesItemProps> = ({
     const node = nodes.find((n) => n.id == nodeId);
     if (!node) return false;
 
-    const connectedEdges = getConnectedEdges([node], edges);
+    const connectedEdges = getConnectedEdges([node], edges).filter(
+      (edge) => edge.source === nodeId && edge.sourceHandle === id
+    );
 
     return connectedEdges.length < limit;
-  }, [edges, limit, nodeId, nodes]);
+  }, [edges, id, limit, nodeId, nodes]);
 
   return (
     <div className={`output-handles-item ${className}`}>
