@@ -33,6 +33,7 @@ const BaseNode: FC<BaseNodeProps> = ({
             <InputHandles.Handle
               className={inputHandle.className}
               id={inputHandle.id}
+              limit={inputHandle.limit}
               pos={
                 height / (2 * inputHandles.length) +
                 (index * height) / inputHandles.length
@@ -49,6 +50,7 @@ const BaseNode: FC<BaseNodeProps> = ({
             <OutputHandles.Handle
               className={outputHandle.className}
               id={outputHandle.id}
+              limit={outputHandle.limit}
               pos={
                 height / (2 * outputHandles.length) +
                 (index * height) / outputHandles.length

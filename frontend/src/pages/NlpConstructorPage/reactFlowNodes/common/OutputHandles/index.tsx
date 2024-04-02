@@ -1,5 +1,11 @@
-import React, { FC, ReactNode } from 'react';
-import { Handle as ReactFlowHandle, Position } from 'reactflow';
+import React, { FC, ReactNode, useMemo } from 'react';
+import { useAppSelector } from 'hooks/redux';
+import {
+  Handle as ReactFlowHandle,
+  Position,
+  getConnectedEdges,
+  useNodeId,
+} from 'reactflow';
 import { getChildrenByName } from 'components/_extensions/childrenExtension';
 import './styles.scss';
 
@@ -20,10 +26,25 @@ const OutputHandles = ({ className, children }: OutputHandlesProps) => {
 export interface OutputHandlesItemProps {
   className?: string;
   id: string;
+  limit?: number;
   pos?: number;
 }
 
-const Handle: FC<OutputHandlesItemProps> = ({ className, id, pos }) => {
+const Handle: FC<OutputHandlesItemProps> = ({
+  className,
+  id,
+  limit = 1,
+  pos,
+}) => {
+  const nodeId = useNodeId();
+  const { nodes, edges } = useAppSelector((state) => state.reactFlowReducer);
+  const isHandleConnectable = useMemo(() => {
+    const node = nodes.find((n) => n.id == nodeId)!;
+    const connectedEdges = getConnectedEdges([node], edges);
+
+    return connectedEdges.length < limit;
+  }, [edges, limit, nodeId, nodes]);
+
   return (
     <div className={`output-handles-item ${className}`}>
       <div className="output-handles-item__id">{id}</div>
@@ -32,6 +53,7 @@ const Handle: FC<OutputHandlesItemProps> = ({ className, id, pos }) => {
         position={Position.Right}
         className="output-handles-item__handle"
         id={id}
+        isConnectable={isHandleConnectable}
         style={{ top: pos }}
       />
     </div>
