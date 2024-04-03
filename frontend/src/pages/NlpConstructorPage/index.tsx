@@ -1,4 +1,11 @@
-import React, { FC, useCallback, useRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useId,
+  useRef,
+  useState,
+} from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import Layout from 'pages/_layouts/Layout';
 import ReactFlow, {
@@ -53,6 +60,7 @@ const NlpConstructorPage: FC = () => {
   const { onNodesChange, onEdgesChange, onConnect, setNodes, setEdges } =
     reactFlowSlice.actions;
   const dispatch = useAppDispatch();
+  const nlpConstructorId = useId();
 
   const handlePaneContextMenu = useCallback(
     (e: React.MouseEvent<Element, MouseEvent>) => {
@@ -106,7 +114,6 @@ const NlpConstructorPage: FC = () => {
 
       const flow = JSON.parse(item);
       if (!flow) return;
-      console.log(flow);
 
       const { x = 0, y = 0, zoom = 1 } = flow.viewport;
       dispatch(setNodes(flow.nodes || []));
@@ -116,6 +123,46 @@ const NlpConstructorPage: FC = () => {
 
     restoreFlow();
   }, [dispatch, rfInstance, setEdges, setNodes]);
+
+  const handleSaveToFile = useCallback(() => {
+    if (rfInstance) {
+      const flow = rfInstance.toObject();
+      const href = URL.createObjectURL(
+        new Blob([JSON.stringify(flow)], { type: 'application/json' })
+      );
+      const link = document.createElement('a');
+      link.href = href;
+      link.setAttribute('download', 'scheme.json');
+      document.body.appendChild(link);
+      link.click();
+
+      // clean up and remove ObjectURL
+      document.body.removeChild(link);
+      URL.revokeObjectURL(href);
+    }
+  }, [rfInstance]);
+
+  const handleLoadFromFile = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = async () => {
+          const json = reader.result;
+
+          const flow = JSON.parse(json as string);
+          if (!flow) return;
+
+          const { x = 0, y = 0, zoom = 1 } = flow.viewport;
+          dispatch(setNodes(flow.nodes || []));
+          dispatch(setEdges(flow.edges || []));
+          rfInstance?.setViewport({ x, y, zoom });
+        };
+      }
+    },
+    [rfInstance]
+  );
 
   const handleRun = async () => {
     dispatch(runNodeAsync())
@@ -176,6 +223,29 @@ const NlpConstructorPage: FC = () => {
               >
                 Restore
               </Button>
+            </div>
+            <div className="nlp-constructor-page__panel-item">
+              <Button
+                className="nlp-constructor-page__panel-button"
+                onClick={handleSaveToFile}
+              >
+                Save to file
+              </Button>
+            </div>
+            <div className="nlp-constructor-page__panel-item">
+              <label
+                className="nlp-constructor-page__panel-button"
+                htmlFor={nlpConstructorId}
+              >
+                <input
+                  type="file"
+                  accept=".txt, .json"
+                  id={nlpConstructorId}
+                  onChange={handleLoadFromFile}
+                  hidden
+                />
+                Load from file
+              </label>
             </div>
             <div className="nlp-constructor-page__panel-item">
               <Button
