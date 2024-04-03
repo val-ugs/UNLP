@@ -1,6 +1,9 @@
 import React, { FC, useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { v4 as uuidv4 } from 'uuid';
 import Button from 'components/common/Button';
-import { Node, useReactFlow } from 'reactflow';
+import { Node } from 'reactflow';
+import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
 import './styles.scss';
 
 interface NodeContextMenuProps {
@@ -9,24 +12,23 @@ interface NodeContextMenuProps {
 }
 
 const NodeContextMenu: FC<NodeContextMenuProps> = ({ nodeId, coords }) => {
-  const { getNode, setNodes, addNodes, setEdges } = useReactFlow();
+  const { nodes } = useAppSelector((state) => state.reactFlowReducer);
+  const { addNode, deleteNode } = reactFlowSlice.actions;
+  const dispatch = useAppDispatch();
 
   const handleDuplicateNode = useCallback(() => {
-    const node: Node = getNode(nodeId)!;
+    const node: Node = nodes.find((node) => node.id == nodeId)!;
     const position = {
       x: node.position.x + 50,
       y: node.position.y + 50,
     };
 
-    addNodes({ ...node, id: `${node.id}-copy`, position });
-  }, [nodeId, getNode, addNodes]);
+    dispatch(addNode({ ...node, id: uuidv4(), position }));
+  }, [nodes, dispatch, addNode, nodeId]);
 
   const handleDeleteNode = useCallback(() => {
-    setNodes((nodes) => nodes.filter((node) => node.id !== nodeId));
-    setEdges((edges) =>
-      edges.filter((edge) => edge.source !== nodeId && edge.target !== nodeId)
-    );
-  }, [nodeId, setNodes, setEdges]);
+    dispatch(deleteNode(nodeId));
+  }, [dispatch, deleteNode, nodeId]);
 
   return (
     <div

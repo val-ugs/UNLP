@@ -1,5 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Handle, Node, NodeProps, Position, useReactFlow } from 'reactflow';
+import { useAppDispatch } from 'hooks/redux';
+import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
+import { NodeProps } from 'reactflow';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import Select, { SelectProps } from 'components/common/Select';
 import {
@@ -10,7 +12,8 @@ import { huggingFaceModelApi } from 'services/huggingFaceModelService';
 import { skipToken } from '@reduxjs/toolkit/query';
 import Button from 'components/common/Button';
 import { enumToArray } from 'helpers/enumToArray';
-import { editNode } from '../nodeUtils';
+import BaseNode from '../../common/BaseNode';
+import { OutputHandlesItemProps } from '../../common/OutputHandles';
 import './styles.scss';
 
 interface HuggingFaceModelNodeProps {
@@ -23,7 +26,8 @@ interface HuggingFaceModelNodeProps {
 const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
   node
 ) => {
-  const { setNodes } = useReactFlow();
+  const { editNode } = reactFlowSlice.actions;
+  const dispatch = useAppDispatch();
   const [huggingFaceModelType, setHuggingFaceModelType] =
     useState<HuggingFaceModelType>(HuggingFaceModelType.Classification);
   const [huggingFaceModels, setHuggingFaceModels] =
@@ -44,9 +48,14 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
   const setHuggingFaceModelValue = (value: number) => {
     const huggingFaceModel = huggingFaceModels?.find((hfm) => hfm.id == value);
     if (huggingFaceModel)
-      editNode(setNodes, node.id, {
-        output: { huggingFaceModel: huggingFaceModel },
-      });
+      dispatch(
+        editNode({
+          id: node.id,
+          newData: {
+            output: { huggingFaceModel: huggingFaceModel },
+          },
+        })
+      );
   };
   const huggingFaceModelSelect: SelectProps<number> = {
     className: 'hugging-face-model-node__select nodrag nowheel',
@@ -63,8 +72,17 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
     ),
   };
 
+  const outputHandles: OutputHandlesItemProps[] = [
+    {
+      id: 'huggingFaceModel',
+    },
+  ];
+
   return (
-    <div className="hugging-face-model-node nopan">
+    <BaseNode
+      className="hugging-face-model-node nopan"
+      outputHandles={outputHandles}
+    >
       <div className="hugging-face-model-node__main">
         <div className="hugging-face-model-node__main-item">
           <div className="hugging-face-model-node__type">
@@ -77,9 +95,14 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
                     }`}
                     onClick={() => {
                       setHuggingFaceModelType(hfmt);
-                      editNode(setNodes, node.id, {
-                        output: { huggingFaceModel: null },
-                      });
+                      dispatch(
+                        editNode({
+                          id: node.id,
+                          newData: {
+                            output: { huggingFaceModel: null },
+                          },
+                        })
+                      );
                     }}
                   >
                     {hfmt}
@@ -105,26 +128,14 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
                   {huggingFaceModelSelect.children}
                 </Select>
               </LabeledElement>
-              <Handle
-                className="hugging-face-model-node__handle"
-                type={'source'}
-                position={Position.Right}
-              />
             </>
           ) : (
             'Hugging face models not found'
           )}
         </div>
       </div>
-    </div>
+    </BaseNode>
   );
 };
 
 export default HuggingFaceModelNode;
-
-export const run = (node: Node) => {
-  console.log('-----');
-  console.log('huggingFaceModel');
-  console.log(node);
-  console.log('-----');
-};
