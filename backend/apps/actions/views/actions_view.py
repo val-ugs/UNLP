@@ -89,17 +89,19 @@ def create_dataset_by_field(request, nlp_dataset_pk):
 
     field = request.GET.get('field', '')
     ner_label_name = request.GET.get('ner-label')
+    is_classification_label_saved = request.GET.get('is-classification-label-saved', 'False')
+    is_summarization_saved = request.GET.get('is-summarization-saved', 'False')
 
     nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset)
 
     # copy dataset by classification-label
     if field == "classification-label":
-        print(field)
         for nlp_text in nlp_texts:
-            nlp_text_copy = deepcopy(nlp_text)
-            nlp_text_copy.pk = None
-            nlp_text_copy.text = nlp_text_copy.classification_label
-            nlp_text_copy.classification_label = None
+            if not nlp_text.classification_label:
+                continue
+            nlp_text_copy = NlpText.objects.create()
+            nlp_text_copy.text = nlp_text.classification_label
+            save_fields(nlp_text_copy, nlp_text, is_classification_label_saved, is_summarization_saved)
             nlp_text_copy.nlp_dataset = nlp_dataset_copy
             nlp_text_copy.save()
         return Response(status=status.HTTP_200_OK)
@@ -107,10 +109,11 @@ def create_dataset_by_field(request, nlp_dataset_pk):
     # copy dataset by summarization
     elif field == "summarization":
         for nlp_text in nlp_texts:
-            nlp_text_copy = deepcopy(nlp_text)
-            nlp_text_copy.pk = None
-            nlp_text_copy.text = nlp_text_copy.summarization
-            nlp_text_copy.summarization = None
+            if not nlp_text.summarization:
+                continue
+            nlp_text_copy = NlpText.objects.create()
+            nlp_text_copy.text = nlp_text.summarization
+            save_fields(nlp_text_copy, nlp_text, is_classification_label_saved, is_summarization_saved)
             nlp_text_copy.nlp_dataset = nlp_dataset_copy
             nlp_text_copy.save()
         return Response(status=status.HTTP_200_OK)
@@ -127,6 +130,8 @@ def create_dataset_by_field(request, nlp_dataset_pk):
             
             if nlp_token_ner_label.initial == 1:
                 if isNewWord == False:
+                    nlp_text = get_object_or_404(NlpText, pk=nlp_token.nlp_text.pk, nlp_dataset=nlp_dataset_pk)
+                    save_fields(nlp_text_copy, nlp_text, is_classification_label_saved, is_summarization_saved)
                     nlp_text_copy.save()
                     nlp_text_copy = NlpText.objects.create()
                     nlp_text_copy.nlp_dataset = nlp_dataset_copy
@@ -134,7 +139,15 @@ def create_dataset_by_field(request, nlp_dataset_pk):
                 isNewWord = False
             
             nlp_text_copy.text = nlp_token.token if nlp_text_copy.text=="" else nlp_text_copy.text + " " + nlp_token.token
+        nlp_text = get_object_or_404(NlpText, pk=nlp_token.nlp_text.pk, nlp_dataset=nlp_dataset_pk)
+        save_fields(nlp_text_copy, nlp_text, is_classification_label_saved, is_summarization_saved)
         nlp_text_copy.save()
         return Response(status=status.HTTP_200_OK)
         
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+def save_fields(nlp_text_copy, nlp_text, is_classification_label_saved, is_summarization_saved):
+    if is_classification_label_saved:
+        nlp_text_copy.classification_label = nlp_text.classification_label
+    if is_summarization_saved:
+        nlp_text_copy.summarization = nlp_text.summarization
