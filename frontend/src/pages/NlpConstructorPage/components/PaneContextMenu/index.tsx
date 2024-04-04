@@ -1,14 +1,13 @@
 import React, { FC, useCallback } from 'react';
 import { useAppDispatch } from 'hooks/redux';
 import { v4 as uuidv4 } from 'uuid';
-import OrderedList from 'components/common/OrderedList';
-import Button from 'components/common/Button';
 import { Node, useReactFlow } from 'reactflow';
-import {
-  NlpConstructorNode,
-  listOfNlpConstructorNodes,
-} from 'pages/NlpConstructorPage/reactFlowNodes/nodes/nlpConstructorNodeTypes';
 import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
+import {
+  listOfNlpConstructorActionNodes,
+  listOfNlpConstructorNodes,
+} from 'pages/NlpConstructorPage/reactFlowNodes/nlpConstructorNodeTypes';
+import NodeGroupMenu from './components/NodeGroupMenu';
 import './styles.scss';
 
 interface PaneContextMenuProps {
@@ -46,21 +45,17 @@ const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
       className="pane-context-menu"
       style={{ top: coords.y, left: coords.x }}
     >
-      <div className="pane-context-menu__title">Add node</div>
-      <OrderedList className="pane-context-menu__nodes" type="none">
-        {listOfNlpConstructorNodes.map((node: NlpConstructorNode) => (
-          <OrderedList.Item className="pane-context-menu__node" key={node.name}>
-            <Button
-              className="pane-context-menu__button"
-              onClick={() => {
-                addNodeByType(node.type);
-              }}
-            >
-              {node.name}
-            </Button>
-          </OrderedList.Item>
-        ))}
-      </OrderedList>
+      <div className="pane-context-menu__title">Add</div>
+      <NodeGroupMenu
+        groupTitle={'nodes'}
+        listOfNodes={listOfNlpConstructorNodes}
+        addNodeByType={addNodeByType}
+      />
+      <NodeGroupMenu
+        groupTitle={'actions'}
+        listOfNodes={listOfNlpConstructorActionNodes}
+        addNodeByType={addNodeByType}
+      />
     </div>
   );
 };

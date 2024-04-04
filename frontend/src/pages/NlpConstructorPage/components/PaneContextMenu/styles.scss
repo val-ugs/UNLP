@@ -7,20 +7,7 @@
   border: 2px solid $color-2;
 
   &__title {
-    padding: 5px;
+    padding: 5px 10px;
     text-align: center;
-  }
-
-  &__nodes {
-    padding-left: 0;
-  }
-
-  &__node {
-  }
-
-  &__button {
-    width: 100%;
-    border: none;
-    border-radius: 0;
   }
 }

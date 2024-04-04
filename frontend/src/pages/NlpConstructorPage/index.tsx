@@ -7,7 +7,6 @@ import React, {
   useState,
 } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import Layout from 'pages/_layouts/Layout';
 import ReactFlow, {
   Background,
   BackgroundVariant,
@@ -18,8 +17,9 @@ import ReactFlow, {
   Panel,
   ReactFlowInstance,
 } from 'reactflow';
+import { nlpConstructorNodeTypes } from './reactFlowNodes/nlpConstructorNodeTypes';
+import Layout from 'pages/_layouts/Layout';
 import useContextMenu from 'hooks/useContextMenu';
-import { nlpConstructorNodeTypes } from './reactFlowNodes/nodes/nlpConstructorNodeTypes';
 import PaneContextMenu from './components/PaneContextMenu';
 import NodeContextMenu from './components/NodeContextMenu';
 import EdgeContextMenu from './components/EdgeContextMenu';
