@@ -2,6 +2,7 @@ import { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 import { api } from './apiService';
 import { tagTypes } from './tagTypes';
 import { clearFieldType } from 'data/enums/clearFieldType';
+import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 
 export const actionApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
@@ -15,7 +16,7 @@ export const actionApi = api.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.NlpDataset],
     }),
-    copyNlpDataset: build.mutation<void, number>({
+    copyNlpDataset: build.mutation<NlpDatasetProps, number>({
       query: (nlpDatasetId) => ({
         url: `/actions/copy/${nlpDatasetId}/`,
         method: 'GET',

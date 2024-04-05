@@ -1,29 +1,28 @@
 import React, { FC } from 'react';
+import { useAppDispatch } from 'hooks/redux';
 import { NodeProps } from 'reactflow';
+import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
-import { HuggingFaceModelProps } from 'interfaces/huggingFaceModel.interface';
 import BaseNode from '../../_common/BaseNode';
-import { InputHandlesItemProps } from '../../common/_InputHandles';
-import { OutputHandlesItemProps } from '../../common/_OutputHandles';
+import { InputHandlesItemProps } from '../../_common/InputHandles';
+import { OutputHandlesItemProps } from '../../_common/OutputHandles';
 import './styles.scss';
 
-interface PredictNodeProps {
+interface CopyNlpDatasetNodeProps {
   input: {
     nlpDataset: NlpDatasetProps;
-    huggingFaceModel: HuggingFaceModelProps;
   };
   output: {
     nlpDataset: NlpDatasetProps;
   };
 }
 
-const PredictNode: FC<NodeProps<PredictNodeProps>> = (node) => {
+const NlpDatasetCopyingNode: FC<NodeProps<CopyNlpDatasetNodeProps>> = (
+  node
+) => {
   const inputHandles: InputHandlesItemProps[] = [
     {
       id: 'nlpDataset',
-    },
-    {
-      id: 'huggingFaceModel',
     },
   ];
 
@@ -35,13 +34,13 @@ const PredictNode: FC<NodeProps<PredictNodeProps>> = (node) => {
 
   return (
     <BaseNode
-      className="predict-node"
+      className="nlp-dataset-copying-node"
       inputHandles={inputHandles}
       outputHandles={outputHandles}
     >
-      <div className="predict-node__main">Predict</div>
+      <div className="nlp-dataset-copying-node__main">Copy Nlp Dataset</div>
     </BaseNode>
   );
 };
 
-export default PredictNode;
+export default NlpDatasetCopyingNode;

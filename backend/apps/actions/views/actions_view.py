@@ -50,8 +50,10 @@ def copy_nlp_dataset(request, nlp_dataset_pk):
                 nlp_token_ner_label_copy.nlp_token = nlp_token_copy
                 nlp_token_ner_label_copy.ner_label = get_object_or_404(NerLabel, name=nlp_token_ner_label.ner_label.name, nlp_dataset=nlp_dataset_copy)
                 nlp_token_ner_label_copy.save()
+
+    nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset_copy);
         
-    return Response(status=status.HTTP_200_OK)
+    return Response(nlp_dataset_serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def clear_nlp_dataset(request, nlp_dataset_pk):

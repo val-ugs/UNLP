@@ -12,8 +12,8 @@ import { huggingFaceModelApi } from 'services/huggingFaceModelService';
 import { skipToken } from '@reduxjs/toolkit/query';
 import Button from 'components/common/Button';
 import { enumToArray } from 'helpers/enumToArray';
-import BaseNode from '../../common/BaseNode';
-import { OutputHandlesItemProps } from '../../common/OutputHandles';
+import BaseNode from '../../_common/BaseNode';
+import { OutputHandlesItemProps } from '../../_common/OutputHandles';
 import './styles.scss';
 
 interface HuggingFaceModelNodeProps {

@@ -6,8 +6,8 @@ import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
-import BaseNode from '../../common/BaseNode';
-import { OutputHandlesItemProps } from '../../common/OutputHandles';
+import BaseNode from '../../_common/BaseNode';
+import { OutputHandlesItemProps } from '../../_common/OutputHandles';
 import './styles.scss';
 
 interface NlpDatasetNodeProps {
