@@ -5,6 +5,7 @@ import HuggingFaceModelNode from './nodes/HuggingFaceModelNode';
 import NlpDatasetNode from './nodes/NlpDatasetNode';
 import PredictNode from './nodes/PredictNode';
 // import actions
+import NlpDatasetClearingNode from './actionNodes/nlpDatasetClearingNode';
 import NlpDatasetCopyingNode from './actionNodes/nlpDatasetCopyingNode';
 
 export interface NlpConstructorNode {
@@ -28,6 +29,10 @@ export const listOfNlpConstructorNodes: NlpConstructorNode[] = [
 ];
 
 export const listOfNlpConstructorActionNodes: NlpConstructorNode[] = [
+  {
+    name: 'Clear Nlp Dataset',
+    node: NlpDatasetClearingNode,
+  },
   {
     name: 'Copy Nlp Dataset',
     node: NlpDatasetCopyingNode,

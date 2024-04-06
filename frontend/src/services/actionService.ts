@@ -1,14 +1,14 @@
 import { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 import { api } from './apiService';
 import { tagTypes } from './tagTypes';
-import { clearFieldType } from 'data/enums/clearFieldType';
+import { fieldType } from 'data/enums/fieldType';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 
 export const actionApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
     clearNlpDataset: build.mutation<
-      void,
-      { nlpDatasetId: number; clearField: clearFieldType }
+      NlpDatasetProps,
+      { nlpDatasetId: number; clearField: fieldType }
     >({
       query: ({ nlpDatasetId, clearField }) => ({
         url: `/actions/clear/${nlpDatasetId}/?field=${clearField}`,

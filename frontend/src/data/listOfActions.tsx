@@ -1,11 +1,11 @@
 import { ActionProps } from 'interfaces/action.interface';
-import NlpDatasetCleaning from 'components/interstitial/actions/NlpDatasetCleaning';
+import NlpDatasetClearing from 'components/interstitial/actions/NlpDatasetClearing';
 import NlpDatasetCopying from 'components/interstitial/actions/NlpDatasetCopying';
 
 export const listOfActions: ActionProps[] = [
   {
     name: 'Clear dataset',
-    component: <NlpDatasetCleaning />,
+    component: <NlpDatasetClearing />,
   },
   {
     name: 'Copy dataset',

@@ -3,10 +3,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework.renderers import JSONRenderer
 
 from apps.common.models import NerLabel, NlpDataset, NlpText, NlpToken, NlpTokenNerLabel
-from apps.common.serializers import NerLabelSerializer, NlpDatasetFullSerializer, NlpDatasetSerializer, NlpTextSerializer, NlpTokenNerLabelSerializer, NlpTokenSerializer
+from apps.common.serializers import NlpDatasetSerializer
 
 from copy import deepcopy
 
@@ -51,7 +50,7 @@ def copy_nlp_dataset(request, nlp_dataset_pk):
                 nlp_token_ner_label_copy.ner_label = get_object_or_404(NerLabel, name=nlp_token_ner_label.ner_label.name, nlp_dataset=nlp_dataset_copy)
                 nlp_token_ner_label_copy.save()
 
-    nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset_copy);
+    nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset_copy)
         
     return Response(nlp_dataset_serializer.data, status=status.HTTP_200_OK)
 
@@ -59,24 +58,24 @@ def copy_nlp_dataset(request, nlp_dataset_pk):
 def clear_nlp_dataset(request, nlp_dataset_pk):
     field = request.GET.get('field', '')
 
-    if field == 'classification_label':
+    if field == 'classification-label':
         nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk)
         for nlp_text in nlp_texts:
             nlp_text.classification_label = None
             nlp_text.save()
-        return Response(status=status.HTTP_200_OK)
     
-    if field == 'ner_label':
+    if field == 'ner-label':
         ner_labels = NerLabel.objects.filter(nlp_dataset=nlp_dataset_pk)
         for ner_label in ner_labels:
             ner_label.delete()
-        return Response(status=status.HTTP_200_OK)
 
     if field == 'summarization':
         nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk)
         for nlp_text in nlp_texts:
             nlp_text.summarization = None
             nlp_text.save()
-        return Response(status=status.HTTP_200_OK)
+    
+    nlp_dataset = get_object_or_404(NlpDataset, pk=nlp_dataset_pk)
+    nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset)
 
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+    return Response(nlp_dataset_serializer.data, status=status.HTTP_200_OK)

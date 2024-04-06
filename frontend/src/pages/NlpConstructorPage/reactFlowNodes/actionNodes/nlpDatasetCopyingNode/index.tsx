@@ -1,14 +1,12 @@
 import React, { FC } from 'react';
-import { useAppDispatch } from 'hooks/redux';
 import { NodeProps } from 'reactflow';
-import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import BaseNode from '../../_common/BaseNode';
 import { InputHandlesItemProps } from '../../_common/InputHandles';
 import { OutputHandlesItemProps } from '../../_common/OutputHandles';
 import './styles.scss';
 
-interface CopyNlpDatasetNodeProps {
+interface NlpDatasetCopyingNodeProps {
   input: {
     nlpDataset: NlpDatasetProps;
   };
@@ -17,7 +15,7 @@ interface CopyNlpDatasetNodeProps {
   };
 }
 
-const NlpDatasetCopyingNode: FC<NodeProps<CopyNlpDatasetNodeProps>> = (
+const NlpDatasetCopyingNode: FC<NodeProps<NlpDatasetCopyingNodeProps>> = (
   node
 ) => {
   const inputHandles: InputHandlesItemProps[] = [
