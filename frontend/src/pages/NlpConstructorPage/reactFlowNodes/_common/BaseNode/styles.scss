@@ -1,12 +1,27 @@
 @import 'variables.scss';
 
 .base-node {
-  display: flex;
-  background-color: $color-3;
-  border: 3px solid $color-2;
+  position: relative;
+  overflow: hidden;
 
-  &.active {
-    border-color: $color-7;
+  // border color
+  background-color: $color-2;
+
+  &__animated-border {
+    position: absolute;
+
+    // active border color
+    background: conic-gradient($color-2 10%, $color-7);
+    animation: rotate 4s linear infinite;
+    content: '';
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    margin: 4px;
+    background-color: $color-3;
   }
 
   &__input-handles {
@@ -19,5 +34,15 @@
 
   &__output-handles {
     border-left: 2px solid $color-2;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
