@@ -1,11 +1,16 @@
 import { Node } from 'reactflow';
 
-export const run = (node: Node) => {
+const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+
+export const run = async (node: Node) => {
   console.log('-----');
   console.log('nlpDataset');
   console.log(node);
   console.log('-----');
-  console.log(node);
 
-  return node.data.output;
+  await sleep(10000);
+
+  return {
+    nlpDataset: node.data?.input?.nlpDataset,
+  };
 };

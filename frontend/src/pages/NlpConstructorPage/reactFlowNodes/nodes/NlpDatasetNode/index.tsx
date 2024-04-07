@@ -11,10 +11,13 @@ import { OutputHandlesItemProps } from '../../_common/OutputHandles';
 import './styles.scss';
 
 interface NlpDatasetNodeProps {
-  input: undefined;
+  input: {
+    nlpDataset: NlpDatasetProps;
+  };
   output: {
     nlpDataset: NlpDatasetProps;
   };
+  running: boolean;
 }
 
 const NlpDatasetNode: FC<NodeProps<NlpDatasetNodeProps>> = (node) => {
@@ -36,7 +39,7 @@ const NlpDatasetNode: FC<NodeProps<NlpDatasetNodeProps>> = (node) => {
       dispatch(
         editNode({
           id: node.id,
-          newData: { output: { nlpDataset: nlpDataset } },
+          newData: { input: { nlpDataset: nlpDataset } },
         })
       );
     console.log(node);
@@ -44,7 +47,7 @@ const NlpDatasetNode: FC<NodeProps<NlpDatasetNodeProps>> = (node) => {
 
   const nlpDatasetSelect: SelectProps<number> = {
     className: 'nlp-dataset-node__select nodrag nowheel',
-    selectedValue: node.data?.output?.nlpDataset?.id ?? 0,
+    selectedValue: node.data?.input?.nlpDataset?.id ?? 0,
     setSelectedValue: setNlpDatasetIdValue,
     children: nlpDatasets?.map((nlpDataset: NlpDatasetProps) => {
       return (
@@ -62,7 +65,11 @@ const NlpDatasetNode: FC<NodeProps<NlpDatasetNodeProps>> = (node) => {
   ];
 
   return (
-    <BaseNode className="nlp-dataset-node nopan" outputHandles={outputHandles}>
+    <BaseNode
+      className="nlp-dataset-node nopan"
+      outputHandles={outputHandles}
+      running={node.data?.running}
+    >
       <div className="nlp-dataset-node__main">
         <LabeledElement
           className="nlp-dataset-node__labeled-element"

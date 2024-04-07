@@ -13,6 +13,7 @@ interface NlpDatasetCopyingNodeProps {
   output: {
     nlpDataset: NlpDatasetProps;
   };
+  running: boolean;
 }
 
 const NlpDatasetCopyingNode: FC<NodeProps<NlpDatasetCopyingNodeProps>> = (
@@ -35,6 +36,7 @@ const NlpDatasetCopyingNode: FC<NodeProps<NlpDatasetCopyingNodeProps>> = (
       className="nlp-dataset-copying-node"
       inputHandles={inputHandles}
       outputHandles={outputHandles}
+      running={node.data?.running}
     >
       <div className="nlp-dataset-copying-node__main">Copy Nlp Dataset</div>
     </BaseNode>

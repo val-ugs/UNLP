@@ -17,10 +17,13 @@ import { OutputHandlesItemProps } from '../../_common/OutputHandles';
 import './styles.scss';
 
 interface HuggingFaceModelNodeProps {
-  input: null;
+  input: {
+    huggingFaceModel: HuggingFaceModelProps;
+  };
   output: {
     huggingFaceModel: HuggingFaceModelProps;
   };
+  running: boolean;
 }
 
 const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
@@ -52,14 +55,14 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
         editNode({
           id: node.id,
           newData: {
-            output: { huggingFaceModel: huggingFaceModel },
+            input: { huggingFaceModel: huggingFaceModel },
           },
         })
       );
   };
   const huggingFaceModelSelect: SelectProps<number> = {
     className: 'hugging-face-model-node__select nodrag nowheel',
-    selectedValue: node.data?.output?.huggingFaceModel?.id ?? 0,
+    selectedValue: node.data?.input?.huggingFaceModel?.id ?? 0,
     setSelectedValue: setHuggingFaceModelValue,
     children: huggingFaceModels?.map(
       (huggingFaceModel: HuggingFaceModelProps) => {
@@ -82,6 +85,7 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
     <BaseNode
       className="hugging-face-model-node nopan"
       outputHandles={outputHandles}
+      running={node.data?.running}
     >
       <div className="hugging-face-model-node__main">
         <div className="hugging-face-model-node__main-item">

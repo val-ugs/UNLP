@@ -20,6 +20,7 @@ interface NlpDatasetClearingNodeProps {
   output: {
     nlpDataset: NlpDatasetProps;
   };
+  running: boolean;
 }
 
 const NlpDatasetClearingNode: FC<NodeProps<NlpDatasetClearingNodeProps>> = (
@@ -66,6 +67,7 @@ const NlpDatasetClearingNode: FC<NodeProps<NlpDatasetClearingNodeProps>> = (
       className="nlp-dataset-clearing-node"
       inputHandles={inputHandles}
       outputHandles={outputHandles}
+      running={node.data?.running}
     >
       <div className="nlp-dataset-clearing-node__main">
         <LabeledElement

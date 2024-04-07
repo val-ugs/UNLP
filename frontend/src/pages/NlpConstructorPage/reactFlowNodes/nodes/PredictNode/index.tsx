@@ -3,8 +3,8 @@ import { NodeProps } from 'reactflow';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import { HuggingFaceModelProps } from 'interfaces/huggingFaceModel.interface';
 import BaseNode from '../../_common/BaseNode';
-import { InputHandlesItemProps } from '../../common/_InputHandles';
-import { OutputHandlesItemProps } from '../../common/_OutputHandles';
+import { InputHandlesItemProps } from '../../_common/InputHandles';
+import { OutputHandlesItemProps } from '../../_common/OutputHandles';
 import './styles.scss';
 
 interface PredictNodeProps {
@@ -15,6 +15,7 @@ interface PredictNodeProps {
   output: {
     nlpDataset: NlpDatasetProps;
   };
+  running: boolean;
 }
 
 const PredictNode: FC<NodeProps<PredictNodeProps>> = (node) => {
@@ -38,6 +39,7 @@ const PredictNode: FC<NodeProps<PredictNodeProps>> = (node) => {
       className="predict-node"
       inputHandles={inputHandles}
       outputHandles={outputHandles}
+      running={node.data?.running}
     >
       <div className="predict-node__main">Predict</div>
     </BaseNode>

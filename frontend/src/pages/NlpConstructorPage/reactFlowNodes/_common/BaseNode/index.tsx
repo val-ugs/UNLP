@@ -7,6 +7,7 @@ interface BaseNodeProps {
   className?: string;
   inputHandles?: InputHandlesItemProps[];
   outputHandles?: OutputHandlesItemProps[];
+  running: boolean;
   children: ReactNode;
 }
 
@@ -14,6 +15,7 @@ const BaseNode: FC<BaseNodeProps> = ({
   className,
   inputHandles,
   outputHandles,
+  running,
   children,
 }) => {
   const nodeRef = useRef(null);
@@ -25,8 +27,13 @@ const BaseNode: FC<BaseNodeProps> = ({
     }
   }, []);
 
+  console.log(running);
+
   return (
-    <div className={`base-node ${className}`} ref={nodeRef}>
+    <div
+      className={`base-node ${className} ${running ? 'active' : ''}`}
+      ref={nodeRef}
+    >
       {inputHandles && (
         <InputHandles className="base-node__input-handles">
           {inputHandles.map((inputHandle, index) => (

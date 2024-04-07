@@ -23,21 +23,9 @@ interface EditNodeProps {
 
 const editNodeAsync = createAppAsyncThunk(
   'reactflow/editNode',
-  async ({ id, newData }: EditNodeProps, thunkApi) => {
-    const { nodes } = thunkApi.getState().reactFlowReducer;
-
-    return nodes.map((node: Node) => {
-      if (node.id === id) {
-        return {
-          ...node,
-          data: {
-            ...node.data,
-            ...newData,
-          },
-        };
-      }
-      return node;
-    });
+  async ({ id, newData }: EditNodeProps) => {
+    // update occurs when this promise is fulfilled (see extraReducers), there we work with the current state
+    return { id, newData };
   }
 );
 
@@ -57,7 +45,6 @@ export const runNodeAsync = createAppAsyncThunk(
       if (sourcePromises.length) {
         console.log(`Waiting for ${sourcePromises} sources to resolve`);
         await Promise.all(sourcePromises).catch((e) => {
-          console.log(e);
           throw e;
         });
         console.log(`Sources resolved`);
@@ -89,6 +76,7 @@ export const runNodeAsync = createAppAsyncThunk(
                 ...node.data?.input,
                 ...input,
               },
+              running: true,
             },
           })
         )
@@ -113,7 +101,7 @@ export const runNodeAsync = createAppAsyncThunk(
         .dispatch(
           editNodeAsync({
             id: node.id,
-            newData: { output: output },
+            newData: { output: output, running: false },
           })
         )
         .unwrap()
@@ -135,11 +123,21 @@ export const runNodeAsync = createAppAsyncThunk(
         getIncomers(node, nodes, edges).length > 0 &&
         getOutgoers(node, nodes, edges).length == 0
     );
-    for (const node of endNodes) {
-      await processNode(node, thunkApi).catch((e) => {
+    // for (const node of endNodes) {
+    //   await processNode(node, thunkApi).catch((e) => {
+    //     throw e;
+    //   });
+    // }
+
+    const promises = endNodes.map(async (n) => {
+      return await processNode(n, thunkApi).catch((e) => {
         throw e;
       });
-    }
+    });
+    if (promises.length)
+      await Promise.all(promises).catch((e) => {
+        throw e;
+      });
   }
 );
 
@@ -186,6 +184,7 @@ export const reactFlowSlice = createSlice({
     },
     addNode: (state, action: PayloadAction<Node>) => {
       const node = action.payload;
+      node.data = { ...node.data, running: false };
       state.nodes = [...state.nodes, node];
     },
     editNode: (state, action: PayloadAction<{ id: string; newData: any }>) => {
@@ -217,7 +216,19 @@ export const reactFlowSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(editNodeAsync.fulfilled, (state, action) => {
-      state.nodes = action.payload;
+      const { id, newData } = action.payload;
+      state.nodes = state.nodes.map((node: Node) => {
+        if (node.id === id) {
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              ...newData,
+            },
+          };
+        }
+        return node;
+      });
     });
   },
 });

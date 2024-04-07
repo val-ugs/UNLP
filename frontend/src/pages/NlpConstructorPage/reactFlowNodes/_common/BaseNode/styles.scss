@@ -5,6 +5,10 @@
   background-color: $color-3;
   border: 3px solid $color-2;
 
+  &.active {
+    border-color: $color-7;
+  }
+
   &__input-handles {
     border-right: 2px solid $color-2;
   }
