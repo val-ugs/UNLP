@@ -20,32 +20,42 @@ const BaseNode: FC<BaseNodeProps> = ({
 }) => {
   const nodeRef = useRef(null);
   const [height, setHeight] = useState<number>(0);
-  const [width, setWidth] = useState<number>(0);
 
   useLayoutEffect(() => {
-    setTimeout(() => {
-      if (!nodeRef.current) return;
+    if (!nodeRef.current) return;
 
-      setHeight(nodeRef.current.offsetHeight);
-      setWidth(nodeRef.current.offsetWidth);
-    }, 100); // timeout to resolve width error
+    setHeight(nodeRef.current.offsetHeight);
   }, []);
-
-  console.log(running);
 
   return (
     <div className={`base-node ${className}`} ref={nodeRef}>
-      {running && (
-        <div
-          className={'base-node__animated-border'}
-          style={{
-            width: Math.max(height, width) + 10,
-            height: Math.max(height, width) + 10,
-            top: width > height ? -0.5 * width + 0.5 * height : 0,
-            left: height > width ? -0.5 * height + 0.5 * width : 0,
-          }}
-        ></div>
-      )}
+      <div className="base-node__animated-border-wrapper">
+        {running && (
+          <div
+            className={'base-node__animated-border'}
+            style={{
+              width: Math.max(
+                nodeRef.current?.offsetHeight,
+                nodeRef.current?.offsetWidth
+              ),
+              height: Math.max(
+                nodeRef.current?.offsetHeight,
+                nodeRef.current?.offsetWidth
+              ),
+              top:
+                nodeRef.current?.offsetWidth > nodeRef.current?.offsetHeight
+                  ? -0.5 * nodeRef.current?.offsetWidth +
+                    0.5 * nodeRef.current?.offsetHeight
+                  : 0,
+              left:
+                nodeRef.current?.offsetHeight > nodeRef.current?.offsetWidth
+                  ? -0.5 * nodeRef.current?.offsetHeight +
+                    0.5 * nodeRef.current?.offsetWidth
+                  : 0,
+            }}
+          ></div>
+        )}
+      </div>
       <div className="base-node__content">
         {inputHandles && (
           <InputHandles className="base-node__input-handles">
