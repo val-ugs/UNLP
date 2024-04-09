@@ -93,6 +93,7 @@ class NerTrainer:
                     if not nlp_token_ner_label.ner_label: #  set ner label if not defined
                         # print(f'token id without ner_label: {nlp_token.id}')
                         nlp_token_ner_label.ner_label = ner_label
+                        nlp_token_ner_label.initial = initial
                         nlp_token_ner_label.save()
 
         return metrics
