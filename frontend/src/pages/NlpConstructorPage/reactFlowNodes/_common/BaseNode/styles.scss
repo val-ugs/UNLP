@@ -1,0 +1,53 @@
+@import 'variables.scss';
+
+.base-node {
+  position: relative;
+  display: flex;
+
+  &__animated-border-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: $color-2;
+  }
+
+  &__animated-border {
+    position: absolute;
+
+    // active border color
+    background: conic-gradient($color-2 10%, $color-7);
+    animation: rotate 4s linear infinite;
+    content: '';
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    margin: 4px;
+    background-color: $color-3;
+  }
+
+  &__input-handles {
+    border-right: 2px solid $color-2;
+  }
+
+  &__main {
+    padding: 10px;
+  }
+
+  &__output-handles {
+    border-left: 2px solid $color-2;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

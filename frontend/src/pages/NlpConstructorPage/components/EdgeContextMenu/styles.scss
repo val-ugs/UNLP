@@ -1,13 +1,19 @@
 @import 'variables.scss';
 
-.pane-context-menu {
+.edge-context-menu {
   position: absolute;
   z-index: 100;
   background-color: $color-4;
   border: 2px solid $color-2;
 
   &__title {
-    padding: 5px 10px;
+    padding: 5px;
     text-align: center;
+  }
+
+  &__button {
+    width: 100%;
+    border: none;
+    border-radius: 0;
   }
 }

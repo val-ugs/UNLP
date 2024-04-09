@@ -1,53 +1,43 @@
 import React, { FC, useCallback } from 'react';
-import OrderedList from 'components/common/OrderedList';
-import Button from 'components/common/Button';
+import { useAppDispatch } from 'hooks/redux';
+import { v4 as uuidv4 } from 'uuid';
 import { Node, useReactFlow } from 'reactflow';
+import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
 import {
-  NlpConstructorNode,
+  listOfNlpConstructorActionNodes,
   listOfNlpConstructorNodes,
-} from 'pages/NlpConstructorPage/nodes/nlpConstructorNodeTypes';
+} from 'pages/NlpConstructorPage/reactFlowNodes/nlpConstructorNodeTypes';
+import NodeGroupMenu from './components/NodeGroupMenu';
 import './styles.scss';
 
 interface PaneContextMenuProps {
-  setNodes: React.Dispatch<
-    React.SetStateAction<
-      Node<
-        {
-          label: string;
-          value?: undefined;
-        },
-        string | undefined
-      >[]
-    >
-  >;
   coords: { x: number; y: number };
 }
 
-let id = 1;
-const getId = () => `node-${id++}`;
-
-const PaneContextMenu: FC<PaneContextMenuProps> = ({ setNodes, coords }) => {
+const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
+  const { addNode } = reactFlowSlice.actions;
+  const dispatch = useAppDispatch();
   const { screenToFlowPosition } = useReactFlow();
   const flowCoords = screenToFlowPosition({
     x: coords.x,
     y: coords.y,
   });
 
-  const addNode = useCallback(
+  const addNodeByType = useCallback(
     (nodeType: string) => {
-      const id = getId();
+      const id = uuidv4();
       const newNode: Node = {
         id,
         position: {
           x: flowCoords.x,
           y: flowCoords.y,
         },
-        data: { label: `Node ${id}` },
+        data: null,
         type: nodeType,
       };
-      setNodes((nds) => nds.concat(newNode));
+      dispatch(addNode(newNode));
     },
-    [flowCoords.x, flowCoords.y, setNodes]
+    [flowCoords.x, flowCoords.y, dispatch, addNode]
   );
 
   return (
@@ -55,21 +45,17 @@ const PaneContextMenu: FC<PaneContextMenuProps> = ({ setNodes, coords }) => {
       className="pane-context-menu"
       style={{ top: coords.y, left: coords.x }}
     >
-      <div className="pane-context-menu__title">Add node</div>
-      <OrderedList className="pane-context-menu__nodes" type="none">
-        {listOfNlpConstructorNodes.map((node: NlpConstructorNode) => (
-          <OrderedList.Item className="pane-context-menu__node" key={node.name}>
-            <Button
-              className="pane-context-menu__button"
-              onClick={() => {
-                addNode(node.type);
-              }}
-            >
-              {node.name}
-            </Button>
-          </OrderedList.Item>
-        ))}
-      </OrderedList>
+      <div className="pane-context-menu__title">Add</div>
+      <NodeGroupMenu
+        groupTitle={'nodes'}
+        listOfNodes={listOfNlpConstructorNodes}
+        addNodeByType={addNodeByType}
+      />
+      <NodeGroupMenu
+        groupTitle={'actions'}
+        listOfNodes={listOfNlpConstructorActionNodes}
+        addNodeByType={addNodeByType}
+      />
     </div>
   );
 };

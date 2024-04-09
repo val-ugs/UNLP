@@ -1,0 +1,15 @@
+.input-handles {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.input-handles-item {
+  padding: 5px;
+
+  &__id {
+  }
+
+  &__handle {
+  }
+}

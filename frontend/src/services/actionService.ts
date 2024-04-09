@@ -16,7 +16,7 @@ export const actionApi = api.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.NlpDataset],
     }),
-    copyNlpDataset: build.mutation<void, number>({
+    copyNlpDataset: build.mutation<NlpDatasetProps, number>({
       query: (nlpDatasetId) => ({
         url: `/actions/copy/${nlpDatasetId}/`,
         method: 'GET',
