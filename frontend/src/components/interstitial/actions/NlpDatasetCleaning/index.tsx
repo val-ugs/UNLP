@@ -6,7 +6,7 @@ import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import InputButton from 'components/common/Inputs/InputButton';
 import { actionApi } from 'services/actionService';
-import { clearFieldType } from 'data/enums/clearFieldType';
+import { fieldType } from 'data/enums/fieldType';
 import { enumToArray } from 'helpers/enumToArray';
 import { actionModalSlice } from 'store/reducers/actionModalSlice';
 import './styles.scss';
@@ -14,9 +14,7 @@ import './styles.scss';
 const NlpDatasetCleaning: FC = () => {
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [nlpDatasetId, setNlpDatasetId] = useState<number>();
-  const [clearField, setClearField] = useState<clearFieldType>(
-    clearFieldType.ClassificationLabel
-  );
+  const [field, setField] = useState<fieldType>(fieldType.ClassificationLabel);
   const { deactivate } = actionModalSlice.actions;
   const dispatch = useAppDispatch();
   const [clearNlpDataset, {}] = actionApi.useClearNlpDatasetMutation();
@@ -46,24 +44,24 @@ const NlpDatasetCleaning: FC = () => {
     }),
   };
 
-  const setClearFieldValue = (value: string) => {
-    setClearField(value as clearFieldType);
+  const setFieldValue = (value: string) => {
+    setField(value as fieldType);
   };
-  const clearFieldSelect: SelectProps<string> = {
+  const fieldSelect: SelectProps<string> = {
     className: 'nlp-dataset-cleaning__select',
-    selectedValue: clearField ?? '',
-    setSelectedValue: setClearFieldValue,
-    children: enumToArray(clearFieldType).map((cf: clearFieldType) => {
+    selectedValue: field ?? '',
+    setSelectedValue: setFieldValue,
+    children: enumToArray(fieldType).map((ft: fieldType) => {
       return (
-        <Select.Item key={cf} value={cf}>
-          {cf}
+        <Select.Item key={ft} value={ft}>
+          {ft}
         </Select.Item>
       );
     }),
   };
 
   const handleSubmit = () => {
-    if (nlpDatasetId) clearNlpDataset({ nlpDatasetId, clearField });
+    if (nlpDatasetId) clearNlpDataset({ nlpDatasetId, field });
     dispatch(deactivate());
   };
 
@@ -91,12 +89,12 @@ const NlpDatasetCleaning: FC = () => {
             labelElement={{ value: 'Select field to clear' }}
           >
             <Select
-              className={clearFieldSelect.className}
-              selectedValue={clearFieldSelect.selectedValue}
-              setSelectedValue={clearFieldSelect.setSelectedValue}
-              disabled={clearFieldSelect.disabled}
+              className={fieldSelect.className}
+              selectedValue={fieldSelect.selectedValue}
+              setSelectedValue={fieldSelect.setSelectedValue}
+              disabled={fieldSelect.disabled}
             >
-              {clearFieldSelect.children}
+              {fieldSelect.children}
             </Select>
           </LabeledElement>
         </div>

@@ -29,7 +29,7 @@ const NlpDatasetCopying: FC = () => {
     setNlpDatasetId(value);
   };
   const nlpDatasetSelect: SelectProps<number> = {
-    className: 'nlp-dataset-cleaning__select',
+    className: 'nlp-dataset-copying__select',
     selectedValue: nlpDatasetId ?? 0,
     setSelectedValue: setNlpDatasetIdValue,
     children: nlpDatasets?.map((nlpDataset: NlpDatasetProps) => {

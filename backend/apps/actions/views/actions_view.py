@@ -57,7 +57,7 @@ def copy_nlp_dataset(request, nlp_dataset_pk):
 def clear_nlp_dataset(request, nlp_dataset_pk):
     field = request.GET.get('field', '')
 
-    if field == 'classification_label':
+    if field == 'classification-label':
         nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk)
         for nlp_text in nlp_texts:
             nlp_text.classification_label = None
@@ -88,7 +88,7 @@ def create_dataset_by_field(request, nlp_dataset_pk):
     nlp_dataset_copy.save()
 
     field = request.GET.get('field', '')
-    ner_label_name = request.GET.get('ner-label')
+    ner_label_id = request.GET.get('ner-label-id')
     is_classification_label_saved = request.GET.get('is-classification-label-saved', 'False')
     is_summarization_saved = request.GET.get('is-summarization-saved', 'False')
 
@@ -120,12 +120,11 @@ def create_dataset_by_field(request, nlp_dataset_pk):
     
     # copy dataset by ner-label
     elif field == "ner-label":
-        ner_label = get_object_or_404(NerLabel, nlp_dataset=nlp_dataset_pk, name=ner_label_name)
-        nlp_token_ner_labels = NlpTokenNerLabel.objects.filter(ner_label=ner_label).order_by('nlp_token')
+        nlp_tokens_ner_label = NlpTokenNerLabel.objects.filter(ner_label=ner_label_id).order_by('nlp_token')
         nlp_text_copy = NlpText.objects.create()
         nlp_text_copy.nlp_dataset = nlp_dataset_copy
         isNewWord = True
-        for nlp_token_ner_label in nlp_token_ner_labels:
+        for nlp_token_ner_label in nlp_tokens_ner_label:
             nlp_token = get_object_or_404(NlpToken, pk=nlp_token_ner_label.nlp_token.pk)
             
             if nlp_token_ner_label.initial == 1:
@@ -138,7 +137,7 @@ def create_dataset_by_field(request, nlp_dataset_pk):
                     isNewWord = True
                 isNewWord = False
             
-            nlp_text_copy.text = nlp_token.token if nlp_text_copy.text=="" else nlp_text_copy.text + " " + nlp_token.token
+            nlp_text_copy.text = nlp_token.token if not nlp_text_copy.text else nlp_text_copy.text + " " + nlp_token.token
         nlp_text = get_object_or_404(NlpText, pk=nlp_token.nlp_text.pk, nlp_dataset=nlp_dataset_pk)
         save_fields(nlp_text_copy, nlp_text, is_classification_label_saved, is_summarization_saved)
         nlp_text_copy.save()
