@@ -1,0 +1,27 @@
+.nlp-dataset-creating-by-field {
+  display: flex;
+  flex-direction: column;
+
+  &__item {
+    padding-bottom: 5px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &__item-button {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__labeled-element {
+  }
+
+  &__input-checkbox {
+    padding-top: 10px;
+  }
+
+  &__button {
+  }
+}

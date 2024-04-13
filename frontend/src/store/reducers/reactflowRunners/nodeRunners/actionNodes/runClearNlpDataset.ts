@@ -5,7 +5,7 @@ export const run = async (node: Node, thunkApi: any) => {
   const { data: nlpDataset } = await thunkApi.dispatch(
     actionApi.endpoints.clearNlpDataset.initiate({
       nlpDatasetId: node.data?.input?.nlpDataset?.id,
-      clearField: node.data?.input?.clearField,
+      field: node.data?.input?.field,
     })
   );
 
