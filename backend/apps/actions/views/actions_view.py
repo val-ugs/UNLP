@@ -138,7 +138,7 @@ def create_dataset_by_field(request, nlp_dataset_pk):
                         isNewWord = True
                     isNewWord = False
                 
-                nlp_text_copy.text = nlp_token.token if not nlp_text_copy.text else nlp_text_copy.text + " " + nlp_token.token
+                nlp_text_copy.text = nlp_token.token if not nlp_text_copy.text else '{} {}'.format(nlp_text_copy.text, nlp_token.token)
             nlp_text = get_object_or_404(NlpText, pk=nlp_token.nlp_text.pk, nlp_dataset=nlp_dataset_pk)
             try_save_fields(nlp_text_copy, nlp_text, is_classification_label_saved, is_summarization_saved)
             nlp_text_copy.save()
