@@ -225,7 +225,7 @@ const NlpDatasetCreatingByFieldNode: FC<
       )}
       <div className="nlp-dataset-creating-by-field-node__input-checkbox">
         <LabeledElement
-          className="nlp-dataset-creating-by-field__labeled-element"
+          className="nlp-dataset-creating-by-field-node__labeled-element"
           labelElement={{ value: 'Is classification label saved' }}
         >
           <InputCheckbox
@@ -238,7 +238,7 @@ const NlpDatasetCreatingByFieldNode: FC<
       </div>
       <div className="nlp-dataset-creating-by-field-node__input-checkbox">
         <LabeledElement
-          className="nlp-dataset-creating-by-field__labeled-element"
+          className="nlp-dataset-creating-by-field-node__labeled-element"
           labelElement={{ value: 'Is summarization saved' }}
         >
           <InputCheckbox

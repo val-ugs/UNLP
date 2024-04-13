@@ -16,8 +16,6 @@ export const run = async (node: Node, thunkApi: any) => {
     })
   );
 
-  console.log('nlpDataset: ', nlpDataset);
-
   return {
     nlpDataset: nlpDataset,
   };
