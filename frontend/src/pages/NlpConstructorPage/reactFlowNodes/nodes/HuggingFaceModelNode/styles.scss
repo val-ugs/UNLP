@@ -1,0 +1,38 @@
+@import 'variables.scss';
+
+.hugging-face-model-node {
+  &__name {
+  }
+
+  &__handle {
+  }
+
+  &__main {
+  }
+
+  &__main-item {
+    padding-bottom: 10px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &__type {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__type-item {
+    padding: 0 10px;
+  }
+
+  &__type-button {
+  }
+
+  &__labeled-element {
+  }
+
+  &__select {
+  }
+}

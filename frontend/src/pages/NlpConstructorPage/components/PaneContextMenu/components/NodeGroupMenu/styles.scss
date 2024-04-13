@@ -1,0 +1,35 @@
+@import 'variables.scss';
+
+.node-group-menu {
+  position: relative;
+
+  &__group-title {
+    padding: 5px;
+    text-align: center;
+    background-color: $color-2;
+
+    &:hover {
+      background-color: $color-3;
+    }
+
+    &.active {
+      background-color: $color-3;
+    }
+  }
+
+  &__nodes {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    padding-left: 0;
+  }
+
+  &__node {
+  }
+
+  &__button {
+    width: 100%;
+    white-space: nowrap;
+    border-radius: 0;
+  }
+}

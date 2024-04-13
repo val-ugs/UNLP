@@ -1,0 +1,71 @@
+@import 'variables.scss';
+
+.nlp-constructor-page {
+  display: flex;
+  height: 100%;
+
+  &__react-flow {
+  }
+
+  &__panel {
+    display: flex;
+  }
+
+  &__panel-item {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  &__panel-button {
+    padding: 5px;
+    font-size: 14px;
+    background-color: $color-2;
+    border: 2px solid $color-4;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+  &__error {
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: 300px;
+    padding: 5px;
+    color: $color-7;
+    opacity: 0;
+
+    &.animate {
+      animation: smooth 2s ease-in;
+    }
+  }
+}
+
+@keyframes smooth {
+  0% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+// override react-flow styles
+.react-flow {
+  &__controls-button {
+    width: 30px;
+  }
+
+  &__edge-path {
+    stroke: $color-3;
+  }
+
+  &__connection-path {
+    stroke: $color-3;
+  }
+}

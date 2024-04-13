@@ -1,0 +1,9 @@
+@import 'variables.scss';
+
+.predict-node {
+  &__main {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}
