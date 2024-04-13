@@ -3,11 +3,12 @@ import { api } from './apiService';
 import { tagTypes } from './tagTypes';
 import { fieldType } from 'data/enums/fieldType';
 import { createNlpDatasetByFieldDtoProps } from 'interfaces/dtos/createNlpDatasetByFieldDto.interface';
+import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 
 export const actionApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
     clearNlpDataset: build.mutation<
-      void,
+      NlpDatasetProps,
       { nlpDatasetId: number; field: fieldType }
     >({
       query: ({ nlpDatasetId, field }) => ({
@@ -16,7 +17,7 @@ export const actionApi = api.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.NlpDataset],
     }),
-    copyNlpDataset: build.mutation<NlpDatasetProps, number>({
+    copyNlpDataset: build.mutation<void, number>({
       query: (nlpDatasetId) => ({
         url: `/actions/copy/${nlpDatasetId}/`,
         method: 'GET',
@@ -25,15 +26,20 @@ export const actionApi = api.injectEndpoints({
     }),
     createByFieldNlpDataset: build.mutation<
       void,
-      createNlpDatasetByFieldDtoProps
+      {
+        nlpDatasetId: number;
+        createNlpDatasetByFieldDto: createNlpDatasetByFieldDtoProps;
+      }
     >({
       query: ({
         nlpDatasetId,
-        field,
-        nerLabelId,
-        isClassificationLabelSaved,
-        isSummarizationSaved,
-      }: createNlpDatasetByFieldDtoProps) => ({
+        createNlpDatasetByFieldDto: {
+          field,
+          nerLabelId,
+          isClassificationLabelSaved,
+          isSummarizationSaved,
+        },
+      }) => ({
         url: `/actions/create-by-field/${nlpDatasetId}/?field=${field}&${
           nerLabelId ? `ner-label-id=${nerLabelId}&` : ''
         }is-classification-label-saved=${isClassificationLabelSaved}&is-summarization-saved=${isSummarizationSaved}`,

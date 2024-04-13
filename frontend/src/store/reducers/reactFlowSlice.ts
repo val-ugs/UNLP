@@ -92,7 +92,15 @@ export const runNodeAsync = createAppAsyncThunk(
 
       // run the node
       const output = node2
-        ? await runNode(node2, thunkApi).catch((e) => {
+        ? await runNode(node2, thunkApi).catch(async (e) => {
+            await thunkApi.dispatch(
+              editNodeAsync({
+                id: node2.id,
+                newData: {
+                  running: false,
+                },
+              })
+            );
             throw e;
           })
         : node.data?.output;

@@ -15,7 +15,7 @@ import './styles.scss';
 interface NlpDatasetClearingNodeProps {
   input: {
     nlpDataset: NlpDatasetProps;
-    clearField: fieldType;
+    field: fieldType;
   };
   output: {
     nlpDataset: NlpDatasetProps;
@@ -41,7 +41,7 @@ const NlpDatasetClearingNode: FC<NodeProps<NlpDatasetClearingNodeProps>> = (
     },
   ];
 
-  const setClearFieldValue = (value: string) => {
+  const setFieldValue = (value: string) => {
     dispatch(
       editNode({
         id: node.id,
@@ -51,12 +51,12 @@ const NlpDatasetClearingNode: FC<NodeProps<NlpDatasetClearingNodeProps>> = (
   };
   const clearFieldSelect: SelectProps<string> = {
     className: 'nlp-dataset-clearing-node__select nodrag nowheel',
-    selectedValue: node.data?.input?.clearField ?? '',
-    setSelectedValue: setClearFieldValue,
-    children: enumToArray(fieldType).map((cf: fieldType) => {
+    selectedValue: node.data?.input?.field ?? '',
+    setSelectedValue: setFieldValue,
+    children: enumToArray(fieldType).map((ft: fieldType) => {
       return (
-        <Select.Item key={cf} value={cf}>
-          {cf}
+        <Select.Item key={ft} value={ft}>
+          {ft}
         </Select.Item>
       );
     }),

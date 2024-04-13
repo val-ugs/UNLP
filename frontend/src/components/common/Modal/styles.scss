@@ -7,16 +7,18 @@
   &__block {
     position: fixed;
     inset: 0;
+    z-index: 10;
     background-color: $color-5;
     opacity: 0.5;
   }
 
   &__window-wrapper {
     position: fixed;
-    inset: 0;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
+    inset: 0;
   }
 
   &__window {

@@ -14,9 +14,7 @@ import './styles.scss';
 const NlpDatasetClearing: FC = () => {
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [nlpDatasetId, setNlpDatasetId] = useState<number>();
-  const [clearField, setClearField] = useState<fieldType>(
-    fieldType.ClassificationLabel
-  );
+  const [field, setField] = useState<fieldType>(fieldType.ClassificationLabel);
   const { deactivate } = actionModalSlice.actions;
   const dispatch = useAppDispatch();
   const [clearNlpDataset, {}] = actionApi.useClearNlpDatasetMutation();
@@ -47,11 +45,11 @@ const NlpDatasetClearing: FC = () => {
   };
 
   const setClearFieldValue = (value: string) => {
-    setClearField(value as fieldType);
+    setField(value as fieldType);
   };
   const clearFieldSelect: SelectProps<string> = {
     className: 'nlp-dataset-clearing__select',
-    selectedValue: clearField ?? '',
+    selectedValue: field ?? '',
     setSelectedValue: setClearFieldValue,
     children: enumToArray(fieldType).map((cf: fieldType) => {
       return (
@@ -63,7 +61,7 @@ const NlpDatasetClearing: FC = () => {
   };
 
   const handleSubmit = () => {
-    if (nlpDatasetId) clearNlpDataset({ nlpDatasetId, clearField });
+    if (nlpDatasetId) clearNlpDataset({ nlpDatasetId, field });
     dispatch(deactivate());
   };
 

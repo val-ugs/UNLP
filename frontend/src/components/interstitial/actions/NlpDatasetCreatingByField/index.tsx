@@ -19,7 +19,6 @@ import InputCheckbox, {
 import './styles.scss';
 
 const emptyCreateNlpDatasetByFieldDto: createNlpDatasetByFieldDtoProps = {
-  nlpDatasetId: undefined,
   field: fieldType.ClassificationLabel,
   nerLabelId: undefined,
   isClassificationLabelSaved: false,
@@ -28,6 +27,7 @@ const emptyCreateNlpDatasetByFieldDto: createNlpDatasetByFieldDtoProps = {
 
 const NlpDatasetCreatingByField: FC = () => {
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
+  const [nlpDatasetId, setNlpDatasetId] = useState<number>();
   const [createNlpDatasetByFieldDto, setCreateNlpDatasetByFieldDto] =
     useState<createNlpDatasetByFieldDtoProps>(emptyCreateNlpDatasetByFieldDto);
   const [nerLabels, setNerLabels] = useState<NerLabelProps[]>([]);
@@ -45,9 +45,7 @@ const NlpDatasetCreatingByField: FC = () => {
     error: nerLabelError,
     isLoading: nerLabelLoading,
     isError: isNerLabelError,
-  } = nerLabelApi.useGetNerLabelsByNlpDatasetIdQuery(
-    createNlpDatasetByFieldDto.nlpDatasetId ?? skipToken
-  );
+  } = nerLabelApi.useGetNerLabelsByNlpDatasetIdQuery(nlpDatasetId ?? skipToken);
 
   useEffect(() => {
     if (nlpDatasetsData) setNlpDatasets(nlpDatasetsData);
@@ -60,14 +58,12 @@ const NlpDatasetCreatingByField: FC = () => {
   }, [createNlpDatasetByFieldDto.field, isNerLabelError, nerLabelsData]);
 
   const setNlpDatasetIdValue = (value: number) => {
-    setCreateNlpDatasetByFieldDto({
-      ...createNlpDatasetByFieldDto,
-      nlpDatasetId: value,
-    });
+    setNlpDatasetId(value);
   };
+
   const nlpDatasetSelect: SelectProps<number> = {
     className: 'nlp-dataset-creating-by-field__select',
-    selectedValue: createNlpDatasetByFieldDto?.nlpDatasetId ?? 0,
+    selectedValue: nlpDatasetId ?? 0,
     setSelectedValue: setNlpDatasetIdValue,
     children: nlpDatasets?.map((nlpDataset: NlpDatasetProps) => {
       return (
@@ -109,16 +105,16 @@ const NlpDatasetCreatingByField: FC = () => {
     setSelectedValue: setNerLabelIdValue,
     children: nerLabels?.map((nerLabel: NerLabelProps) => {
       return (
-        <Select.Item key={nerLabel.id} value={nerLabel.id}>
-          {`NerLabel ${nerLabel.name}`}
+        <Select.Item key={nerLabel.name} value={nerLabel.id}>
+          {`${nerLabel.name}`}
         </Select.Item>
       );
     }),
   };
 
   const handleSubmit = () => {
-    if (createNlpDatasetByFieldDto.nlpDatasetId)
-      createByFieldNlpDataset(createNlpDatasetByFieldDto);
+    if (nlpDatasetId)
+      createByFieldNlpDataset({ nlpDatasetId, createNlpDatasetByFieldDto });
     dispatch(deactivate());
   };
   const handleClassificationLabelSavedChange = () => {

@@ -13,7 +13,7 @@ export const listOfActions: ActionProps[] = [
     component: <NlpDatasetCopying />,
   },
   {
-    name: 'Create by field dataset',
+    name: 'Create dataset by field',
     component: <NlpDatasetCreatingByField />,
   },
 ];
