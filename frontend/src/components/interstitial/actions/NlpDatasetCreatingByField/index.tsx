@@ -33,8 +33,8 @@ const NlpDatasetCreatingByField: FC = () => {
   const [nerLabels, setNerLabels] = useState<NerLabelProps[]>([]);
   const { deactivate } = actionModalSlice.actions;
   const dispatch = useAppDispatch();
-  const [createByFieldNlpDataset, {}] =
-    actionApi.useCreateByFieldNlpDatasetMutation();
+  const [createNlpDatasetByField, {}] =
+    actionApi.useCreateNlpDatasetByFieldMutation();
   const {
     data: nlpDatasetsData,
     error: nlpDatasetError,
@@ -114,7 +114,7 @@ const NlpDatasetCreatingByField: FC = () => {
 
   const handleSubmit = () => {
     if (nlpDatasetId)
-      createByFieldNlpDataset({ nlpDatasetId, createNlpDatasetByFieldDto });
+      createNlpDatasetByField({ nlpDatasetId, createNlpDatasetByFieldDto });
     dispatch(deactivate());
   };
   const handleClassificationLabelSavedChange = () => {
@@ -194,22 +194,30 @@ const NlpDatasetCreatingByField: FC = () => {
           </div>
         )}
         <div className="nlp-dataset-creating-by-field__input-checkbox">
-          Is classification label saved:
-          <InputCheckbox
-            className={classificationLabelSavedInputCheckbox.className}
-            name={classificationLabelSavedInputCheckbox.name}
-            checked={classificationLabelSavedInputCheckbox.checked}
-            onChange={classificationLabelSavedInputCheckbox.onChange}
-          />
+          <LabeledElement
+            className="nlp-dataset-creating-by-field__labeled-element"
+            labelElement={{ value: 'Is classification label saved' }}
+          >
+            <InputCheckbox
+              className={classificationLabelSavedInputCheckbox.className}
+              name={classificationLabelSavedInputCheckbox.name}
+              checked={classificationLabelSavedInputCheckbox.checked}
+              onChange={classificationLabelSavedInputCheckbox.onChange}
+            />
+          </LabeledElement>
         </div>
         <div className="nlp-dataset-creating-by-field__input-checkbox">
-          Is summarization saved:
-          <InputCheckbox
-            className={summarizationSavedInputCheckbox.className}
-            name={summarizationSavedInputCheckbox.name}
-            checked={summarizationSavedInputCheckbox.checked}
-            onChange={summarizationSavedInputCheckbox.onChange}
-          />
+          <LabeledElement
+            className="nlp-dataset-creating-by-field__labeled-element"
+            labelElement={{ value: 'Is summarization saved' }}
+          >
+            <InputCheckbox
+              className={summarizationSavedInputCheckbox.className}
+              name={summarizationSavedInputCheckbox.name}
+              checked={summarizationSavedInputCheckbox.checked}
+              onChange={summarizationSavedInputCheckbox.onChange}
+            />
+          </LabeledElement>
         </div>
 
         <div className="nlp-dataset-creating-by-field__item nlp-dataset-creating-by-field__item-button">

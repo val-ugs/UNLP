@@ -6,7 +6,7 @@ import { run as runPredict } from './nodeRunners/nodes/runPredictNode';
 // import action node runners
 import { run as runClearNlpDataset } from './nodeRunners/actionNodes/runClearNlpDataset';
 import { run as runCopyNlpDataset } from './nodeRunners/actionNodes/runCopyNlpDataset';
-import { run as runCreateByFieldNlpDataset } from './nodeRunners/actionNodes/runCreateByFieldNlpDataset';
+import { run as runCreateNlpDatasetByField } from './nodeRunners/actionNodes/runCreateNlpDatasetByField';
 
 export const runNode = async (node: Node, thunkApi: any) => {
   switch (node.type) {
@@ -23,6 +23,6 @@ export const runNode = async (node: Node, thunkApi: any) => {
     case 'NlpDatasetCopyingNode':
       return await runCopyNlpDataset(node, thunkApi);
     case 'NlpDatasetCreatingByFieldNode':
-      return await runCreateByFieldNlpDataset(node, thunkApi);
+      return await runCreateNlpDatasetByField(node, thunkApi);
   }
 };

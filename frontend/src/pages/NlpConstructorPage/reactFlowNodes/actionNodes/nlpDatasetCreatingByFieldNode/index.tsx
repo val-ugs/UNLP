@@ -103,7 +103,7 @@ const NlpDatasetCreatingByFieldNode: FC<
     );
   };
   const nerLabelSelect: SelectProps<number> = {
-    className: 'nlp-dataset-creating-by-field__select nodrag nowheel',
+    className: 'nlp-dataset-creating-by-field-node__select nodrag nowheel',
     selectedValue:
       node.data?.input?.createNlpDatasetByFieldDto?.nerLabelId ?? 0,
     setSelectedValue: setNerLabelIdValue,
@@ -135,7 +135,7 @@ const NlpDatasetCreatingByFieldNode: FC<
     );
   };
   const classificationLabelSavedInputCheckbox: InputCheckboxProps = {
-    className: 'nlp-dataset-creating-by-field__input-checkbox',
+    className: 'nlp-dataset-creating-by-field-node__input-checkbox',
     name: 'classificationLabelSaved',
     checked:
       node.data?.input?.createNlpDatasetByFieldDto
@@ -161,7 +161,7 @@ const NlpDatasetCreatingByFieldNode: FC<
     );
   };
   const summarizationSavedInputCheckbox: InputCheckboxProps = {
-    className: 'nlp-dataset-creating-by-field__input-checkbox',
+    className: 'nlp-dataset-creating-by-field-node__input-checkbox',
     name: 'summarizationSaved',
     checked:
       node.data?.input?.createNlpDatasetByFieldDto?.isSummarizationSaved ??
@@ -182,8 +182,6 @@ const NlpDatasetCreatingByFieldNode: FC<
     isNerLabelError,
     nerLabelsData,
   ]);
-
-  useEffect(() => {});
 
   return (
     <BaseNode
@@ -226,22 +224,30 @@ const NlpDatasetCreatingByFieldNode: FC<
         </div>
       )}
       <div className="nlp-dataset-creating-by-field-node__input-checkbox">
-        Is classification label saved:
-        <InputCheckbox
-          className={classificationLabelSavedInputCheckbox.className}
-          name={classificationLabelSavedInputCheckbox.name}
-          checked={classificationLabelSavedInputCheckbox.checked}
-          onChange={classificationLabelSavedInputCheckbox.onChange}
-        />
+        <LabeledElement
+          className="nlp-dataset-creating-by-field__labeled-element"
+          labelElement={{ value: 'Is classification label saved' }}
+        >
+          <InputCheckbox
+            className={classificationLabelSavedInputCheckbox.className}
+            name={classificationLabelSavedInputCheckbox.name}
+            checked={classificationLabelSavedInputCheckbox.checked}
+            onChange={classificationLabelSavedInputCheckbox.onChange}
+          />
+        </LabeledElement>
       </div>
       <div className="nlp-dataset-creating-by-field-node__input-checkbox">
-        Is summarization saved:
-        <InputCheckbox
-          className={summarizationSavedInputCheckbox.className}
-          name={summarizationSavedInputCheckbox.name}
-          checked={summarizationSavedInputCheckbox.checked}
-          onChange={summarizationSavedInputCheckbox.onChange}
-        />
+        <LabeledElement
+          className="nlp-dataset-creating-by-field__labeled-element"
+          labelElement={{ value: 'Is summarization saved' }}
+        >
+          <InputCheckbox
+            className={summarizationSavedInputCheckbox.className}
+            name={summarizationSavedInputCheckbox.name}
+            checked={summarizationSavedInputCheckbox.checked}
+            onChange={summarizationSavedInputCheckbox.onChange}
+          />
+        </LabeledElement>
       </div>
       {nerLabels.length == 0 &&
         node.data?.input?.createNlpDatasetByFieldDto.field ==

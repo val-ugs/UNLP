@@ -24,8 +24,8 @@ export const actionApi = api.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.NlpDataset],
     }),
-    createByFieldNlpDataset: build.mutation<
-      void,
+    createNlpDatasetByField: build.mutation<
+      NlpDatasetProps,
       {
         nlpDatasetId: number;
         createNlpDatasetByFieldDto: createNlpDatasetByFieldDtoProps;
