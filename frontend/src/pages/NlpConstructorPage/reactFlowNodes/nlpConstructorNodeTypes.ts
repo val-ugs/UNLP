@@ -7,6 +7,7 @@ import PredictNode from './nodes/PredictNode';
 // import actions
 import NlpDatasetClearingNode from './actionNodes/nlpDatasetClearingNode';
 import NlpDatasetCopyingNode from './actionNodes/nlpDatasetCopyingNode';
+import NlpDatasetCreatingByFieldNode from './actionNodes/nlpDatasetCreatingByFieldNode';
 
 export interface NlpConstructorNode {
   name: string;
@@ -36,6 +37,10 @@ export const listOfNlpConstructorActionNodes: NlpConstructorNode[] = [
   {
     name: 'Copy Nlp Dataset',
     node: NlpDatasetCopyingNode,
+  },
+  {
+    name: 'Create Nlp Dataset By Field',
+    node: NlpDatasetCreatingByFieldNode,
   },
 ];
 

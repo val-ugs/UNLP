@@ -1,0 +1,18 @@
+@import 'variables.scss';
+
+.nlp-dataset-creating-by-field-node {
+  &__main {
+  }
+
+  &__labeled-element {
+  }
+
+  &__select {
+  }
+
+  &__warning {
+    max-width: 270px;
+    color: $color-7;
+    font-size: 14px;
+  }
+}
