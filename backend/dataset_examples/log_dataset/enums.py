@@ -10,7 +10,7 @@ class ClassificationLabel(Enum):
     Proxifier = 'Proxifier'
     Spark = 'Spark'
     Windows = 'Windows'
-    Zookeper = 'Zookeper'
+    Zookeeper = 'Zookeeper'
 
 class NerLabel(Enum):
     DateTime = 'DateTime'
@@ -19,4 +19,5 @@ class NerLabel(Enum):
     User = 'User'
     Node = 'Node'
     Component = 'Component'
-    Content = 'Content'
+    Content = 'Content',
+    Other = 'Other'
