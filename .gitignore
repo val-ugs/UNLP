@@ -168,3 +168,5 @@ node_modules
 # App
 trained_models
 !frontend/.env
+!backend/dataset_examples/**/*.log
+backend/dataset_examples/**/*.json
