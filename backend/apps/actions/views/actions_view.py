@@ -147,6 +147,19 @@ def create_dataset_by_field(request, nlp_dataset_pk):
 
     return Response(nlp_dataset_serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def delete_texts_without_fields(request, nlp_dataset_pk):
+    nlp_dataset = get_object_or_404(NlpDataset, pk=nlp_dataset_pk)
+
+    nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset)
+    for nlp_text in nlp_texts:
+        if (not nlp_text.classification_label and not nlp_text.summarization and not NlpToken.objects.filter(nlp_text=nlp_text.pk)) :
+            nlp_text.delete()
+
+    nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset)
+        
+    return Response(nlp_dataset_serializer.data, status=status.HTTP_200_OK)
+
 def try_save_fields(nlp_text_copy, nlp_text, is_classification_label_saved, is_summarization_saved):
     if is_classification_label_saved:
         nlp_text_copy.classification_label = nlp_text.classification_label
