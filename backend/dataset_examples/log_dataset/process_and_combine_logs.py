@@ -36,34 +36,34 @@ def convert_to_my_dataset():
     nlp_texts = []
 
     apache_log_nlp_dataset_parser = ApacheLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
-    nlp_texts.extend(apache_log_nlp_dataset_parser.process()[0:300])
+    nlp_texts.extend(apache_log_nlp_dataset_parser.process()[0:200])
 
-    # hadoop_log_nlp_dataset_parser = HadoopLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
-    # nlp_texts.extend(hadoop_log_nlp_dataset_parser.process()[0:300])
+    hadoop_log_nlp_dataset_parser = HadoopLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
+    nlp_texts.extend(hadoop_log_nlp_dataset_parser.process()[0:200])
 
-    # hdfs_log_nlp_dataset_parser = HDFSLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
-    # nlp_texts.extend(hdfs_log_nlp_dataset_parser.process()[0:300])
+    hdfs_log_nlp_dataset_parser = HDFSLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
+    nlp_texts.extend(hdfs_log_nlp_dataset_parser.process()[0:200])
 
-    # linux_log_nlp_dataset_parser = LinuxLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
-    # nlp_texts.extend(linux_log_nlp_dataset_parser.process()[0:300])
+    linux_log_nlp_dataset_parser = LinuxLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
+    nlp_texts.extend(linux_log_nlp_dataset_parser.process()[0:200])
 
-    # mac_log_nlp_dataset_parser = MacLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
-    # nlp_texts.extend(mac_log_nlp_dataset_parser.process()[0:300])
+    mac_log_nlp_dataset_parser = MacLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
+    nlp_texts.extend(mac_log_nlp_dataset_parser.process()[0:200])
 
-    # open_ssh_log_nlp_dataset_parser = OpenSSHLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
-    # nlp_texts.extend(open_ssh_log_nlp_dataset_parser.process()[0:300])
+    open_ssh_log_nlp_dataset_parser = OpenSSHLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
+    nlp_texts.extend(open_ssh_log_nlp_dataset_parser.process()[0:200])
 
-    # proxifier_log_nlp_dataset_parser = ProxifierLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
-    # nlp_texts.extend(proxifier_log_nlp_dataset_parser.process()[0:300])
+    proxifier_log_nlp_dataset_parser = ProxifierLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
+    nlp_texts.extend(proxifier_log_nlp_dataset_parser.process()[0:200])
 
-    # spark_log_nlp_dataset_parser = SparkLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
-    # nlp_texts.extend(spark_log_nlp_dataset_parser.process()[0:300])
+    spark_log_nlp_dataset_parser = SparkLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
+    nlp_texts.extend(spark_log_nlp_dataset_parser.process()[0:200])
 
-    # windows_log_nlp_dataset_parser = WindowsLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
-    # nlp_texts.extend(windows_log_nlp_dataset_parser.process()[0:300])
+    windows_log_nlp_dataset_parser = WindowsLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
+    nlp_texts.extend(windows_log_nlp_dataset_parser.process()[0:200])
 
-    # zookeeper_log_nlp_dataset_parser = ZookeeperLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
-    # nlp_texts.extend(zookeeper_log_nlp_dataset_parser.process()[0:300])
+    zookeeper_log_nlp_dataset_parser = ZookeeperLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
+    nlp_texts.extend(zookeeper_log_nlp_dataset_parser.process()[0:200])
 
     print(len(nlp_texts))
 

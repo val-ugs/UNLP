@@ -19,5 +19,5 @@ class NerLabel(Enum):
     User = 'User'
     Node = 'Node'
     Component = 'Component'
-    Content = 'Content',
+    Content = 'Content'
     Other = 'Other'

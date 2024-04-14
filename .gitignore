@@ -168,3 +168,4 @@ node_modules
 # App
 trained_models
 !frontend/.env
+!backend/dataset_examples/log_dataset/logs/*.log

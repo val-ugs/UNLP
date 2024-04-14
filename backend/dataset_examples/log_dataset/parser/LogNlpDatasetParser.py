@@ -23,7 +23,7 @@ class LogNlpDatasetParser:
         df = df.applymap(lambda x: self.__tokenize(x))
         
         nlp_texts = []
-        for _, row in df[0:1].iterrows():
+        for _, row in df.iterrows():
             lineId = int(row['LineId'][0]) - 1
             line = self.__tokenize(lines[lineId])
             
@@ -51,7 +51,7 @@ class LogNlpDatasetParser:
                 
                 self.__define_nlp_token_ner_label(nlp_token, ner_label_rows, is_finished_ner_labels)
 
-                print(nlp_token)
+                nlp_tokens.append(nlp_token)
 
             nlp_texts.append({
                 'nlp_tokens': nlp_tokens,
