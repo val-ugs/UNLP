@@ -47,5 +47,14 @@ export const actionApi = api.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.NlpDataset],
     }),
+    deleteTextsWithoutFieldsNlpDataset: build.mutation<NlpDatasetProps, number>(
+      {
+        query: (nlpDatasetId) => ({
+          url: `/actions/delete-texts-without-fields/${nlpDatasetId}/`,
+          method: 'GET',
+        }),
+        invalidatesTags: [tagTypes.NlpDataset],
+      }
+    ),
   }),
 });
