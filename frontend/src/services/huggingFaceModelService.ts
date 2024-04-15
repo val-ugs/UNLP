@@ -6,6 +6,7 @@ import {
   HuggingFaceModelType,
 } from 'interfaces/huggingFaceModel.interface';
 import { TrainResultsDto } from 'interfaces/dtos/trainResultsDto.interface';
+import { PredictResultsDto } from 'interfaces/dtos/predictResultsDto.interface';
 
 export const huggingFaceModelApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
@@ -155,11 +156,18 @@ export const huggingFaceModelApi = api.injectEndpoints({
         }));
       },
     }),
-    predictHuggingFaceModel: build.mutation<void, any>({
+    predictHuggingFaceModel: build.mutation<PredictResultsDto, any>({
       query: ({ huggingFaceModel, testNlpDatasetId }) => ({
         url: `/nlp/hugging-face-models/${huggingFaceModel.id}/predict/nlp-datasets/${testNlpDatasetId}/`,
         method: 'GET',
       }),
+      transformResponse: (response: any) => {
+        return {
+          predictRuntime: response['predict_runtime'],
+          predictSamplesPerSecond: response['predict_samples_per_second'],
+          predictStepsPerSecond: response['predict_steps_per_second'],
+        };
+      },
     }),
   }),
 });

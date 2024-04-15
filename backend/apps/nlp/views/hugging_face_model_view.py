@@ -127,8 +127,8 @@ def predict(request, hugging_face_model_pk, nlp_dataset_pk):
         trainer = CommonTrainer(hugging_face_model)
 
         test_nlp_dataset = get_object_or_404(NlpDataset, pk=nlp_dataset_pk)
-        trainer.predict(test_nlp_dataset)
+        metric = trainer.predict(test_nlp_dataset)
     except Exception as e:
         return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response(status=status.HTTP_200_OK)
+    return Response(metric, status=status.HTTP_200_OK)

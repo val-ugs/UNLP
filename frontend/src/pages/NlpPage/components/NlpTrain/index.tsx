@@ -3,8 +3,8 @@ import Button from 'components/common/Button';
 import HuggingFaceModelTrain from './components/HuggingFaceModelTrain';
 import { HuggingFaceModelProps } from 'interfaces/huggingFaceModel.interface';
 import { huggingFaceModelApi } from 'services/huggingFaceModelService';
-import './styles.scss';
 import { TrainResultsDto } from 'interfaces/dtos/trainResultsDto.interface';
+import './styles.scss';
 
 const NlpTrain: FC = () => {
   const [huggingFaceModel, setHuggingFaceModel] = useState<

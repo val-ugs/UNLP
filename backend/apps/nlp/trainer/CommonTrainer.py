@@ -77,4 +77,5 @@ class CommonTrainer:
         return log_history
 
     def predict(self, test_nlp_dataset: NlpDataset):
-        self.trainer.predict(test_nlp_dataset)
+        metric = self.trainer.predict(test_nlp_dataset)
+        return metric
