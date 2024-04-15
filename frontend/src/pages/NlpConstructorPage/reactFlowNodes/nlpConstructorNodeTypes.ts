@@ -8,6 +8,7 @@ import PredictNode from './nodes/PredictNode';
 import NlpDatasetClearingNode from './actionNodes/nlpDatasetClearingNode';
 import NlpDatasetCopyingNode from './actionNodes/nlpDatasetCopyingNode';
 import NlpDatasetCreatingByFieldNode from './actionNodes/nlpDatasetCreatingByFieldNode';
+import NlpDatasetDeletingTextsWithoutFieldsNode from './actionNodes/nlpDatasetDeletingTextsWithoutFieldsNode';
 
 export interface NlpConstructorNode {
   name: string;
@@ -41,6 +42,10 @@ export const listOfNlpConstructorActionNodes: NlpConstructorNode[] = [
   {
     name: 'Create Nlp Dataset By Field',
     node: NlpDatasetCreatingByFieldNode,
+  },
+  {
+    name: 'Delete Texts Without Fields Nlp Dataset',
+    node: NlpDatasetDeletingTextsWithoutFieldsNode,
   },
 ];
 
