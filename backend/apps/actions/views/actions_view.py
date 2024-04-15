@@ -153,14 +153,14 @@ def delete_texts_without_fields(request, nlp_dataset_pk):
 
     nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset)
     for nlp_text in nlp_texts:
-        if (not nlp_text.classification_label and not nlp_text.summarization and check_tokens_without_ner_labels(nlp_text)) :
+        if (not nlp_text.classification_label and not nlp_text.summarization and has_tokens_without_ner_labels(nlp_text)) :
             nlp_text.delete()
 
     nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset)
         
     return Response(nlp_dataset_serializer.data, status=status.HTTP_200_OK)
 
-def check_tokens_without_ner_labels(nlp_text):
+def has_tokens_without_ner_labels(nlp_text):
     nlp_tokens = NlpToken.objects.filter(nlp_text=nlp_text)
     for nlp_token in nlp_tokens:
         nlp_token_ner_labels = NlpTokenNerLabel.objects.filter(nlp_token=nlp_token)
