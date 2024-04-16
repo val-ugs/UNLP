@@ -26,7 +26,7 @@ const ActionModal: FC = () => {
     <>
       {action && (
         <ContentModal
-          className="ner-label-form-modal"
+          className="action-modal"
           title={action.name}
           isActive={isActive}
           handleClose={handleClose}

@@ -33,6 +33,29 @@
   }
 
   &__actions-button {
+    width: 100%;
+    background: none;
+    border-radius: 0;
+  }
+
+  &__metrics {
+    position: relative;
+  }
+
+  &__metrics-dropdown {
+    position: absolute;
+    z-index: 1;
+    max-height: 500px;
+    overflow-y: scroll;
+    background-color: $color-3;
+    border: 2px solid $color-2;
+  }
+
+  &__metrics-item {
+  }
+
+  &__metrics-button {
+    width: 100%;
     background: none;
     border-radius: 0;
   }
