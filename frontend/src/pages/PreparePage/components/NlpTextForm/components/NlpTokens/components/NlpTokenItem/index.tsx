@@ -45,6 +45,8 @@ const NlpTokenItem: FC<NlpTokenItemProps> = ({
     nlpTokenNerLabelApi.usePostNlpTokenNerLabelMutation();
   const [updateNlpTokenNerLabel, {}] =
     nlpTokenNerLabelApi.usePutNlpTokenNerLabelMutation();
+  const [deleteNlpTokenNerLabel, {}] =
+    nlpTokenNerLabelApi.useDeleteNlpTokenNerLabelMutation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -107,6 +109,12 @@ const NlpTokenItem: FC<NlpTokenItemProps> = ({
     }
   };
 
+  const handleDelete = () => {
+    if (nlpTokenNerLabel) {
+      deleteNlpTokenNerLabel(nlpTokenNerLabel.nlpTokenId);
+    }
+  };
+
   return (
     <div className={`nlp-token-item ${className}`}>
       {nlpTokenNerLabel && nerLabel && (
@@ -130,6 +138,12 @@ const NlpTokenItem: FC<NlpTokenItemProps> = ({
         setIsOpen={setIsOpen}
         onClose={handleClose}
       >
+        <Button
+          className="nlp-token-item__button-delete"
+          onClick={handleDelete}
+        >
+          Delete
+        </Button>
         <form className="nlp-token-item__dropdown-form">
           <LabeledElement
             className="nlp-token-item__labeled-element"
