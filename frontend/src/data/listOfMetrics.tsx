@@ -1,4 +1,6 @@
 import ClassificationMetricCalculation from 'components/interstitial/metrics/ClassificationMetricCalculation';
+import NerMetricCalculation from 'components/interstitial/metrics/NerMetricCalculation';
+import SummarizationMetricCalculation from 'components/interstitial/metrics/SummarizationMetricCalculation';
 import { HuggingFaceModelType } from 'interfaces/huggingFaceModel.interface';
 import { MetricProps } from 'interfaces/metric.interface';
 
@@ -9,10 +11,10 @@ export const listOfMetrics: MetricProps[] = [
   },
   {
     modelType: HuggingFaceModelType.Ner,
-    component: <>Ner</>,
+    component: <NerMetricCalculation />,
   },
   {
     modelType: HuggingFaceModelType.Summarization,
-    component: <>Summarization</>,
+    component: <SummarizationMetricCalculation />,
   },
 ];

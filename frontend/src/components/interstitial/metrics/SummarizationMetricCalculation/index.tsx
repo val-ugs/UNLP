@@ -5,33 +5,29 @@ import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import InputButton from 'components/common/Inputs/InputButton';
 import { metricApi } from 'services/metricService';
-import { ClassificationMetricCalculationRequest } from 'interfaces/dtos/classificationMetricCalculationDto.interface';
-import {
-  classificationMetricType,
-  f1ScoreAverageType,
-} from 'interfaces/metric.interface';
+import { SummarizationMetricCalculationRequest } from 'interfaces/dtos/summarizationMetricCalculationDto.interface';
+import { summarizationMetricType } from 'interfaces/metric.interface';
 import { enumToArray } from 'helpers/enumToArray';
 import './styles.scss';
 
-const emptyClassificationMetricCalculationRequest: ClassificationMetricCalculationRequest =
+const emptySummarizationMetricCalculationRequest: SummarizationMetricCalculationRequest =
   {
     nlpDatasetId: 0,
     predictedNlpDatasetId: 0,
     metricName: '',
-    average: '',
   };
 
-const ClassificationMetricCalculation: FC = () => {
+const SummarizationMetricCalculation: FC = () => {
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [
-    classificationMetricCalculationRequest,
-    setClassificationMetricCalculationRequest,
-  ] = useState<ClassificationMetricCalculationRequest>(
-    emptyClassificationMetricCalculationRequest
+    summarizationMetricCalculationRequest,
+    setSummarizationMetricCalculationRequest,
+  ] = useState<SummarizationMetricCalculationRequest>(
+    emptySummarizationMetricCalculationRequest
   );
   const [result, setResult] = useState<string>();
-  const [calculateClassification, {}] =
-    metricApi.useCalculateClassificationMutation();
+  const [calculateSummarization, {}] =
+    metricApi.useCalculateSummarizationMutation();
   const {
     data: nlpDatasetsData,
     error,
@@ -43,14 +39,14 @@ const ClassificationMetricCalculation: FC = () => {
   }, [nlpDatasetsData]);
 
   const setNlpDatasetIdValue = (value: number) => {
-    setClassificationMetricCalculationRequest({
-      ...classificationMetricCalculationRequest,
+    setSummarizationMetricCalculationRequest({
+      ...summarizationMetricCalculationRequest,
       nlpDatasetId: value,
     });
   };
   const nlpDatasetSelect: SelectProps<number> = {
-    className: 'classification-metric-calculation__select',
-    selectedValue: classificationMetricCalculationRequest.nlpDatasetId ?? 0,
+    className: 'summarization-metric-calculation__select',
+    selectedValue: summarizationMetricCalculationRequest.nlpDatasetId ?? 0,
     setSelectedValue: setNlpDatasetIdValue,
     children: nlpDatasets?.map((nlpDataset: NlpDatasetProps) => {
       return (
@@ -62,15 +58,15 @@ const ClassificationMetricCalculation: FC = () => {
   };
 
   const setPredictedNlpDatasetIdValue = (value: number) => {
-    setClassificationMetricCalculationRequest({
-      ...classificationMetricCalculationRequest,
+    setSummarizationMetricCalculationRequest({
+      ...summarizationMetricCalculationRequest,
       predictedNlpDatasetId: value,
     });
   };
   const predictedNlpDatasetSelect: SelectProps<number> = {
-    className: 'classification-metric-calculation__select',
+    className: 'summarization-metric-calculation__select',
     selectedValue:
-      classificationMetricCalculationRequest.predictedNlpDatasetId ?? 0,
+      summarizationMetricCalculationRequest.predictedNlpDatasetId ?? 0,
     setSelectedValue: setPredictedNlpDatasetIdValue,
     children: nlpDatasets?.map((nlpDataset: NlpDatasetProps) => {
       return (
@@ -82,17 +78,17 @@ const ClassificationMetricCalculation: FC = () => {
   };
 
   const setMetricNameValue = (value: string) => {
-    setClassificationMetricCalculationRequest({
-      ...classificationMetricCalculationRequest,
+    setSummarizationMetricCalculationRequest({
+      ...summarizationMetricCalculationRequest,
       metricName: value,
     });
   };
   const metricNameSelect: SelectProps<string> = {
-    className: 'classification-metric-calculation__select',
-    selectedValue: classificationMetricCalculationRequest.metricName ?? '',
+    className: 'summarization-metric-calculation__select',
+    selectedValue: summarizationMetricCalculationRequest.metricName ?? '',
     setSelectedValue: setMetricNameValue,
-    children: enumToArray(classificationMetricType).map(
-      (cmt: classificationMetricType) => {
+    children: enumToArray(summarizationMetricType).map(
+      (cmt: summarizationMetricType) => {
         return (
           <Select.Item key={cmt} value={cmt}>
             {cmt}
@@ -102,37 +98,16 @@ const ClassificationMetricCalculation: FC = () => {
     ),
   };
 
-  const setAverageValue = (value: string) => {
-    setClassificationMetricCalculationRequest({
-      ...classificationMetricCalculationRequest,
-      average: value,
-    });
-  };
-  const averageSelect: SelectProps<string> = {
-    className: 'classification-metric-calculation__select',
-    selectedValue: classificationMetricCalculationRequest.average ?? '',
-    setSelectedValue: setAverageValue,
-    children: enumToArray(f1ScoreAverageType).map(
-      (fsat: f1ScoreAverageType) => {
-        return (
-          <Select.Item key={fsat} value={fsat}>
-            {fsat}
-          </Select.Item>
-        );
-      }
-    ),
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (
-      classificationMetricCalculationRequest.nlpDatasetId &&
-      classificationMetricCalculationRequest.nlpDatasetId &&
-      classificationMetricCalculationRequest.metricName
+      summarizationMetricCalculationRequest.nlpDatasetId &&
+      summarizationMetricCalculationRequest.nlpDatasetId &&
+      summarizationMetricCalculationRequest.metricName
     ) {
       try {
-        const result = await calculateClassification(
-          classificationMetricCalculationRequest
+        const result = await calculateSummarization(
+          summarizationMetricCalculationRequest
         ).unwrap();
         setResult(result);
       } catch (error) {
@@ -143,11 +118,11 @@ const ClassificationMetricCalculation: FC = () => {
   };
 
   return (
-    <div className="classification-metric-calculation">
+    <div className="summarization-metric-calculation">
       <form onSubmit={handleSubmit}>
-        <div className="classification-metric-calculation__item">
+        <div className="summarization-metric-calculation__item">
           <LabeledElement
-            className="classification-metric-calculation__labeled-element"
+            className="summarization-metric-calculation__labeled-element"
             labelElement={{ value: 'Select nlp dataset' }}
           >
             <Select
@@ -160,9 +135,9 @@ const ClassificationMetricCalculation: FC = () => {
             </Select>
           </LabeledElement>
         </div>
-        <div className="classification-metric-calculation__item">
+        <div className="summarization-metric-calculation__item">
           <LabeledElement
-            className="classification-metric-calculation__labeled-element"
+            className="summarization-metric-calculation__labeled-element"
             labelElement={{ value: 'Select predicted nlp dataset' }}
           >
             <Select
@@ -175,9 +150,9 @@ const ClassificationMetricCalculation: FC = () => {
             </Select>
           </LabeledElement>
         </div>
-        <div className="classification-metric-calculation__item">
+        <div className="summarization-metric-calculation__item">
           <LabeledElement
-            className="classification-metric-calculation__labeled-element"
+            className="summarization-metric-calculation__labeled-element"
             labelElement={{ value: 'Select metric' }}
           >
             <Select
@@ -190,37 +165,19 @@ const ClassificationMetricCalculation: FC = () => {
             </Select>
           </LabeledElement>
         </div>
-        {classificationMetricCalculationRequest.metricName ==
-          classificationMetricType.F1Score && (
-          <div className="classification-metric-calculation__item">
-            <LabeledElement
-              className="classification-metric-calculation__labeled-element"
-              labelElement={{ value: 'Select average' }}
-            >
-              <Select
-                className={averageSelect.className}
-                selectedValue={averageSelect.selectedValue}
-                setSelectedValue={averageSelect.setSelectedValue}
-                disabled={averageSelect.disabled}
-              >
-                {averageSelect.children}
-              </Select>
-            </LabeledElement>
-          </div>
-        )}
-        <div className="classification-metric-calculation__item classification-metric-calculation__item-button">
-          <InputButton className="classification-metric-calculation__button">
+        <div className="summarization-metric-calculation__item summarization-metric-calculation__item-button">
+          <InputButton className="summarization-metric-calculation__button">
             Calculate
           </InputButton>
         </div>
       </form>
       {result && (
-        <div className="classification-metric-calculation__result">
+        <pre className="summarization-metric-calculation__result">
           Result: {result}
-        </div>
+        </pre>
       )}
     </div>
   );
 };
 
-export default ClassificationMetricCalculation;
+export default SummarizationMetricCalculation;
