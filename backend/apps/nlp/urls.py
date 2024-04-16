@@ -11,4 +11,5 @@ urlpatterns = [
     path('hugging-face-models/<int:hugging_face_model_pk>/predict/nlp-datasets/<int:nlp_dataset_pk>/', hugging_face_model_view.predict, name='hugging-face-models-predict'),
     path('metrics/classification/', metric_view.calculate_classification_metric, name='metrics-classification'),
     path('metrics/ner/', metric_view.calculate_ner_metric, name='metrics-ner'),
+    path('metrics/summarization/', metric_view.calculate_summarization_metric, name='metrics-summarization'),
 ]
