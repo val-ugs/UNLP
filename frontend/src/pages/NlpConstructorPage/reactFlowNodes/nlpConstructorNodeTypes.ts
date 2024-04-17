@@ -9,6 +9,10 @@ import NlpDatasetClearingNode from './actionNodes/nlpDatasetClearingNode';
 import NlpDatasetCopyingNode from './actionNodes/nlpDatasetCopyingNode';
 import NlpDatasetCreatingByFieldNode from './actionNodes/nlpDatasetCreatingByFieldNode';
 import NlpDatasetDeletingTextsWithoutFieldsNode from './actionNodes/nlpDatasetDeletingTextsWithoutFieldsNode';
+// import metrics
+import ClassificationMetricCalculationNode from './metricNodes/ClassificationMetricCalculationNode';
+import NerMetricCalculationNode from './metricNodes/NerMetricCalculationNode';
+import SummarizationMetricCalculationNode from './metricNodes/SummarizationMetricCalculationNode';
 
 export interface NlpConstructorNode {
   name: string;
@@ -21,7 +25,7 @@ export const listOfNlpConstructorNodes: NlpConstructorNode[] = [
     node: HuggingFaceModelNode,
   },
   {
-    name: 'Nlp Dataset',
+    name: 'Nlp dataset',
     node: NlpDatasetNode,
   },
   {
@@ -32,25 +36,42 @@ export const listOfNlpConstructorNodes: NlpConstructorNode[] = [
 
 export const listOfNlpConstructorActionNodes: NlpConstructorNode[] = [
   {
-    name: 'Clear Nlp Dataset',
+    name: 'Clear nlp dataset',
     node: NlpDatasetClearingNode,
   },
   {
-    name: 'Copy Nlp Dataset',
+    name: 'Copy nlp dataset',
     node: NlpDatasetCopyingNode,
   },
   {
-    name: 'Create Nlp Dataset By Field',
+    name: 'Create nlp dataset by field',
     node: NlpDatasetCreatingByFieldNode,
   },
   {
-    name: 'Delete Texts Without Fields Nlp Dataset',
+    name: 'Delete texts without fields nlp dataset',
     node: NlpDatasetDeletingTextsWithoutFieldsNode,
   },
 ];
 
+export const listOfNlpConstructorMetricNodes: NlpConstructorNode[] = [
+  {
+    name: 'Classification Metric Calculation',
+    node: ClassificationMetricCalculationNode,
+  },
+  {
+    name: 'Ner Metric Calculation',
+    node: NerMetricCalculationNode,
+  },
+  {
+    name: 'Summarization Metric Calculation',
+    node: SummarizationMetricCalculationNode,
+  },
+];
+
 export const nlpConstructorNodeTypes: NodeTypes = Object.fromEntries(
-  [...listOfNlpConstructorNodes, ...listOfNlpConstructorActionNodes].map(
-    (x) => [x.node.name, x.node]
-  )
+  [
+    ...listOfNlpConstructorNodes,
+    ...listOfNlpConstructorActionNodes,
+    ...listOfNlpConstructorMetricNodes,
+  ].map((x) => [x.node.name, x.node])
 );

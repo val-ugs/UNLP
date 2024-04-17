@@ -5,6 +5,7 @@ import { Node, useReactFlow } from 'reactflow';
 import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
 import {
   listOfNlpConstructorActionNodes,
+  listOfNlpConstructorMetricNodes,
   listOfNlpConstructorNodes,
 } from 'pages/NlpConstructorPage/reactFlowNodes/nlpConstructorNodeTypes';
 import NodeGroupMenu from './components/NodeGroupMenu';
@@ -54,6 +55,11 @@ const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
       <NodeGroupMenu
         groupTitle={'actions'}
         listOfNodes={listOfNlpConstructorActionNodes}
+        addNodeByType={addNodeByType}
+      />
+      <NodeGroupMenu
+        groupTitle={'metrics'}
+        listOfNodes={listOfNlpConstructorMetricNodes}
         addNodeByType={addNodeByType}
       />
     </div>

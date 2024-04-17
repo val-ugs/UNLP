@@ -215,9 +215,9 @@ const ClassificationMetricCalculation: FC = () => {
         </div>
       </form>
       {result && (
-        <div className="classification-metric-calculation__result">
+        <pre className="classification-metric-calculation__result">
           Result: {result}
-        </div>
+        </pre>
       )}
     </div>
   );
