@@ -45,7 +45,7 @@ const NlpDatasetClearingNode: FC<NodeProps<NlpDatasetClearingNodeProps>> = (
     dispatch(
       editNode({
         id: node.id,
-        newData: { input: { clearField: value as fieldType } },
+        newData: { input: { field: value as fieldType } },
       })
     );
   };
