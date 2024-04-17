@@ -10,7 +10,6 @@ import { enumToArray } from 'helpers/enumToArray';
 import BaseNode from '../../_common/BaseNode';
 import { InputHandlesItemProps } from '../../_common/InputHandles';
 import { OutputHandlesItemProps } from '../../_common/OutputHandles';
-import './styles.scss';
 import { createNlpDatasetByFieldDtoProps } from 'interfaces/dtos/createNlpDatasetByFieldDto.interface';
 import { NerLabelProps } from 'interfaces/nerLabel.interface';
 import { nerLabelApi } from 'services/nerLabelService';
@@ -18,6 +17,7 @@ import { skipToken } from '@reduxjs/toolkit/query';
 import InputCheckbox, {
   InputCheckboxProps,
 } from 'components/common/Inputs/InputCheckbox';
+import './styles.scss';
 
 interface NlpDatasetCreatingByFieldNodeProps {
   input: {

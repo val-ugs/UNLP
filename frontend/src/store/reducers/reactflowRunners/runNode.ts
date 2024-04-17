@@ -8,6 +8,10 @@ import { run as runClearNlpDataset } from './nodeRunners/actionNodes/runClearNlp
 import { run as runCopyNlpDataset } from './nodeRunners/actionNodes/runCopyNlpDataset';
 import { run as runCreateNlpDatasetByField } from './nodeRunners/actionNodes/runCreateNlpDatasetByField';
 import { run as runDeleteTextsWithoutFieldsNlpDataset } from './nodeRunners/actionNodes/runDeleteTextsWithoutFieldsNlpDataset';
+// import metric node runners
+import { run as runCalculateClassificationMetric } from './nodeRunners/metricNodes/runCalculateClassificationMetric';
+import { run as runCalculateNerMetric } from './nodeRunners/metricNodes/runCalculateNerMetric';
+import { run as runCalculateSummarizationMetric } from './nodeRunners/metricNodes/runCalculateSummarizationMetric';
 
 export const runNode = async (node: Node, thunkApi: any) => {
   switch (node.type) {
@@ -27,5 +31,12 @@ export const runNode = async (node: Node, thunkApi: any) => {
       return await runCreateNlpDatasetByField(node, thunkApi);
     case 'NlpDatasetDeletingTextsWithoutFieldsNode':
       return await runDeleteTextsWithoutFieldsNlpDataset(node, thunkApi);
+    // metric nodes
+    case 'ClassificationMetricCalculationNode':
+      return await runCalculateClassificationMetric(node, thunkApi);
+    case 'NerMetricCalculationNode':
+      return await runCalculateNerMetric(node, thunkApi);
+    case 'SummarizationMetricCalculationNode':
+      return await runCalculateSummarizationMetric(node, thunkApi);
   }
 };

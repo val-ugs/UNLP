@@ -88,10 +88,10 @@ const SummarizationMetricCalculation: FC = () => {
     selectedValue: summarizationMetricCalculationRequest.metricName ?? '',
     setSelectedValue: setMetricNameValue,
     children: enumToArray(summarizationMetricType).map(
-      (cmt: summarizationMetricType) => {
+      (smt: summarizationMetricType) => {
         return (
-          <Select.Item key={cmt} value={cmt}>
-            {cmt}
+          <Select.Item key={smt} value={smt}>
+            {smt}
           </Select.Item>
         );
       }

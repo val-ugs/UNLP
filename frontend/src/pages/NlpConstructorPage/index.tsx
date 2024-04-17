@@ -191,9 +191,6 @@ const NlpConstructorPage: FC = () => {
           onNodesChange={(e) => dispatch(onNodesChange(e))}
           onEdgesChange={(e) => dispatch(onEdgesChange(e))}
           onConnect={(e) => dispatch(onConnect(e))}
-          isValidConnection={(connection) =>
-            connection.targetHandle === connection.sourceHandle
-          }
           nodeTypes={nlpConstructorNodeTypes}
           onPaneContextMenu={handlePaneContextMenu}
           onNodeContextMenu={handleNodeContextMenu}

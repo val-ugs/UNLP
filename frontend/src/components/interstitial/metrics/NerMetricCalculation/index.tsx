@@ -80,10 +80,10 @@ const NerMetricCalculation: FC = () => {
     className: 'ner-metric-calculation__select',
     selectedValue: nerMetricCalculationRequest.metricName ?? '',
     setSelectedValue: setMetricNameValue,
-    children: enumToArray(nerMetricType).map((cmt: nerMetricType) => {
+    children: enumToArray(nerMetricType).map((nmt: nerMetricType) => {
       return (
-        <Select.Item key={cmt} value={cmt}>
-          {cmt}
+        <Select.Item key={nmt} value={nmt}>
+          {nmt}
         </Select.Item>
       );
     }),
