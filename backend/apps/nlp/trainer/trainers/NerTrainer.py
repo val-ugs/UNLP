@@ -31,13 +31,17 @@ class NerTrainer:
         self.list_of_tags = [tag for tag_list in train_df["tags"].tolist() for tag in tag_list]
         self.id2label, self.label2id = get_id2label_label2id(self.list_of_tags)
         model = AutoModelForTokenClassification.from_pretrained(
+            token="hf_...",
             pretrained_model_name_or_path=model_name_or_path,
             num_labels=len(self.id2label),
             id2label=self.id2label,
             label2id=self.label2id
         )
 
-        tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path=model_name_or_path)
+        tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path=model_name_or_path, add_prefix_space=True)
+        tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+        model.resize_token_embeddings(len(tokenizer))
+        model.config.pad_token_id = tokenizer.pad_token_id
         self.preparation = NerPreparer(tokenizer)
 
         tokenized_train_dataset = self.preparation.get_dataset(train_df)
@@ -46,7 +50,7 @@ class NerTrainer:
         data_collator = DataCollatorForTokenClassification(tokenizer=tokenizer)
 
         self.trainer = Trainer(
-            model=model,
+            model=model.to('cuda'),
             args=training_args,
             train_dataset=tokenized_train_dataset,
             eval_dataset=tokenized_val_dataset,

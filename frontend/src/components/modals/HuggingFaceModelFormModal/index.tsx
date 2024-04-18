@@ -97,7 +97,7 @@ const HuggingFaceModelFormModal: FC = () => {
     name: 'modelNameOrPath',
     value: huggingFaceModel.modelNameOrPath,
     setValue: setModelNameOrPathValue,
-    maxLength: 20,
+    maxLength: 200,
     disabled: false,
   };
 

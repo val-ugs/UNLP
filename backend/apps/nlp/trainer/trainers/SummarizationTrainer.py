@@ -42,7 +42,7 @@ class SummarizationTrainer:
         training_args.predict_with_generate = True # set generation parameter
         
         self.trainer = Seq2SeqTrainer(
-            model=model,
+            model=model.to('cuda'),
             args=training_args,
             train_dataset=tokenized_train_dataset,
             eval_dataset=tokenized_val_dataset,

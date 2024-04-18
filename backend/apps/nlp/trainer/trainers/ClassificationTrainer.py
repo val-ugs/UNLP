@@ -31,6 +31,7 @@ class ClassificationTrainer:
 
         self.id2label, self.label2id = get_id2label_label2id(train_df["labels"].tolist())
         model = AutoModelForSequenceClassification.from_pretrained(
+            token="hf_...",
             pretrained_model_name_or_path=model_name_or_path,
             num_labels=len(self.id2label),
             id2label=self.id2label,
@@ -38,6 +39,9 @@ class ClassificationTrainer:
         )
 
         tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path=model_name_or_path)
+        tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+        model.resize_token_embeddings(len(tokenizer))
+        model.config.pad_token_id = tokenizer.pad_token_id
         self.preparer = ClassificationPreparer(tokenizer, self.label2id)
 
         tokenized_train_dataset = self.preparer.get_dataset(train_df)
@@ -46,7 +50,7 @@ class ClassificationTrainer:
         data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
         self.trainer = Trainer(
-            model=model,
+            model=model.to('cuda'),
             args=training_args,
             train_dataset=tokenized_train_dataset,
             eval_dataset=tokenized_val_dataset,
