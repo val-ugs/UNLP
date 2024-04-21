@@ -1,5 +1,8 @@
 from io import BytesIO
+import re
+import json
 from django.shortcuts import get_object_or_404
+from django.db import transaction
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -174,3 +177,48 @@ def try_save_fields(nlp_text_copy, nlp_text, is_classification_label_saved, is_s
         nlp_text_copy.classification_label = nlp_text.classification_label
     if is_summarization_saved:
         nlp_text_copy.summarization = nlp_text.summarization
+
+@api_view(['POST'])
+def create_nlp_token_ner_labels_by_pattern(request, nlp_dataset_pk):
+    try:
+        ner_label_patterns = request.body
+        if not ner_label_patterns:
+            return Response("ner_label_patterns not set", status=status.HTTP_400_BAD_REQUEST)
+        
+        nlp_dataset = get_object_or_404(NlpDataset, pk=nlp_dataset_pk)
+        nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk)
+
+        ner_label_patterns = json.loads(ner_label_patterns)
+
+        with transaction.atomic():
+            for ner_label_pattern in ner_label_patterns:
+                ner_label_id = ner_label_pattern['ner_label_id']
+                pattern = ner_label_pattern['pattern']
+                ner_label = get_object_or_404(NerLabel, pk=ner_label_id)
+                
+                for nlp_text in nlp_texts[0:100]:
+                    tokens = tokenize(nlp_text.text, nlp_dataset.token_pattern_to_remove, nlp_dataset.token_pattern_to_split)
+                
+                    concidences = re.findall(pattern, nlp_text.text)
+                    for concidence in concidences:
+                        ner_label_tokens = tokenize(concidence, nlp_dataset.token_pattern_to_remove, nlp_dataset.token_pattern_to_split)
+                        for ner_label_token in ner_label_tokens:
+                            pos = tokens.index(ner_label_token)
+                            nlp_token = get_object_or_404(NlpToken, nlp_text=nlp_text, token=ner_label_token, pos=pos)
+                            nlp_token_ner_label, _ = NlpTokenNerLabel.objects.get_or_create(nlp_token=nlp_token)
+                            if (nlp_token_ner_label.ner_label):
+                                raise Exception(f"Collision: for tokens found by pattern {pattern}, the ner label is already defined (nlp_text='{nlp_text.text}',ner_label={nlp_token_ner_label.ner_label.name})).")
+
+                            nlp_token_ner_label.ner_label = ner_label
+                            nlp_token_ner_label.initial = ner_label_token == ner_label_tokens[0]
+                            nlp_token_ner_label.save()
+        return Response(status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
+def tokenize(line, token_pattern_to_remove, token_pattern_to_split):
+    line = str(line)
+    line = re.sub(token_pattern_to_remove, '', line)
+    line = re.split(token_pattern_to_split, line)
+    line = list(filter(None, line)) # remove empty strings
+    return line
