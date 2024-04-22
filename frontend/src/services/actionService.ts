@@ -4,6 +4,7 @@ import { tagTypes } from './tagTypes';
 import { fieldType } from 'data/enums/fieldType';
 import { createNlpDatasetByFieldDtoProps } from 'interfaces/dtos/createNlpDatasetByFieldDto.interface';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
+import { CreateNlpTokenNerLabelsByPatternDtoProps } from 'interfaces/dtos/createNlpTokenNerLabelsByPatternDto';
 
 export const actionApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
@@ -56,5 +57,26 @@ export const actionApi = api.injectEndpoints({
         invalidatesTags: [tagTypes.NlpDataset],
       }
     ),
+    createNlpTokenNerLabelsByPattern: build.mutation<
+      NlpDatasetProps,
+      CreateNlpTokenNerLabelsByPatternDtoProps
+    >({
+      query: (createNlpTokenNerLabelsByPatternDto) => ({
+        url: `/actions/create-nlp-token-ner-labels-by-pattern/${createNlpTokenNerLabelsByPatternDto.nlpDatasetId}/`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+          createNlpTokenNerLabelsByPatternDto.nerLabelPatterns.map(
+            (nerLabelPattern) => {
+              return {
+                ner_label_id: nerLabelPattern.nerLabel.id,
+                pattern: nerLabelPattern.pattern,
+              };
+            }
+          )
+        ),
+      }),
+      invalidatesTags: [tagTypes.NlpDataset],
+    }),
   }),
 });
