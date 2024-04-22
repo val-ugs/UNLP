@@ -4,6 +4,7 @@ import { tagTypes } from './tagTypes';
 import { fieldType } from 'data/enums/fieldType';
 import { createNlpDatasetByFieldDtoProps } from 'interfaces/dtos/createNlpDatasetByFieldDto.interface';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
+import { CreateNlpTokenNerLabelsByPatternDtoProps } from 'interfaces/dtos/createNlpTokenNerLabelsByPatternDto';
 
 export const actionApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
@@ -15,6 +16,13 @@ export const actionApi = api.injectEndpoints({
         url: `/actions/clear/${nlpDatasetId}/?field=${field}`,
         method: 'GET',
       }),
+      transformResponse: (response: any) => {
+        return {
+          id: response['id'],
+          tokenPatternToRemove: response['token_pattern_to_remove'],
+          tokenPatternToSplit: response['token_pattern_to_split'],
+        };
+      },
       invalidatesTags: [tagTypes.NlpDataset],
     }),
     copyNlpDataset: build.mutation<NlpDatasetProps, number>({
@@ -22,6 +30,13 @@ export const actionApi = api.injectEndpoints({
         url: `/actions/copy/${nlpDatasetId}/`,
         method: 'GET',
       }),
+      transformResponse: (response: any) => {
+        return {
+          id: response['id'],
+          tokenPatternToRemove: response['token_pattern_to_remove'],
+          tokenPatternToSplit: response['token_pattern_to_split'],
+        };
+      },
       invalidatesTags: [tagTypes.NlpDataset],
     }),
     createNlpDatasetByField: build.mutation<
@@ -45,6 +60,13 @@ export const actionApi = api.injectEndpoints({
         }is-classification-label-saved=${isClassificationLabelSaved}&is-summarization-saved=${isSummarizationSaved}`,
         method: 'GET',
       }),
+      transformResponse: (response: any) => {
+        return {
+          id: response['id'],
+          tokenPatternToRemove: response['token_pattern_to_remove'],
+          tokenPatternToSplit: response['token_pattern_to_split'],
+        };
+      },
       invalidatesTags: [tagTypes.NlpDataset],
     }),
     deleteTextsWithoutFieldsNlpDataset: build.mutation<NlpDatasetProps, number>(
@@ -53,8 +75,43 @@ export const actionApi = api.injectEndpoints({
           url: `/actions/delete-texts-without-fields/${nlpDatasetId}/`,
           method: 'GET',
         }),
+        transformResponse: (response: any) => {
+          return {
+            id: response['id'],
+            tokenPatternToRemove: response['token_pattern_to_remove'],
+            tokenPatternToSplit: response['token_pattern_to_split'],
+          };
+        },
         invalidatesTags: [tagTypes.NlpDataset],
       }
     ),
+    createNlpTokenNerLabelsByPattern: build.mutation<
+      NlpDatasetProps,
+      CreateNlpTokenNerLabelsByPatternDtoProps
+    >({
+      query: (createNlpTokenNerLabelsByPatternDto) => ({
+        url: `/actions/create-nlp-token-ner-labels-by-pattern/${createNlpTokenNerLabelsByPatternDto.nlpDatasetId}/`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+          createNlpTokenNerLabelsByPatternDto.nerLabelPatterns.map(
+            (nerLabelPattern) => {
+              return {
+                ner_label_id: nerLabelPattern.nerLabel.id,
+                pattern: nerLabelPattern.pattern,
+              };
+            }
+          )
+        ),
+      }),
+      transformResponse: (response: any) => {
+        return {
+          id: response['id'],
+          tokenPatternToRemove: response['token_pattern_to_remove'],
+          tokenPatternToSplit: response['token_pattern_to_split'],
+        };
+      },
+      invalidatesTags: [tagTypes.NlpDataset],
+    }),
   }),
 });

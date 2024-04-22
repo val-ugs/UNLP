@@ -3,6 +3,7 @@ import NlpDatasetClearing from 'components/interstitial/actions/NlpDatasetCleari
 import NlpDatasetCopying from 'components/interstitial/actions/NlpDatasetCopying';
 import NlpDatasetCreatingByField from 'components/interstitial/actions/NlpDatasetCreatingByField';
 import NlpDatasetDeletingTextsWithoutFields from 'components/interstitial/actions/NlpDatasetDeletingTextsWithoutFields';
+import NlpTokenNerLabelsCreatingByPattern from 'components/interstitial/actions/NlpTokenNerLabelsCreatingByPattern';
 
 export const listOfActions: ActionProps[] = [
   {
@@ -20,5 +21,9 @@ export const listOfActions: ActionProps[] = [
   {
     name: 'Delete texts without fields',
     component: <NlpDatasetDeletingTextsWithoutFields />,
+  },
+  {
+    name: 'Create nlp token ner labels by pattern',
+    component: <NlpTokenNerLabelsCreatingByPattern />,
   },
 ];
