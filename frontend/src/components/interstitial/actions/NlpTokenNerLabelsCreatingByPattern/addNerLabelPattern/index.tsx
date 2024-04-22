@@ -27,7 +27,7 @@ const AddNerLabelPattern: FC<AddNerLabelPatternProps> = ({
     setNerLabelId(value);
   };
   const nerLabelSelect: SelectProps<number> = {
-    className: 'ner-label-pattern__select',
+    className: 'ner-label-pattern__select nodrag nowheel',
     selectedValue: nerLabelId ?? 0,
     setSelectedValue: setNerLabelIdValue,
     children: nerLabels?.map((nerLabel: NerLabelProps) => {
@@ -43,7 +43,7 @@ const AddNerLabelPattern: FC<AddNerLabelPatternProps> = ({
     setPattern(value);
   };
   const patternInputField: InputFieldProps = {
-    className: 'ner-label-pattern__input-field',
+    className: 'ner-label-pattern__input-field nodrag nowheel',
     type: 'text',
     name: 'pattern',
     value: pattern ?? '',
