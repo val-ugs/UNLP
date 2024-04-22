@@ -1,0 +1,67 @@
+@import 'variables.scss';
+
+.nlp-token-ner-labels-creating-by-pattern-node {
+  display: flex;
+  flex-direction: column;
+
+  &__main-title {
+    padding-bottom: 5px;
+    text-align: center;
+  }
+
+  &__item {
+    padding-bottom: 5px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &__item-title {
+    padding-bottom: 5px;
+    font-weight: bold;
+  }
+
+  &__item-error {
+    color: $color-7;
+  }
+
+  &__item-button {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__labeled-element {
+  }
+
+  &__ner-label-patterns {
+    max-height: 200px;
+    padding: 5px;
+    overflow-y: scroll;
+    border: 2px solid $color-5;
+  }
+
+  &__ner-label-pattern {
+    margin-left: 20px;
+    padding-bottom: 5px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &__ner-label-pattern-content {
+    display: flex;
+    align-items: center;
+  }
+
+  &__ner-label-pattern-text {
+    padding-right: 10px;
+  }
+
+  &__ner-label-pattern-button {
+  }
+
+  &__button {
+  }
+}

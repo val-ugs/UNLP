@@ -39,7 +39,7 @@ const NlpDatasetDeletingTextsWithoutFieldsNode: FC<
       running={node.data?.running}
     >
       <div className="nlp-dataset-deleting-texts-without-fields-node__main">
-        Delete Texts Without Fields Nlp Dataset
+        Delete texts without fields nlp dataset
       </div>
     </BaseNode>
   );

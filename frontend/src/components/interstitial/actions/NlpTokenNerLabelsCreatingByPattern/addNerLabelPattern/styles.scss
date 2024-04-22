@@ -1,0 +1,29 @@
+.ner-label-pattern {
+  display: flex;
+  justify-content: flex-end;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 5px;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  &__labeled-element {
+    padding-bottom: 5px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &__item-button {
+  }
+
+  &__button {
+  }
+}

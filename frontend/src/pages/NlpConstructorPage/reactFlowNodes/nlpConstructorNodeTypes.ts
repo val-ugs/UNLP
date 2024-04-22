@@ -5,14 +5,15 @@ import HuggingFaceModelNode from './nodes/HuggingFaceModelNode';
 import NlpDatasetNode from './nodes/NlpDatasetNode';
 import PredictNode from './nodes/PredictNode';
 // import actions
-import NlpDatasetClearingNode from './actionNodes/nlpDatasetClearingNode';
-import NlpDatasetCopyingNode from './actionNodes/nlpDatasetCopyingNode';
-import NlpDatasetCreatingByFieldNode from './actionNodes/nlpDatasetCreatingByFieldNode';
-import NlpDatasetDeletingTextsWithoutFieldsNode from './actionNodes/nlpDatasetDeletingTextsWithoutFieldsNode';
+import NlpDatasetClearingNode from './actionNodes/NlpDatasetClearingNode';
+import NlpDatasetCopyingNode from './actionNodes/NlpDatasetCopyingNode';
+import NlpDatasetCreatingByFieldNode from './actionNodes/NlpDatasetCreatingByFieldNode';
+import NlpDatasetDeletingTextsWithoutFieldsNode from './actionNodes/NlpDatasetDeletingTextsWithoutFieldsNode';
 // import metrics
 import ClassificationMetricCalculationNode from './metricNodes/ClassificationMetricCalculationNode';
 import NerMetricCalculationNode from './metricNodes/NerMetricCalculationNode';
 import SummarizationMetricCalculationNode from './metricNodes/SummarizationMetricCalculationNode';
+import NlpTokenNerLabelsCreatingByPatternNode from './actionNodes/NlpTokenNerLabelsCreatingByPatternNode';
 
 export interface NlpConstructorNode {
   name: string;
@@ -50,6 +51,10 @@ export const listOfNlpConstructorActionNodes: NlpConstructorNode[] = [
   {
     name: 'Delete texts without fields nlp dataset',
     node: NlpDatasetDeletingTextsWithoutFieldsNode,
+  },
+  {
+    name: 'Create nlp token ner labels by pattern',
+    node: NlpTokenNerLabelsCreatingByPatternNode,
   },
 ];
 
