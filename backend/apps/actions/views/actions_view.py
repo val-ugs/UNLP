@@ -196,23 +196,26 @@ def create_nlp_token_ner_labels_by_pattern(request, nlp_dataset_pk):
                 pattern = ner_label_pattern['pattern']
                 ner_label = get_object_or_404(NerLabel, pk=ner_label_id)
                 
-                for nlp_text in nlp_texts[0:100]:
+                for nlp_text in nlp_texts:
                     tokens = tokenize(nlp_text.text, nlp_dataset.token_pattern_to_remove, nlp_dataset.token_pattern_to_split)
-                
+                    
                     concidences = re.findall(pattern, nlp_text.text)
                     for concidence in concidences:
                         ner_label_tokens = tokenize(concidence, nlp_dataset.token_pattern_to_remove, nlp_dataset.token_pattern_to_split)
+                        pos = tokens.index(ner_label_tokens[0])
                         for ner_label_token in ner_label_tokens:
-                            pos = tokens.index(ner_label_token)
                             nlp_token = get_object_or_404(NlpToken, nlp_text=nlp_text, token=ner_label_token, pos=pos)
                             nlp_token_ner_label, _ = NlpTokenNerLabel.objects.get_or_create(nlp_token=nlp_token)
                             if (nlp_token_ner_label.ner_label):
-                                raise Exception(f"Collision: for tokens found by pattern {pattern}, the ner label is already defined (nlp_text='{nlp_text.text}',ner_label={nlp_token_ner_label.ner_label.name})).")
+                                raise Exception(f"Collision: for tokens found by pattern {pattern}, the ner label is already defined (nlp_text=\"{nlp_text.text}\",ner_label=\"{nlp_token_ner_label.ner_label.name}\").")
 
                             nlp_token_ner_label.ner_label = ner_label
                             nlp_token_ner_label.initial = ner_label_token == ner_label_tokens[0]
                             nlp_token_ner_label.save()
-        return Response(status=status.HTTP_200_OK)
+                            pos += 1
+
+        nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset)
+        return Response(nlp_dataset_serializer.data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
     
