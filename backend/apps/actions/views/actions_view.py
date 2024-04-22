@@ -1,4 +1,6 @@
+from collections import defaultdict
 from io import BytesIO
+import json
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
@@ -159,6 +161,63 @@ def delete_texts_without_fields(request, nlp_dataset_pk):
     nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset)
         
     return Response(nlp_dataset_serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def create_dataset_by_template(request):
+    try:
+        template_dataset = request.body
+        template_dataset = json.loads(template_dataset)
+
+        nlp_dataset_pks = template_dataset['nlp_dataset_pks']
+        template = template_dataset['template']
+        delimiter = template_dataset['delimiter']
+
+        nlp_dataset_template = NlpDataset.objects.create()
+        nlp_dataset_template.save()
+        
+        len = -1
+        for nlp_dataset_pk in nlp_dataset_pks:
+            nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk)
+            if (len == -1):
+                len = nlp_texts.count()
+                continue
+            if (len != nlp_texts.count()):
+                raise Exception('The length of the datasets is not equal')
+        for i in range(0, len):
+            template_copy = template
+            for nlp_dataset_pk in nlp_dataset_pks:
+                try:
+                    nlp_text = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk).order_by('pk')[i]
+                except NlpTokenNerLabel.DoesNotExist:
+                    nlp_text = None
+                dict = defaultdict(str)
+                nlp_tokens = NlpToken.objects.filter(nlp_text=nlp_text)
+                for nlp_token in nlp_tokens:
+                    try:
+                        nlp_token_ner_label = NlpTokenNerLabel.objects.get(nlp_token=nlp_token)
+                    except NlpTokenNerLabel.DoesNotExist:
+                        nlp_token_ner_label = None
+                    
+                    if (nlp_token_ner_label and nlp_token_ner_label.ner_label):
+                        ner_label = nlp_token_ner_label.ner_label
+                        if not dict[ner_label.name]:
+                            dict[ner_label.name] = nlp_token.token
+                        else:
+                            if (nlp_token_ner_label.initial == 0):
+                                dict[ner_label.name] += f" {nlp_token.token}"
+                            else:
+                                dict[ner_label.name] += f"{delimiter} {nlp_token.token}"
+                for key in dict:
+                    template_copy = template_copy.replace(f"<{key}>", dict[key])
+
+            nlp_text_template = NlpText.objects.create()
+            nlp_text_template.text = template_copy
+            nlp_text_template.nlp_dataset = nlp_dataset_template
+            nlp_text_template.save()
+
+        return Response(status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 def has_tokens_without_ner_labels(nlp_text):
     nlp_tokens = NlpToken.objects.filter(nlp_text=nlp_text)
