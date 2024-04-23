@@ -271,7 +271,7 @@ def create_nlp_dataset_by_template(request):
                             if (nlp_token_ner_label.initial == 0):
                                 dict[ner_label.name] += f" {nlp_token.token}"
                             else:
-                                dict[ner_label.name] += f"{delimiter} {nlp_token.token}"
+                                dict[ner_label.name] += f"{delimiter}{nlp_token.token}"
                 for key in dict:
                     template_copy = template_copy.replace(f"<{key}>", dict[key])
                 template_copy = template_copy if not nlp_text.classification_label else template_copy.replace(f"<{"classification_label"}>", nlp_text.classification_label)
