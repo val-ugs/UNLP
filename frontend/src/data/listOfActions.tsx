@@ -4,6 +4,7 @@ import NlpDatasetCopying from 'components/interstitial/actions/NlpDatasetCopying
 import NlpDatasetCreatingByField from 'components/interstitial/actions/NlpDatasetCreatingByField';
 import NlpDatasetDeletingTextsWithoutFields from 'components/interstitial/actions/NlpDatasetDeletingTextsWithoutFields';
 import NlpTokenNerLabelsCreatingByPattern from 'components/interstitial/actions/NlpTokenNerLabelsCreatingByPattern';
+import NlpDatasetCreatingByTemplate from 'components/interstitial/actions/NlpDatasetCreatingByTemplate';
 
 export const listOfActions: ActionProps[] = [
   {
@@ -25,5 +26,9 @@ export const listOfActions: ActionProps[] = [
   {
     name: 'Create nlp token ner labels by pattern',
     component: <NlpTokenNerLabelsCreatingByPattern />,
+  },
+  {
+    name: 'Create nlp dataset by template',
+    component: <NlpDatasetCreatingByTemplate />,
   },
 ];
