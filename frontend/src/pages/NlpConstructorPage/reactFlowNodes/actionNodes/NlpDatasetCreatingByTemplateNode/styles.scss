@@ -1,0 +1,26 @@
+.nlp-dataset-creating-by-template-node {
+  &__main {
+  }
+
+  &__main-title {
+    padding-bottom: 5px;
+    text-align: center;
+  }
+
+  &__item {
+    padding-bottom: 5px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &__labeled-element {
+  }
+
+  &__textarea-field {
+  }
+
+  &__input-field {
+  }
+}
