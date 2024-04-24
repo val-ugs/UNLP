@@ -1,0 +1,67 @@
+@import 'variables.scss';
+@import 'media_mixin.scss';
+
+// TextareaField variables
+$textarea-field-background-color: $color-6;
+$textarea-field-border-color: $color-2;
+$textarea-field-text-color: $color-5;
+$textarea-field-focus-border-color: $color-2;
+
+.textarea-field {
+  display: flex;
+  height: 100%;
+  color: $textarea-field-text-color;
+  font-size: 20px;
+  background-color: $textarea-field-background-color;
+  border: 1px solid $textarea-field-border-color;
+  border-radius: 10px;
+
+  &:focus-within {
+    border-color: $textarea-field-focus-border-color;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-left: 1px solid $textarea-field-border-color;
+  }
+
+  &__textarea {
+    flex: 1;
+    overflow: hidden;
+    color: inherit;
+    font-size: inherit;
+    font-family: $font-family;
+    background-color: inherit;
+    border: none;
+    border-radius: inherit;
+    resize: none;
+
+    &::placeholder {
+      color: inherit;
+      opacity: 0.4;
+    }
+
+    &:focus {
+      outline: none;
+
+      + .textarea-field {
+        &__right {
+          border-color: $textarea-field-focus-border-color;
+        }
+      }
+    }
+  }
+
+  &__counter {
+  }
+
+  @include media-1000 {
+    font-size: 16px;
+  }
+
+  @include media-700 {
+    font-size: 14px;
+  }
+}

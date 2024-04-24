@@ -1,0 +1,115 @@
+@import 'variables.scss';
+@import 'media_mixin.scss';
+
+$multiselect-color: $color-5;
+$multiselect-background-color: $color-3;
+$multiselect-background-active-color: $color-4;
+$multiselect-border-color: $color-5;
+
+.multiselect {
+  position: relative;
+  color: $multiselect-color;
+  font-size: 20px;
+  font-family: $font-family;
+  background-color: $multiselect-background-color;
+  border: 1px solid $multiselect-border-color;
+
+  &__selected {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    background-color: inherit;
+    border: none;
+
+    &.disabled {
+      opacity: 0.5;
+    }
+  }
+
+  &__selected-wrapper {
+    display: flex;
+  }
+
+  &__selected-left {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+  }
+
+  &__selected-values {
+  }
+
+  &__selected-value {
+  }
+
+  &__selected-arrow {
+  }
+
+  &__arrow {
+    border-color: $multiselect-color;
+  }
+
+  &__selected-right {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-left: 1px solid $multiselect-border-color;
+  }
+
+  &__selected-counter {
+  }
+
+  &__items {
+    position: absolute;
+    top: 100%;
+    left: -1px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    max-height: 150px;
+    overflow-y: scroll;
+    background-color: inherit;
+  }
+
+  @include media-1000 {
+    font-size: 16px;
+  }
+
+  @include media-700 {
+    font-size: 14px;
+  }
+}
+
+.multiselect-item {
+  width: 100%;
+  padding: 5px;
+  color: $multiselect-color;
+  font-size: 20px;
+  font-family: $font-family;
+  white-space: nowrap;
+  text-align: start;
+  background-color: $multiselect-background-color;
+  border: 1px solid $multiselect-border-color;
+  cursor: pointer;
+
+  &:hover,
+  &.active {
+    background-color: $multiselect-background-active-color;
+  }
+
+  &__label {
+  }
+
+  @include media-1000 {
+    font-size: 16px;
+  }
+
+  @include media-700 {
+    font-size: 14px;
+  }
+}

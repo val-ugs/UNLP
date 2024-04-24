@@ -5,6 +5,7 @@ import { fieldType } from 'data/enums/fieldType';
 import { createNlpDatasetByFieldDtoProps } from 'interfaces/dtos/createNlpDatasetByFieldDto.interface';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import { CreateNlpTokenNerLabelsByPatternDtoProps } from 'interfaces/dtos/createNlpTokenNerLabelsByPatternDto';
+import { CreateNlpDatasetByTemplateDtoProps } from 'interfaces/dtos/createNlpDatasetByTemplateDto';
 
 export const actionApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
@@ -103,6 +104,33 @@ export const actionApi = api.injectEndpoints({
             }
           )
         ),
+      }),
+      transformResponse: (response: any) => {
+        return {
+          id: response['id'],
+          tokenPatternToRemove: response['token_pattern_to_remove'],
+          tokenPatternToSplit: response['token_pattern_to_split'],
+        };
+      },
+      invalidatesTags: [tagTypes.NlpDataset],
+    }),
+    createNlpDatasetByTemplate: build.mutation<
+      NlpDatasetProps,
+      CreateNlpDatasetByTemplateDtoProps
+    >({
+      query: (createNlpDatasetByTemplateDtoProps) => ({
+        url: '/actions/create-nlp-dataset-by-template/',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nlp_dataset_pks: createNlpDatasetByTemplateDtoProps.nlpDatasets.map(
+            (nlpDataset) => {
+              return nlpDataset.id;
+            }
+          ),
+          template: createNlpDatasetByTemplateDtoProps.template,
+          delimiter: createNlpDatasetByTemplateDtoProps.delimiter,
+        }),
       }),
       transformResponse: (response: any) => {
         return {
