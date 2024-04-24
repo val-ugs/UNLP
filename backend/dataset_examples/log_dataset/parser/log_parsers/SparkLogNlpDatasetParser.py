@@ -10,7 +10,7 @@ class SparkLogNlpDatasetParser(LogNlpDatasetParser):
         return log_file_name, csv_file_name
     
     def init_classification_label(self):
-        return ClassificationLabel.Spark.value
+        return ClassificationLabel.Other.value
 
     def init_ner_label_rows(self, row):
         return {

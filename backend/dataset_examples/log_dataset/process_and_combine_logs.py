@@ -72,7 +72,7 @@ def convert_to_my_dataset():
     train_nlp_texts.extend(mac_nlp_texts[0:200])
     train_nlp_texts.extend(open_ssh_nlp_texts[0:200])
     train_nlp_texts.extend(proxifier_nlp_texts[0:200])
-    train_nlp_texts.extend(spark_nlp_texts[0:200])
+    # train_nlp_texts.extend(spark_nlp_texts[0:200])
     train_nlp_texts.extend(windows_nlp_texts[0:200])
     train_nlp_texts.extend(zookeeper_nlp_texts[0:200])
 
