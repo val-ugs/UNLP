@@ -239,15 +239,17 @@ def create_nlp_dataset_by_template(request):
 
         nlp_dataset_template = NlpDataset.objects.create()
         nlp_dataset_template.save()
+
+        if not nlp_dataset_pks:
+            raise Exception('Datasets not defined')
         
-        len = -1
+        first_nlp_text = NlpText.objects.filter(nlp_dataset=nlp_dataset_pks[0])
+        len = first_nlp_text.count()
         for nlp_dataset_pk in nlp_dataset_pks:
             nlp_texts = NlpText.objects.filter(nlp_dataset=nlp_dataset_pk)
-            if (len == -1):
-                len = nlp_texts.count()
-                continue
             if (len != nlp_texts.count()):
                 raise Exception('The length of the datasets is not equal')
+            
         for i in range(0, len):
             template_copy = template
             for nlp_dataset_pk in nlp_dataset_pks:
@@ -263,15 +265,17 @@ def create_nlp_dataset_by_template(request):
                     except NlpTokenNerLabel.DoesNotExist:
                         nlp_token_ner_label = None
                     
-                    if (nlp_token_ner_label and nlp_token_ner_label.ner_label):
-                        ner_label = nlp_token_ner_label.ner_label
-                        if not dict[ner_label.name]:
-                            dict[ner_label.name] = nlp_token.token
+                    if (not nlp_token_ner_label or not nlp_token_ner_label.ner_label):
+                        continue
+
+                    ner_label = nlp_token_ner_label.ner_label
+                    if not dict[ner_label.name]:
+                        dict[ner_label.name] = nlp_token.token
+                    else:
+                        if (nlp_token_ner_label.initial == 0):
+                            dict[ner_label.name] += f" {nlp_token.token}"
                         else:
-                            if (nlp_token_ner_label.initial == 0):
-                                dict[ner_label.name] += f" {nlp_token.token}"
-                            else:
-                                dict[ner_label.name] += f"{delimiter}{nlp_token.token}"
+                            dict[ner_label.name] += f"{delimiter}{nlp_token.token}"
                 for key in dict:
                     template_copy = template_copy.replace(f"<{key}>", dict[key])
                 template_copy = template_copy if not nlp_text.classification_label else template_copy.replace(f"<{"classification_label"}>", nlp_text.classification_label)
