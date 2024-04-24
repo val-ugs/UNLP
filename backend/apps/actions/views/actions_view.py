@@ -201,9 +201,18 @@ def create_nlp_token_ner_labels_by_pattern(request, nlp_dataset_pk):
                     tokens = tokenize(nlp_text.text, nlp_dataset.token_pattern_to_remove, nlp_dataset.token_pattern_to_split)
                     
                     concidences = re.findall(pattern, nlp_text.text)
+                    
+                    processed_posses = []
                     for concidence in concidences:
                         ner_label_tokens = tokenize(concidence, nlp_dataset.token_pattern_to_remove, nlp_dataset.token_pattern_to_split)
-                        pos = tokens.index(ner_label_tokens[0])
+                        
+                        posses = [i for i, x in enumerate(tokens) if x == ner_label_tokens[0]]
+                        if not posses:
+                            continue
+
+                        unprocessed_posses = list(set(posses) - set(processed_posses))
+                        pos = unprocessed_posses[0]
+                        processed_posses.append(pos)
                         for ner_label_token in ner_label_tokens:
                             nlp_token = get_object_or_404(NlpToken, nlp_text=nlp_text, token=ner_label_token, pos=pos)
                             nlp_token_ner_label, _ = NlpTokenNerLabel.objects.get_or_create(nlp_token=nlp_token)
