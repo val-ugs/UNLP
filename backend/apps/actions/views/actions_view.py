@@ -278,8 +278,8 @@ def create_nlp_dataset_by_template(request):
                             dict[ner_label.name] += f"{delimiter}{nlp_token.token}"
                 for key in dict:
                     template_copy = template_copy.replace(f"<{key}>", dict[key])
-                template_copy = template_copy if not nlp_text.classification_label else template_copy.replace(f"<{"classification_label"}>", nlp_text.classification_label)
-                template_copy = template_copy if not nlp_text.summarization else template_copy.replace(f"<{"summarization"}>", nlp_text.summarization)
+                template_copy = template_copy if not nlp_text.classification_label else template_copy.replace(f"<classification_label>", nlp_text.classification_label)
+                template_copy = template_copy if not nlp_text.summarization else template_copy.replace(f"<summarization>", nlp_text.summarization)
 
             nlp_text_template = NlpText.objects.create()
             nlp_text_template.text = template_copy

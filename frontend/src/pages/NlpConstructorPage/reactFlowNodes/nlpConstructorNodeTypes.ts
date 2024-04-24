@@ -9,11 +9,12 @@ import NlpDatasetClearingNode from './actionNodes/NlpDatasetClearingNode';
 import NlpDatasetCopyingNode from './actionNodes/NlpDatasetCopyingNode';
 import NlpDatasetCreatingByFieldNode from './actionNodes/NlpDatasetCreatingByFieldNode';
 import NlpDatasetDeletingTextsWithoutFieldsNode from './actionNodes/NlpDatasetDeletingTextsWithoutFieldsNode';
+import NlpTokenNerLabelsCreatingByPatternNode from './actionNodes/NlpTokenNerLabelsCreatingByPatternNode';
+import NlpDatasetCreatingByTemplateNode from './actionNodes/NlpDatasetCreatingByTemplateNode';
 // import metrics
 import ClassificationMetricCalculationNode from './metricNodes/ClassificationMetricCalculationNode';
 import NerMetricCalculationNode from './metricNodes/NerMetricCalculationNode';
 import SummarizationMetricCalculationNode from './metricNodes/SummarizationMetricCalculationNode';
-import NlpTokenNerLabelsCreatingByPatternNode from './actionNodes/NlpTokenNerLabelsCreatingByPatternNode';
 
 export interface NlpConstructorNode {
   name: string;
@@ -55,6 +56,10 @@ export const listOfNlpConstructorActionNodes: NlpConstructorNode[] = [
   {
     name: 'Create nlp token ner labels by pattern',
     node: NlpTokenNerLabelsCreatingByPatternNode,
+  },
+  {
+    name: 'Create nlp dataset by template',
+    node: NlpDatasetCreatingByTemplateNode,
   },
 ];
 
