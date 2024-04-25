@@ -72,7 +72,7 @@ const NlpDatasetCreatingByTemplate: FC = () => {
     name: 'template',
     value: createNlpDatasetByTemplateDto.template ?? '',
     setValue: setTemplateValue,
-    maxLength: 200,
+    maxLength: 500,
   };
 
   const setDelimiterValue = (value: string) => {

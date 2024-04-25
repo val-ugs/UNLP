@@ -66,7 +66,7 @@ const NlpDatasetCreatingByTemplateNode: FC<
     name: 'template',
     value: node.data?.input?.template ?? '',
     setValue: setTemplateValue,
-    maxLength: 200,
+    maxLength: 500,
   };
 
   const setDelimiterValue = (value: string) => {
