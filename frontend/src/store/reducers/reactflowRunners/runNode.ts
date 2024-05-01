@@ -9,6 +9,7 @@ import { run as runCopyNlpDataset } from './nodeRunners/actionNodes/runCopyNlpDa
 import { run as runCreateNlpDatasetByField } from './nodeRunners/actionNodes/runCreateNlpDatasetByField';
 import { run as runDeleteTextsWithoutFieldsNlpDataset } from './nodeRunners/actionNodes/runDeleteTextsWithoutFieldsNlpDataset';
 import { run as runCreateNlpTokenNerLabelsByPattern } from './nodeRunners/actionNodes/runCreateNlpTokenNerLabelsByPattern';
+import { run as runCreateNlpDatasetByTemplate } from './nodeRunners/actionNodes/runCreateNlpDatasetByTemplate';
 // import metric node runners
 import { run as runCalculateClassificationMetric } from './nodeRunners/metricNodes/runCalculateClassificationMetric';
 import { run as runCalculateNerMetric } from './nodeRunners/metricNodes/runCalculateNerMetric';
@@ -34,6 +35,8 @@ export const runNode = async (node: Node, thunkApi: any) => {
       return await runDeleteTextsWithoutFieldsNlpDataset(node, thunkApi);
     case 'NlpTokenNerLabelsCreatingByPatternNode':
       return await runCreateNlpTokenNerLabelsByPattern(node, thunkApi);
+    case 'NlpDatasetCreatingByTemplateNode':
+      return await runCreateNlpDatasetByTemplate(node, thunkApi);
     // metric nodes
     case 'ClassificationMetricCalculationNode':
       return await runCalculateClassificationMetric(node, thunkApi);
