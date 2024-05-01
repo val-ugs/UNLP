@@ -20,5 +20,6 @@ class MacLogNlpDatasetParser(LogNlpDatasetParser):
             NerLabel.Node: [],
             NerLabel.Component: [row['Component']],
             NerLabel.Process: [row['PID']],
+            NerLabel.Other: [row['Address']],
             NerLabel.Content: [row['Content']]
         }
