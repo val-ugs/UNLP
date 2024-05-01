@@ -1,8 +1,8 @@
 from django.db import models
 
 class NlpDataset(models.Model):
-    token_pattern_to_remove = models.CharField(max_length=100, null=True, blank=True,)
-    token_pattern_to_split = models.CharField(max_length=100, null=True, blank=True,)
+    token_pattern_to_remove = models.CharField(max_length=500, null=True, blank=True,)
+    token_pattern_to_split = models.CharField(max_length=500, null=True, blank=True,)
 
 class NerLabel(models.Model):
     name = models.CharField(max_length=100)
