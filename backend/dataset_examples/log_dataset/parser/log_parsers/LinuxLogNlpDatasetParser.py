@@ -10,7 +10,7 @@ class LinuxLogNlpDatasetParser(LogNlpDatasetParser):
         return log_file_name, csv_file_name
     
     def init_classification_label(self):
-        return ClassificationLabel.Other.value
+        return ClassificationLabel.Unknown.value
 
     def init_ner_label_rows(self, row):
         return {

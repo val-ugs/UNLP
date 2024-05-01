@@ -31,7 +31,7 @@ def convert_to_my_dataset():
     print(ner_labels)
 
     token_pattern_to_remove = ''
-    token_pattern_to_split = '[\\s,\\[,\\],\\@,\\:,\\-,\\=, \\\, \\/]'
+    token_pattern_to_split = '[\s,\[,\],\@,\:,\-,\=,\\\,\/,\.,\,,\!,\",\#,\$,\%,\&,\',\(,\),\*,\+,\-,\;,\?,\^,\_,\`,\{,\|,\},\~,\<,\>]'
 
     apache_log_nlp_dataset_parser = ApacheLogNlpDatasetParser(token_pattern_to_remove, token_pattern_to_split, ner_labels)
     apache_nlp_texts = apache_log_nlp_dataset_parser.process()
