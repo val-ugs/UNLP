@@ -204,15 +204,37 @@ def create_nlp_token_ner_labels_by_pattern(request, nlp_dataset_pk):
                     
                     processed_posses = []
                     for concidence in concidences:
+                        # get first appearance (remove bug with duplicates)
+                        index = nlp_text.text.index(concidence)
+                        substring = nlp_text.text[0:index]
+                        substring = re.sub(nlp_dataset.token_pattern_to_remove, '', substring)
+                        substring = re.sub(nlp_dataset.token_pattern_to_split, '', substring)
+                        token_first_appearance = 0
+                        sum = 0
+                        for i, token in enumerate(tokens):
+                            sum += len(token)
+                            if (sum > len(substring)):
+                                token_first_appearance = i
+                                break
+
+                        # get ner_label_tokens
                         ner_label_tokens = tokenize(concidence, nlp_dataset.token_pattern_to_remove, nlp_dataset.token_pattern_to_split)
+                        line_of_ner_label_tokens = " ".join(str(element) for element in ner_label_tokens)
+
+                        # take start posses of tokens
+                        start_posses = []
+                        for start_pos in [i for i, x in enumerate(tokens) if x == ner_label_tokens[0]]:
+                            current_tokens = tokens[start_pos:start_pos+len(ner_label_tokens)]
+                            line_of_current_tokens = " ".join(str(element) for element in current_tokens)
+                            if (line_of_current_tokens == line_of_ner_label_tokens and start_pos >= token_first_appearance):
+                                start_posses.append(start_pos)
                         
-                        posses = [i for i, x in enumerate(tokens) if x == ner_label_tokens[0]]
-                        unprocessed_posses = list(set(posses) - set(processed_posses))
+                        unprocessed_posses = list(set(start_posses) - set(processed_posses))
+                        unprocessed_posses.sort()
                         if not unprocessed_posses:
                             continue
 
                         pos = unprocessed_posses[0]
-                        processed_posses.append(pos)
                         for ner_label_token in ner_label_tokens:
                             nlp_token = get_object_or_404(NlpToken, nlp_text=nlp_text, token=ner_label_token, pos=pos)
                             nlp_token_ner_label, _ = NlpTokenNerLabel.objects.get_or_create(nlp_token=nlp_token)
@@ -222,6 +244,7 @@ def create_nlp_token_ner_labels_by_pattern(request, nlp_dataset_pk):
                             nlp_token_ner_label.ner_label = ner_label
                             nlp_token_ner_label.initial = ner_label_token == ner_label_tokens[0]
                             nlp_token_ner_label.save()
+                            processed_posses.append(pos)
                             pos += 1
 
         nlp_dataset_serializer = NlpDatasetSerializer(nlp_dataset)
