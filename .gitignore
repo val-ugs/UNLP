@@ -169,4 +169,5 @@ node_modules
 trained_models
 !frontend/.env
 !backend/dataset_examples/**/*.log
-backend/dataset_examples/**/*.json
+backend/dataset_examples/log_dataset/*.json
+!backend/dataset_examples/log_dataset/datasets/*.json

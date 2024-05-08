@@ -36,7 +36,8 @@ class LogNlpDatasetParser:
                 NerLabel.User: False,
                 NerLabel.Node: False,
                 NerLabel.Component: False,
-                NerLabel.Content: False
+                NerLabel.Content: False,
+                NerLabel.Other: False,
             }
 
             ner_label_rows = self.init_ner_label_rows(row)

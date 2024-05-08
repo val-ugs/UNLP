@@ -11,6 +11,7 @@ class ClassificationLabel(Enum):
     Spark = 'Spark'
     Windows = 'Windows'
     Zookeeper = 'Zookeeper'
+    Unknown = 'Unknown'
 
 class NerLabel(Enum):
     DateTime = 'DateTime'
