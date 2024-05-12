@@ -11,6 +11,7 @@ import { listOfMetrics } from 'data/listOfMetrics';
 import { MetricProps } from 'interfaces/metric.interface';
 import { actionModalSlice } from 'store/reducers/actionModalSlice';
 import { metricModalSlice } from 'store/reducers/metricModalSlice';
+import { loadingModalSlice } from 'store/reducers/loadingModalSlice';
 import './styles.scss';
 
 export interface MenuProps {
@@ -21,11 +22,13 @@ export interface MenuProps {
 const Menu: FC<MenuProps> = ({ className, nlpDataset }) => {
   const [isActionOpen, setIsActionOpen] = useState<boolean>(false);
   const [isMetricOpen, setIsMetricOpen] = useState<boolean>(false);
-  const [downloadNlpDataset, {}] =
+  const [downloadNlpDataset, { isLoading: isDownloadNlpDatasetLoading }] =
     nlpDatasetApi.useDownloadNlpDatasetMutation();
   const { activate: activateLoadData } = loadDataModalSlice.actions;
   const { activate: activateAction } = actionModalSlice.actions;
   const { activate: activateMetric } = metricModalSlice.actions;
+  const { activate: activateLoading, deactivate: deactivateLoading } =
+    loadingModalSlice.actions;
   const dispatch = useAppDispatch();
 
   const handleLoadData = () => dispatch(activateLoadData());
@@ -55,6 +58,9 @@ const Menu: FC<MenuProps> = ({ className, nlpDataset }) => {
   const handleOpenAction = () => setIsActionOpen(true);
 
   const handleOpenMetric = () => setIsMetricOpen(true);
+
+  if (isDownloadNlpDatasetLoading) dispatch(activateLoading());
+  else dispatch(deactivateLoading());
 
   return (
     <div className={`menu ${className}`}>

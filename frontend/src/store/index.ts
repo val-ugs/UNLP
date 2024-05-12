@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import actionModalReducer from './reducers/actionModalSlice';
 import huggingFaceModelFormModalReducer from './reducers/huggingFaceModelFormModalSlice';
 import loadDataModalReducer from './reducers/loadDataModalSlice';
+import loadingModalReducer from './reducers/loadingModalSlice';
 import metricModalReducer from './reducers/metricModalSlice';
 import nerLabelFormModalReducer from './reducers/nerLabelFormModalSlice';
 import nlpDatasetReducer from './reducers/nlpDatasetSlice';
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   actionModalReducer,
   huggingFaceModelFormModalReducer,
   loadDataModalReducer,
+  loadingModalReducer,
   metricModalReducer,
   nerLabelFormModalReducer,
   nlpDatasetReducer,
