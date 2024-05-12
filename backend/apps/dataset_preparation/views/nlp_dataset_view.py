@@ -61,7 +61,7 @@ class NlpDatasetView(APIView):
                 if (content == None): # If not read at the unzip stage
                     content = json.load(f)
                 else: # If read at the unzip stage then convert
-                    content = json.loads(content) 
+                    content = json.loads(content)
                 nlp_dataset_serializer = NlpDatasetSerializer(data=content)
                 if (nlp_dataset_serializer.is_valid()):
                     nlp_dataset = NlpDataset.objects.create(
@@ -72,7 +72,8 @@ class NlpDatasetView(APIView):
                     ner_labels_data = content.pop('ner_labels')
                     old_new_ner_label_dict = {}
                     for ner_label_data in ner_labels_data:
-                        old_ner_label_id = ner_label_data.pop('id')
+                        ner_label_data.pop('nlp_dataset', None)
+                        old_ner_label_id = ner_label_data.pop('id', None)
                         ner_label_serializer = NerLabelSerializer(data=ner_label_data)
                         if (ner_label_serializer.is_valid()):
                             ner_label = NerLabel.objects.create(
@@ -89,6 +90,8 @@ class NlpDatasetView(APIView):
 
                     nlp_texts_data = content.pop('nlp_texts')
                     for nlp_text_data in nlp_texts_data:
+                        nlp_text_data.pop('id', None)
+                        nlp_text_data.pop('nlp_dataset', None)
                         nlp_text_serializer = NlpTextSerializer(data=nlp_text_data)
                         if (nlp_text_serializer.is_valid()):
                             nlp_text = NlpText.objects.create(
@@ -100,6 +103,8 @@ class NlpDatasetView(APIView):
 
                             nlp_tokens_data = nlp_text_data.pop('nlp_tokens')
                             for nlp_token_data in nlp_tokens_data:
+                                nlp_token_data.pop('id', None)
+                                nlp_token_data.pop('nlp_text', None)
                                 nlp_token_serializer = NlpTokenSerializer(data=nlp_token_data)
                                 if (nlp_token_serializer.is_valid()):
                                     nlp_token = NlpToken.objects.create(
@@ -108,9 +113,9 @@ class NlpDatasetView(APIView):
                                         nlp_text=nlp_text
                                     )
                                     
-                                    nlp_token_ner_label_data = nlp_token_data.pop('nlp_token_ner_label')
-                                    old_nlp_token_ner_label_ner_label_id = nlp_token_ner_label_data.pop('ner_label')
-                                    nlp_token_ner_label_data.pop('nlp_token') # remove old nlp_token
+                                    nlp_token_ner_label_data = nlp_token_data.pop('nlp_token_ner_label', None)
+                                    old_nlp_token_ner_label_ner_label_id = nlp_token_ner_label_data.pop('ner_label', None)
+                                    nlp_token_ner_label_data.pop('nlp_token', None) # remove old nlp_token
                                     nlp_token_ner_label_serializer = NlpTokenNerLabelSerializer(data=nlp_token_ner_label_data)
                                     if (nlp_token_ner_label_serializer.is_valid()):
                                         if (old_nlp_token_ner_label_ner_label_id != None):
