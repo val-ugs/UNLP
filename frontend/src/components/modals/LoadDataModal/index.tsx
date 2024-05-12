@@ -11,6 +11,7 @@ import InputField, {
   InputFieldProps,
 } from 'components/common/Inputs/InputField';
 import { LoadingDataDtoProps } from 'interfaces/dtos/loadingDataDto.interface';
+import { loadingModalSlice } from 'store/reducers/loadingModalSlice';
 import './styles.scss';
 
 const emptyLoadingDataDto: LoadingDataDtoProps = {
@@ -22,10 +23,13 @@ const LoadDataModal: FC = () => {
   const [loadingDataDto, setLoadingDataDto] =
     useState<LoadingDataDtoProps>(emptyLoadingDataDto);
   const loadDataId = useId();
-  const [postNlpDataset, {}] = nlpDatasetApi.usePostNlpDatasetMutation();
+  const [postNlpDataset, { isLoading: isPostNlpDatasetLoading }] =
+    nlpDatasetApi.usePostNlpDatasetMutation();
   const { isActive } = useAppSelector((state) => state.loadDataModalReducer);
   const { deactivate } = loadDataModalSlice.actions;
   const { setNlpDatasetId } = nlpDatasetSlice.actions;
+  const { activate: activateLoading, deactivate: deactivateLoading } =
+    loadingModalSlice.actions;
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
@@ -89,6 +93,9 @@ const LoadDataModal: FC = () => {
 
     dispatch(deactivate());
   };
+
+  if (isPostNlpDatasetLoading) dispatch(activateLoading());
+  else dispatch(deactivateLoading());
 
   return (
     <ContentModal

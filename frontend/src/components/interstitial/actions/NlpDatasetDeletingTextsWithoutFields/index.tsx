@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from 'hooks/redux';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
@@ -7,6 +7,7 @@ import LabeledElement from 'components/interstitial/LabeledElement';
 import InputButton from 'components/common/Inputs/InputButton';
 import { actionApi } from 'services/actionService';
 import { actionModalSlice } from 'store/reducers/actionModalSlice';
+import { loadingModalSlice } from 'store/reducers/loadingModalSlice';
 import './styles.scss';
 
 const NlpDatasetDeletingTextsWithoutFields: FC = () => {
@@ -14,13 +15,17 @@ const NlpDatasetDeletingTextsWithoutFields: FC = () => {
   const [nlpDatasetId, setNlpDatasetId] = useState<number>();
   const { deactivate } = actionModalSlice.actions;
   const dispatch = useAppDispatch();
-  const [deleteTextsWithoutFieldsNlpDataset, {}] =
-    actionApi.useDeleteTextsWithoutFieldsNlpDatasetMutation();
+  const [
+    deleteTextsWithoutFieldsNlpDataset,
+    { isLoading: isDeleteTextsWithoutFieldsNlpDatasetLoading },
+  ] = actionApi.useDeleteTextsWithoutFieldsNlpDatasetMutation();
   const {
     data: nlpDatasetsData,
     error,
     isLoading,
   } = nlpDatasetApi.useGetNlpDatasetsQuery();
+  const { activate: activateLoading, deactivate: deactivateLoading } =
+    loadingModalSlice.actions;
 
   useEffect(() => {
     if (nlpDatasetsData) setNlpDatasets(nlpDatasetsData);
@@ -42,10 +47,15 @@ const NlpDatasetDeletingTextsWithoutFields: FC = () => {
     }),
   };
 
-  const handleSubmit = () => {
-    if (nlpDatasetId) deleteTextsWithoutFieldsNlpDataset(nlpDatasetId);
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (nlpDatasetId) await deleteTextsWithoutFieldsNlpDataset(nlpDatasetId);
     dispatch(deactivate());
   };
+
+  if (isDeleteTextsWithoutFieldsNlpDatasetLoading) dispatch(activateLoading());
+  else dispatch(deactivateLoading());
 
   return (
     <div className="nlp-dataset-deleting-texts-without-fields">

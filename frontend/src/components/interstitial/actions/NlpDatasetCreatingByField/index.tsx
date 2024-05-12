@@ -16,6 +16,7 @@ import { skipToken } from '@reduxjs/toolkit/query';
 import InputCheckbox, {
   InputCheckboxProps,
 } from 'components/common/Inputs/InputCheckbox';
+import { loadingModalSlice } from 'store/reducers/loadingModalSlice';
 import './styles.scss';
 
 const emptyCreateNlpDatasetByFieldDto: createNlpDatasetByFieldDtoProps = {
@@ -33,8 +34,10 @@ const NlpDatasetCreatingByField: FC = () => {
   const [nerLabels, setNerLabels] = useState<NerLabelProps[]>([]);
   const { deactivate } = actionModalSlice.actions;
   const dispatch = useAppDispatch();
-  const [createNlpDatasetByField, {}] =
-    actionApi.useCreateNlpDatasetByFieldMutation();
+  const [
+    createNlpDatasetByField,
+    { isLoading: isCreateNlpDatasetByFieldLoading },
+  ] = actionApi.useCreateNlpDatasetByFieldMutation();
   const {
     data: nlpDatasetsData,
     error: nlpDatasetError,
@@ -46,6 +49,8 @@ const NlpDatasetCreatingByField: FC = () => {
     isLoading: nerLabelLoading,
     isError: isNerLabelError,
   } = nerLabelApi.useGetNerLabelsByNlpDatasetIdQuery(nlpDatasetId ?? skipToken);
+  const { activate: activateLoading, deactivate: deactivateLoading } =
+    loadingModalSlice.actions;
 
   useEffect(() => {
     if (nlpDatasetsData) setNlpDatasets(nlpDatasetsData);
@@ -112,9 +117,14 @@ const NlpDatasetCreatingByField: FC = () => {
     }),
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
     if (nlpDatasetId)
-      createNlpDatasetByField({ nlpDatasetId, createNlpDatasetByFieldDto });
+      await createNlpDatasetByField({
+        nlpDatasetId,
+        createNlpDatasetByFieldDto,
+      });
     dispatch(deactivate());
   };
   const handleClassificationLabelSavedChange = () => {
@@ -142,6 +152,9 @@ const NlpDatasetCreatingByField: FC = () => {
     checked: createNlpDatasetByFieldDto.isSummarizationSaved,
     onChange: handleSummarizationSavedChange,
   };
+
+  if (isCreateNlpDatasetByFieldLoading) dispatch(activateLoading());
+  else dispatch(deactivateLoading());
 
   return (
     <div className="nlp-dataset-creating-by-field">

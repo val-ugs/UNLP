@@ -17,6 +17,7 @@ import UnorderedList from 'components/common/UnorderedList';
 import Button from 'components/common/Button';
 import { nerLabelApi } from 'services/nerLabelService';
 import { NerLabelProps } from 'interfaces/nerLabel.interface';
+import { loadingModalSlice } from 'store/reducers/loadingModalSlice';
 import './styles.scss';
 
 const emptyCreateNlpTokenNerLabelsByPatternDto: CreateNlpTokenNerLabelsByPatternDtoProps =
@@ -37,8 +38,10 @@ const NlpTokenNerLabelsCreatingByPattern: FC = () => {
   );
   const { deactivate } = actionModalSlice.actions;
   const dispatch = useAppDispatch();
-  const [createNlpTokenNerLabelsByPattern, {}] =
-    actionApi.useCreateNlpTokenNerLabelsByPatternMutation();
+  const [
+    createNlpTokenNerLabelsByPattern,
+    { isLoading: isCreateNlpTokenNerLabelsByPatternLoading },
+  ] = actionApi.useCreateNlpTokenNerLabelsByPatternMutation();
   const {
     data: nlpDatasetsData,
     error: nlpDatasetsError,
@@ -53,6 +56,8 @@ const NlpTokenNerLabelsCreatingByPattern: FC = () => {
       ? Number(createNlpTokenNerLabelsByPatternDto.nlpDatasetId)
       : skipToken
   );
+  const { activate: activateLoading, deactivate: deactivateLoading } =
+    loadingModalSlice.actions;
 
   useEffect(() => {
     if (nlpDatasetsData) setNlpDatasets(nlpDatasetsData);
@@ -104,6 +109,9 @@ const NlpTokenNerLabelsCreatingByPattern: FC = () => {
         setError(e.data.message);
       });
   };
+
+  if (isCreateNlpTokenNerLabelsByPatternLoading) dispatch(activateLoading());
+  else dispatch(deactivateLoading());
 
   return (
     <div className="nlp-token-ner-label-creating-by-pattern">

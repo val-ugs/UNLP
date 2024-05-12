@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from 'hooks/redux';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
@@ -6,7 +6,6 @@ import LabeledElement from 'components/interstitial/LabeledElement';
 import InputButton from 'components/common/Inputs/InputButton';
 import { actionApi } from 'services/actionService';
 import { actionModalSlice } from 'store/reducers/actionModalSlice';
-import './styles.scss';
 import Multiselect, { MultiselectProps } from 'components/common/Multiselect';
 import { CreateNlpDatasetByTemplateDtoProps } from 'interfaces/dtos/createNlpDatasetByTemplateDto';
 import InputField, {
@@ -15,6 +14,8 @@ import InputField, {
 import TextareaField, {
   TextareaFieldProps,
 } from 'components/common/Inputs/TextareaField';
+import { loadingModalSlice } from 'store/reducers/loadingModalSlice';
+import './styles.scss';
 
 const emptyCreateNlpDatasetByTemplateDto: CreateNlpDatasetByTemplateDtoProps = {
   nlpDatasets: [],
@@ -30,13 +31,17 @@ const NlpDatasetCreatingByTemplate: FC = () => {
     );
   const { deactivate } = actionModalSlice.actions;
   const dispatch = useAppDispatch();
-  const [createNlpDatasetByTemplate, {}] =
-    actionApi.useCreateNlpDatasetByTemplateMutation();
+  const [
+    createNlpDatasetByTemplate,
+    { isLoading: isСreateNlpDatasetByTemplateLoading },
+  ] = actionApi.useCreateNlpDatasetByTemplateMutation();
   const {
     data: nlpDatasetsData,
     error,
     isLoading,
   } = nlpDatasetApi.useGetNlpDatasetsQuery();
+  const { activate: activateLoading, deactivate: deactivateLoading } =
+    loadingModalSlice.actions;
 
   useEffect(() => {
     if (nlpDatasetsData) setNlpDatasets(nlpDatasetsData);
@@ -91,11 +96,16 @@ const NlpDatasetCreatingByTemplate: FC = () => {
     disabled: false,
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
     if (createNlpDatasetByTemplateDto.nlpDatasets?.length > 0)
-      createNlpDatasetByTemplate(createNlpDatasetByTemplateDto);
+      await createNlpDatasetByTemplate(createNlpDatasetByTemplateDto);
     dispatch(deactivate());
   };
+
+  if (isСreateNlpDatasetByTemplateLoading) dispatch(activateLoading());
+  else dispatch(deactivateLoading());
 
   return (
     <div className="nlp-dataset-creating-by-template">

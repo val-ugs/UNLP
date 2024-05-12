@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from 'hooks/redux';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
@@ -9,6 +9,7 @@ import { actionApi } from 'services/actionService';
 import { fieldType } from 'data/enums/fieldType';
 import { enumToArray } from 'helpers/enumToArray';
 import { actionModalSlice } from 'store/reducers/actionModalSlice';
+import { loadingModalSlice } from 'store/reducers/loadingModalSlice';
 import './styles.scss';
 
 const NlpDatasetClearing: FC = () => {
@@ -17,12 +18,15 @@ const NlpDatasetClearing: FC = () => {
   const [field, setField] = useState<fieldType>(fieldType.ClassificationLabel);
   const { deactivate } = actionModalSlice.actions;
   const dispatch = useAppDispatch();
-  const [clearNlpDataset, {}] = actionApi.useClearNlpDatasetMutation();
+  const [clearNlpDataset, { isLoading: isClearNlpDatasetLoading }] =
+    actionApi.useClearNlpDatasetMutation();
   const {
     data: nlpDatasetsData,
     error,
     isLoading,
   } = nlpDatasetApi.useGetNlpDatasetsQuery();
+  const { activate: activateLoading, deactivate: deactivateLoading } =
+    loadingModalSlice.actions;
 
   useEffect(() => {
     if (nlpDatasetsData) setNlpDatasets(nlpDatasetsData);
@@ -60,10 +64,15 @@ const NlpDatasetClearing: FC = () => {
     }),
   };
 
-  const handleSubmit = () => {
-    if (nlpDatasetId) clearNlpDataset({ nlpDatasetId, field });
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (nlpDatasetId) await clearNlpDataset({ nlpDatasetId, field });
     dispatch(deactivate());
   };
+
+  if (isClearNlpDatasetLoading) dispatch(activateLoading());
+  else dispatch(deactivateLoading());
 
   return (
     <div className="nlp-dataset-clearing">
