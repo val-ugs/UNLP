@@ -1,0 +1,6 @@
+{
+  "preparePage": {
+    "datasetNotSelectedOrNotFound": "Dataset not selected or not found",
+    "textNotSelectedOrNotFound": "Text not selected or not found"
+  }
+}

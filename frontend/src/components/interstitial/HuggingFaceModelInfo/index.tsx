@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import { HuggingFaceModelProps } from 'interfaces/huggingFaceModel.interface';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
@@ -13,6 +14,7 @@ interface HuggingFaceModelInfoProps {
 const HuggingFaceModelInfo: FC<HuggingFaceModelInfoProps> = ({
   huggingFaceModel,
 }) => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>();
   const {
     data: nlpDatasetsData,
@@ -37,7 +39,7 @@ const HuggingFaceModelInfo: FC<HuggingFaceModelInfoProps> = ({
         >
           <div className="hugging-face-model-info__info">
             <div className="hugging-face-model-info__training-args-name">
-              Parameters:
+              {t('huggingFaceModelInfo.parameters', 'Parameters')}:
             </div>
             <LabeledElement
               className="hugging-face-model-info__labeled-element"

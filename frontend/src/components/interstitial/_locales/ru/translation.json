@@ -1,0 +1,8 @@
+{
+  "nlpDatasetClearing": {
+    "clear": "Очистить"
+  },
+  "huggingFaceModelInfo": {
+    "parameters": "Параметры"
+  }
+}
