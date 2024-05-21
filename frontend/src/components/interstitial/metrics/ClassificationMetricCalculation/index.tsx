@@ -1,3 +1,4 @@
+import { useAppDispatch } from 'hooks/redux';
 import React, { FC, FormEvent, useEffect, useState } from 'react';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
@@ -11,6 +12,7 @@ import {
   f1ScoreAverageType,
 } from 'interfaces/metric.interface';
 import { enumToArray } from 'helpers/enumToArray';
+import { loadingModalSlice } from 'store/reducers/loadingModalSlice';
 import './styles.scss';
 
 const emptyClassificationMetricCalculationRequest: ClassificationMetricCalculationRequest =
@@ -30,13 +32,16 @@ const ClassificationMetricCalculation: FC = () => {
     emptyClassificationMetricCalculationRequest
   );
   const [result, setResult] = useState<string>();
-  const [calculateClassification, {}] =
+  const dispatch = useAppDispatch();
+  const [calculateClassification, { isLoading: isCalculateClassification }] =
     metricApi.useCalculateClassificationMutation();
   const {
     data: nlpDatasetsData,
     error,
     isLoading,
   } = nlpDatasetApi.useGetNlpDatasetsQuery();
+  const { activate: activateLoading, deactivate: deactivateLoading } =
+    loadingModalSlice.actions;
 
   useEffect(() => {
     if (nlpDatasetsData) setNlpDatasets(nlpDatasetsData);
@@ -141,6 +146,9 @@ const ClassificationMetricCalculation: FC = () => {
       }
     }
   };
+
+  if (isCalculateClassification) dispatch(activateLoading());
+  else dispatch(deactivateLoading());
 
   return (
     <div className="classification-metric-calculation">

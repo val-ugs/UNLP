@@ -14,10 +14,10 @@ const AppModals: FC = () => {
       <ActionModal />
       <HuggingFaceModelFormModal />
       <LoadDataModal />
-      <LoadingModal />
       <MetricModal />
       <NerLabelFormModal />
       <NlpTokenSettingsModal />
+      <LoadingModal />
     </>
   );
 };

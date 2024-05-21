@@ -1,3 +1,4 @@
+import { useAppDispatch } from 'hooks/redux';
 import React, { FC, FormEvent, useEffect, useState } from 'react';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
@@ -8,6 +9,7 @@ import { metricApi } from 'services/metricService';
 import { SummarizationMetricCalculationRequest } from 'interfaces/dtos/summarizationMetricCalculationDto.interface';
 import { summarizationMetricType } from 'interfaces/metric.interface';
 import { enumToArray } from 'helpers/enumToArray';
+import { loadingModalSlice } from 'store/reducers/loadingModalSlice';
 import './styles.scss';
 
 const emptySummarizationMetricCalculationRequest: SummarizationMetricCalculationRequest =
@@ -26,13 +28,16 @@ const SummarizationMetricCalculation: FC = () => {
     emptySummarizationMetricCalculationRequest
   );
   const [result, setResult] = useState<string>();
-  const [calculateSummarization, {}] =
+  const dispatch = useAppDispatch();
+  const [calculateSummarization, { isLoading: isCalculateSummarization }] =
     metricApi.useCalculateSummarizationMutation();
   const {
     data: nlpDatasetsData,
     error,
     isLoading,
   } = nlpDatasetApi.useGetNlpDatasetsQuery();
+  const { activate: activateLoading, deactivate: deactivateLoading } =
+    loadingModalSlice.actions;
 
   useEffect(() => {
     if (nlpDatasetsData) setNlpDatasets(nlpDatasetsData);
@@ -116,6 +121,9 @@ const SummarizationMetricCalculation: FC = () => {
       }
     }
   };
+
+  if (isCalculateSummarization) dispatch(activateLoading());
+  else dispatch(deactivateLoading());
 
   return (
     <div className="summarization-metric-calculation">

@@ -1,3 +1,4 @@
+import { useAppDispatch } from 'hooks/redux';
 import React, { FC, FormEvent, useEffect, useState } from 'react';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
@@ -8,6 +9,7 @@ import { metricApi } from 'services/metricService';
 import { NerMetricCalculationRequest } from 'interfaces/dtos/nerMetricCalculationDto.interface';
 import { nerMetricType } from 'interfaces/metric.interface';
 import { enumToArray } from 'helpers/enumToArray';
+import { loadingModalSlice } from 'store/reducers/loadingModalSlice';
 import './styles.scss';
 
 const emptyNerMetricCalculationRequest: NerMetricCalculationRequest = {
@@ -21,12 +23,16 @@ const NerMetricCalculation: FC = () => {
   const [nerMetricCalculationRequest, setNerMetricCalculationRequest] =
     useState<NerMetricCalculationRequest>(emptyNerMetricCalculationRequest);
   const [result, setResult] = useState<string>();
-  const [calculateNer, {}] = metricApi.useCalculateNerMutation();
+  const dispatch = useAppDispatch();
+  const [calculateNer, { isLoading: isCalculateNer }] =
+    metricApi.useCalculateNerMutation();
   const {
     data: nlpDatasetsData,
     error,
     isLoading,
   } = nlpDatasetApi.useGetNlpDatasetsQuery();
+  const { activate: activateLoading, deactivate: deactivateLoading } =
+    loadingModalSlice.actions;
 
   useEffect(() => {
     if (nlpDatasetsData) setNlpDatasets(nlpDatasetsData);
@@ -105,6 +111,9 @@ const NerMetricCalculation: FC = () => {
       }
     }
   };
+
+  if (isCalculateNer) dispatch(activateLoading());
+  else dispatch(deactivateLoading());
 
   return (
     <div className="ner-metric-calculation">
