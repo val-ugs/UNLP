@@ -58,7 +58,7 @@ const NlpDatasetDeletingTextsWithoutFields: FC = () => {
             labelElement={{
               value: t(
                 'nlpDatasetDeletingTextsWithoutFields.selectNlpDataset',
-                'Select NLP dataset'
+                'Select dataset'
               ),
             }}
           >

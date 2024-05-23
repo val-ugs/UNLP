@@ -116,7 +116,7 @@ const NlpTokenNerLabelsCreatingByPattern: FC = () => {
             labelElement={{
               value: t(
                 'nlpTokenNerLabelsCreatingByPattern.selectNlpDataset',
-                'Select NLP dataset'
+                'Select dataset'
               ),
             }}
           >

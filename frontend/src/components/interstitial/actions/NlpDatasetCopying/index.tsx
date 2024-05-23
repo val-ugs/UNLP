@@ -55,10 +55,7 @@ const NlpDatasetCopying: FC = () => {
           <LabeledElement
             className="nlp-dataset-copying__labeled-element"
             labelElement={{
-              value: t(
-                'nlpDatasetCopying.selectNlpDataset',
-                'Select nlp dataset'
-              ),
+              value: t('nlpDatasetCopying.selectNlpDataset', 'Select dataset'),
             }}
           >
             <Select

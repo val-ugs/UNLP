@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
 import { NodeProps } from 'reactflow';
@@ -29,6 +30,7 @@ interface HuggingFaceModelNodeProps {
 const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
   node
 ) => {
+  const { t } = useTranslation();
   const { editNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
   const [huggingFaceModelType, setHuggingFaceModelType] =
@@ -121,7 +123,12 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
             <>
               <LabeledElement
                 className="hugging-face-model-node__labeled-element"
-                labelElement={{ value: 'Hugging face model' }}
+                labelElement={{
+                  value: t(
+                    'huggingFaceModelNode.huggingFaceModel',
+                    'Hugging face model'
+                  ),
+                }}
               >
                 <Select
                   className={huggingFaceModelSelect.className}
@@ -134,7 +141,10 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
               </LabeledElement>
             </>
           ) : (
-            'Hugging face models not found'
+            t(
+              'huggingFaceModelNode.huggingFaceModelsNotFound',
+              'Hugging face models not found'
+            )
           )}
         </div>
       </div>

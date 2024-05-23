@@ -1,10 +1,12 @@
 import { resources as commonResources } from 'components/common/_locales/resources';
 import { resources as interstitialResources } from 'components/interstitial/_locales/resources';
+import { resources as modalsResources } from 'components/modals/_locales/resources';
 import { resources as pagesResources } from 'pages/_locales/resources';
 
 export const resources = deepMerge(
   commonResources,
   interstitialResources,
+  modalsResources,
   pagesResources
 );
 

@@ -74,10 +74,7 @@ const NlpDatasetClearing: FC = () => {
           <LabeledElement
             className="nlp-dataset-clearing__labeled-element"
             labelElement={{
-              value: t(
-                'nlpDatasetClearing.selectNlpDataset',
-                'Select NLP dataset'
-              ),
+              value: t('nlpDatasetClearing.selectNlpDataset', 'Select dataset'),
             }}
           >
             <Select

@@ -154,7 +154,7 @@ const NlpDatasetCreatingByField: FC = () => {
             labelElement={{
               value: t(
                 'nlpDatasetCreatingByField.selectNlpDataset',
-                'Select nlp dataset'
+                'Select dataset'
               ),
             }}
           >

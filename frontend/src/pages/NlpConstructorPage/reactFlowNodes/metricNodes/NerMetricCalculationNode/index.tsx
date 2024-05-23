@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import { NodeProps } from 'reactflow';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
@@ -26,6 +27,7 @@ interface NerMetricCalculationNodeProps {
 const NerMetricCalculationNode: FC<NodeProps<NerMetricCalculationNodeProps>> = (
   node
 ) => {
+  const { t } = useTranslation();
   const { editNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -72,12 +74,20 @@ const NerMetricCalculationNode: FC<NodeProps<NerMetricCalculationNodeProps>> = (
     >
       <div className="ner-metric-calculation-node__main">
         <div className="ner-metric-calculation-node__title">
-          Ner metric calculation
+          {t(
+            'nerMetricCalculationNode.nerMetricCalculation',
+            'NER metric calculation'
+          )}
         </div>
         <div className="ner-metric-calculation-node__item">
           <LabeledElement
             className="ner-metric-calculation-node__labeled-element"
-            labelElement={{ value: 'Select metric' }}
+            labelElement={{
+              value: t(
+                'nerMetricCalculationNode.selectMetric',
+                'Select metric'
+              ),
+            }}
           >
             <Select
               className={metricNameSelect.className}
@@ -91,7 +101,8 @@ const NerMetricCalculationNode: FC<NodeProps<NerMetricCalculationNodeProps>> = (
         </div>
         {node.data?.output?.result && (
           <pre className="ner-metric-calculation-node__item ner-metric-calculation-node__result">
-            Result: {node.data?.output?.result}
+            {t('nerMetricCalculationNode.result', 'Result: ')}
+            {node.data?.output?.result}
           </pre>
         )}
       </div>

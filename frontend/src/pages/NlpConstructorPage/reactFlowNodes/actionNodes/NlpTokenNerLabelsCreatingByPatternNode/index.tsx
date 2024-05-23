@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState, MouseEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { NodeProps } from 'reactflow';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
@@ -29,6 +30,7 @@ interface NlpTokenNerLabelsCreatingByPatternNodeProps {
 const NlpTokenNerLabelsCreatingByPatternNode: FC<
   NodeProps<NlpTokenNerLabelsCreatingByPatternNodeProps>
 > = (node) => {
+  const { t } = useTranslation();
   const [nerLabels, setNerLabels] = useState<NerLabelProps[]>([]);
   const { editNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
@@ -87,7 +89,10 @@ const NlpTokenNerLabelsCreatingByPatternNode: FC<
     >
       <div className="nlp-token-ner-labels-creating-by-pattern-node__main">
         <div className="nlp-token-ner-labels-creating-by-pattern-node__main-title">
-          Create nlp token ner labels by pattern
+          {t(
+            'nlpTokenNerLabelsCreatingByPatternNode.createNlpTokenNerLabelsByPattern',
+            'Create token ner labels by pattern'
+          )}
         </div>
         {nerLabels && nerLabels.length > 0 ? (
           <>
@@ -100,7 +105,17 @@ const NlpTokenNerLabelsCreatingByPatternNode: FC<
               node.data?.input?.nerLabelPatterns?.length > 0 && (
                 <div className="nlp-token-ner-labels-creating-by-pattern-node__item">
                   <div className="nlp-token-ner-labels-creating-by-pattern-node__item-title">
-                    &quot;Ner label&quot; - &quot;pattern:&quot;
+                    &quot;
+                    {t(
+                      'nlpTokenNerLabelsCreatingByPatternNode.nerLabel',
+                      'NER label'
+                    )}
+                    &quot; - &quot;
+                    {t(
+                      'nlpTokenNerLabelsCreatingByPatternNode.pattern',
+                      'pattern'
+                    )}
+                    :&quot;
                   </div>
                   <UnorderedList className="nlp-token-ner-labels-creating-by-pattern-node__ner-label-patterns">
                     {node.data?.input?.nerLabelPatterns?.map(
@@ -135,7 +150,10 @@ const NlpTokenNerLabelsCreatingByPatternNode: FC<
                                   );
                                 }}
                               >
-                                Delete
+                                {t(
+                                  'nlpTokenNerLabelsCreatingByPatternNode.delete',
+                                  'Delete'
+                                )}
                               </Button>
                             </div>
                           </UnorderedList.Item>

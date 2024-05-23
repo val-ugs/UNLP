@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import { NodeProps } from 'reactflow';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
@@ -30,6 +31,7 @@ interface ClassificationMetricCalculationNodeProps {
 const ClassificationMetricCalculationNode: FC<
   NodeProps<ClassificationMetricCalculationNodeProps>
 > = (node) => {
+  const { t } = useTranslation();
   const { editNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -106,12 +108,20 @@ const ClassificationMetricCalculationNode: FC<
     >
       <div className="classification-metric-calculation-node__main">
         <div className="classification-metric-calculation-node__title">
-          Classification metric calculation
+          {t(
+            'classificationMetricCalculationNode.classificationMetricCalculation',
+            'Classification metric calculation'
+          )}
         </div>
         <div className="classification-metric-calculation-node__item">
           <LabeledElement
             className="classification-metric-calculation-node__labeled-element"
-            labelElement={{ value: 'Select metric' }}
+            labelElement={{
+              value: t(
+                'classificationMetricCalculationNode.selectMetric',
+                'Select metric'
+              ),
+            }}
           >
             <Select
               className={metricNameSelect.className}
@@ -127,7 +137,12 @@ const ClassificationMetricCalculationNode: FC<
           <div className="classification-metric-calculation-node__item">
             <LabeledElement
               className="classification-metric-calculation-node__labeled-element"
-              labelElement={{ value: 'Select average' }}
+              labelElement={{
+                value: t(
+                  'classificationMetricCalculationNode.selectAverage',
+                  'Select average'
+                ),
+              }}
             >
               <Select
                 className={averageSelect.className}
@@ -142,7 +157,8 @@ const ClassificationMetricCalculationNode: FC<
         )}
         {node.data?.output?.result && (
           <pre className="classification-metric-calculation-node__item classification-metric-calculation-node__result">
-            Result: {node.data?.output?.result}
+            {t('classificationMetricCalculationNode.result', 'Result: ')}
+            {node.data?.output?.result}
           </pre>
         )}
       </div>

@@ -128,7 +128,7 @@ const SummarizationMetricCalculation: FC = () => {
             labelElement={{
               value: t(
                 'nerMetricCalculation.selectNlpDataset',
-                'Select nlp dataset'
+                'Select dataset'
               ),
             }}
           >
@@ -148,7 +148,7 @@ const SummarizationMetricCalculation: FC = () => {
             labelElement={{
               value: t(
                 'nerMetricCalculation.selectPredictedNlpDataset',
-                'Select predicted nlp dataset'
+                'Select predicted dataset'
               ),
             }}
           >

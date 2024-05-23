@@ -57,7 +57,7 @@ const HuggingFaceModelInfo: FC<HuggingFaceModelInfoProps> = ({
               labelElement={{
                 value: t(
                   'huggingFaceModelInfo.trainNlpDataset',
-                  'Train nlp dataset'
+                  'Train dataset'
                 ),
               }}
             >
@@ -68,7 +68,7 @@ const HuggingFaceModelInfo: FC<HuggingFaceModelInfoProps> = ({
               labelElement={{
                 value: t(
                   'huggingFaceModelInfo.validNlpDataset',
-                  'Valid nlp dataset'
+                  'Valid dataset'
                 ),
               }}
             >

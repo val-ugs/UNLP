@@ -108,7 +108,7 @@ const NlpDatasetCreatingByTemplate: FC = () => {
             labelElement={{
               value: t(
                 'nlpDatasetCreatingByTemplate.selectNlpDatasets',
-                'Select NLP datasets'
+                'Select datasets'
               ),
             }}
           >

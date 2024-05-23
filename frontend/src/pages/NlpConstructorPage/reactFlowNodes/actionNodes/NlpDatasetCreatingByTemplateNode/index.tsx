@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NodeProps } from 'reactflow';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import BaseNode from '../../_common/BaseNode';
@@ -30,6 +31,7 @@ interface NlpDatasetCreatingByTemplateNodeProps {
 const NlpDatasetCreatingByTemplateNode: FC<
   NodeProps<NlpDatasetCreatingByTemplateNodeProps>
 > = (node) => {
+  const { t } = useTranslation();
   const { editNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -102,12 +104,20 @@ const NlpDatasetCreatingByTemplateNode: FC<
     >
       <div className="nlp-dataset-creating-by-template-node__main">
         <div className="nlp-dataset-creating-by-template-node__main-title">
-          Create nlp dataset by template
+          {t(
+            'nlpDatasetCreatingByTemplateNode.createNlpDatasetByTemplate',
+            'Create dataset by template'
+          )}
         </div>
         <div className="nlp-dataset-creating-by-template-node__item">
           <LabeledElement
             className="nlp-dataset-creating-by-template-node__labeled-element"
-            labelElement={{ value: 'Input template' }}
+            labelElement={{
+              value: t(
+                'nlpDatasetCreatingByTemplateNode.inputTemplate',
+                'Input template'
+              ),
+            }}
           >
             <TextareaField
               className={templateTextareaField.className}
@@ -126,7 +136,12 @@ const NlpDatasetCreatingByTemplateNode: FC<
         <div className="nlp-dataset-creating-by-template-node__item">
           <LabeledElement
             className="nlp-dataset-creating-by-template-node__labeled-element"
-            labelElement={{ value: 'Input delimiter' }}
+            labelElement={{
+              value: t(
+                'nlpDatasetCreatingByTemplateNode.inputDelimiter',
+                'Input delimiter'
+              ),
+            }}
           >
             <InputField
               className={delimiterInputField.className}

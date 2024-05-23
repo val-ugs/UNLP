@@ -153,7 +153,7 @@ const ClassificationMetricCalculation: FC = () => {
             labelElement={{
               value: t(
                 'classificationMetricCalculation.selectNlpDataset',
-                'Select nlp dataset'
+                'Select dataset'
               ),
             }}
           >
@@ -173,7 +173,7 @@ const ClassificationMetricCalculation: FC = () => {
             labelElement={{
               value: t(
                 'classificationMetricCalculation.selectPredictedNlpDataset',
-                'Select predicted nlp dataset'
+                'Select predicted dataset'
               ),
             }}
           >

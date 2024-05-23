@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NodeProps } from 'reactflow';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import { HuggingFaceModelProps } from 'interfaces/huggingFaceModel.interface';
@@ -19,6 +20,7 @@ interface PredictNodeProps {
 }
 
 const PredictNode: FC<NodeProps<PredictNodeProps>> = (node) => {
+  const { t } = useTranslation();
   const inputHandles: InputHandlesItemProps[] = [
     {
       id: 'nlpDataset',
@@ -41,7 +43,9 @@ const PredictNode: FC<NodeProps<PredictNodeProps>> = (node) => {
       outputHandles={outputHandles}
       running={node.data?.running}
     >
-      <div className="predict-node__main">Predict</div>
+      <div className="predict-node__main">
+        {t('predictNode.predict', 'Predict')}
+      </div>
     </BaseNode>
   );
 };

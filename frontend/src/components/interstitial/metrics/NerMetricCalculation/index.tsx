@@ -117,7 +117,7 @@ const NerMetricCalculation: FC = () => {
             labelElement={{
               value: t(
                 'nerMetricCalculation.selectNlpDataset',
-                'Select nlp dataset'
+                'Select dataset'
               ),
             }}
           >
@@ -137,7 +137,7 @@ const NerMetricCalculation: FC = () => {
             labelElement={{
               value: t(
                 'nerMetricCalculation.selectPredictedNlpDataset',
-                'Select predicted nlp dataset'
+                'Select predicted dataset'
               ),
             }}
           >

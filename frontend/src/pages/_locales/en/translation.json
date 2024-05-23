@@ -19,6 +19,59 @@
   "paneContextMenu": {
     "add": "Add"
   },
+  "nlpDatasetClearingNode": {
+    "selectFieldToClear": "Select field to clear"
+  },
+  "nlpDatasetCopyingNode": {
+    "copyNlpDataset": "Copy dataset"
+  },
+  "nlpDatasetCreatingByFieldNode": {
+    "selectField": "Select field",
+    "selectNerLabel": "Select NER label",
+    "isClassificationLabelSaved": "Is classification label saved",
+    "isSummarizationSaved": "Is summarization saved",
+    "warning": "Warning: NER labels not found. Dataset not loaded. Try run program."
+  },
+  "nlpDatasetCreatingByTemplateNode": {
+    "createNlpDatasetByTemplate": "Create dataset by template",
+    "inputTemplate": "Input template",
+    "inputDelimiter": "Input delimiter"
+  },
+  "nlpDatasetDeletingTextsWithoutFieldsNode": {
+    "deleteTextsWithoutFieldsNlpDataset": "Delete texts without fields dataset"
+  },
+  "nlpTokenNerLabelsCreatingByPatternNode": {
+    "createNlpTokenNerLabelsByPattern": "Create token ner labels by pattern",
+    "nerLabel": "NER label",
+    "pattern": "pattern",
+    "delete": "Delete"
+  },
+  "classificationMetricCalculationNode": {
+    "classificationMetricCalculation": "Classification metric calculation",
+    "selectMetric": "Select metric",
+    "selectAverage": "Select average",
+    "result":"Result: "
+  },
+  "nerMetricCalculationNode": {
+    "nerMetricCalculation": "NER metric calculation",
+    "selectMetric": "Select metric",
+    "result":"Result: "
+  },
+  "summarizationMetricCalculationNode": {
+    "summarizationMetricCalculation": "Summarization metric calculation",
+    "selectMetric": "Select metric",
+    "result":"Result: "
+  },
+  "huggingFaceModelNode": {
+    "huggingFaceModel": "Hugging face model",
+    "huggingFaceModelsNotFound": "Hugging face models not found"
+  },
+  "nlpDatasetNode": {
+    "nlpDataset": "dataset"
+  },
+  "predictNode": {
+    "predict": "Predict"
+  },
   "preparePage": {
     "datasetNotSelectedOrNotFound": "Dataset not selected or not found",
     "textNotSelectedOrNotFound": "Text not selected or not found"

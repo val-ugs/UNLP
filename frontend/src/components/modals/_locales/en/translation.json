@@ -1,0 +1,26 @@
+{
+  "huggingFaceModelFormModal": {
+    "name": "Name",
+    "modelNameOrPath": "Model name or path",
+    "trainNlpDataset": "Train nlp dataset",
+    "validNlpDataset": "Valid nlp dataset",
+    "evaluateMetricName": "Evaluate metric name",
+    "type": "Type",
+    "trainingArgs": "Training Args:",
+    "learningRate": "Learning rate",
+    "perDeviceTrainBatchSize": "Per device train batch size",
+    "perDeviceEvalBatchSize": "Per device eval batch size",
+    "numTrainEpochs": "Num train epochs",
+    "weightDecay": "Weight decay",
+    "evaluationStrategy": "Evaluation strategy",
+    "saveStrategy": "Save strategy",
+    "loadBestModelAtEnd": "Load best model at end",
+    "confirm": "Confirm"
+  },
+  "loadDataModal": {
+    "loadTxtOrJsonFile": "Load txt or json file",
+    "fileNotSelected": "File not selected",
+    "regexTextPatternToSplit":"Regex text pattern to split",
+    "loadData": "Load data"
+  }
+}

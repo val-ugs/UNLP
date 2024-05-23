@@ -19,6 +19,59 @@
   "paneContextMenu": {
     "add": "Добавить"
   },
+  "nlpDatasetClearingNodeProps": {
+    "selectFieldToClear": "Выберите поле для очистки"
+  },
+  "nlpDatasetCopyingNode": {
+    "copyNlpDataset": "Копировать датасет"
+  },
+  "nlpDatasetCreatingByFieldNode": {
+    "selectField": "Выберите поле",
+    "selectNerLabel": "Выберите NER метку",
+    "isClassificationLabelSaved": "Сохранить метку классификации",
+    "isSummarizationSaved": "Сохранить обобщение",
+    "warning": "Внимание: Ner метки не найдены. Датасет не загружен. Попробуйте запустить программу."
+  },
+  "nlpDatasetCreatingByTemplateNode": {
+    "createNlpDatasetTemplate": "Создать датасет по шаблону",
+    "inputTemplate":"Входной шаблон",
+    "inputDelimiter":"Входной разделитель"
+  },
+  "nlpDatasetDeletingTextsWithoutFieldsNode": {
+    "deleteTextsWithoutFieldsNlpDataset": "Удалить тексты без полей датасета"
+  },
+  "nlpTokenNerLabelsCreatingByPatternNode": {
+    "createNlpTokenNerLabelsByPattern": "Создать NER метки для токенов по шаблону",
+    "nerLabel": "NER метка",
+    "pattern": "шаблон",
+    "delete": "Удалить"
+  },
+  "classificationMetricCalculationNode": {
+    "classificationMetricCalculation": "Расчет метрики классификации",
+    "selectMetric": "Выберите метрику",
+    "selectAverage": "Выберите способ",
+    "result":"Результат: "
+  },
+  "nerMetricCalculationNode": {
+    "nerMetricCalculation": "Расчет метрики NER",
+    "selectMetric": "Выберите метрику",
+    "result":"Результат: "
+  },
+  "summarizationMetricCalculationNodeProps": {
+    "summarizationMetricCalculation": "Расчет метрики обобщения",
+    "selectMetric": "Выберите метрику",
+    "result":"Результат: "
+  },
+  "huggingFaceModelNode": {
+    "huggingFaceModel": "Hugging face модель",
+    "huggingFaceModelsNotFound": "Hugging face модель не найдена"
+  },
+  "nlpDatasetNode": {
+    "nlpDataset": "Датасет"
+  },
+  "predictNode": {
+    "predict": "Предсказать"
+  },
   "preparePage": {
     "datasetNotSelectedOrNotFound": "Датасет не выбран или не найден",
     "textNotSelectedOrNotFound": "Текст не найден или не выбран"
