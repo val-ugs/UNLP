@@ -75,5 +75,40 @@
   "preparePage": {
     "datasetNotSelectedOrNotFound": "Dataset not selected or not found",
     "textNotSelectedOrNotFound": "Text not selected or not found"
+  },
+  "menu": {
+    "loadData": "Load data",
+    "saveData": "Save data",
+    "actions": "Actions",
+    "metrics": "Metrics"
+  },
+  "nerLabels": {
+    "labels": "NER Labels"
+  },
+  "nlpDatasets": {
+    "dataset": "Dataset",
+    "deleteSelectedDatabase": "Delete selected database",
+    "datasetsNotFound": "Datasets not found"
+  },
+  "nlpTextForm": {
+    "classificationLabel": "Classification label",
+    "summarization": "Summarization",
+    "text": "Text",
+    "tokenSettings": "Token Settings"
+  },
+  "nlpTokens": {
+    "tokens": "Tokens",
+    "npTokensFound": "No tokens found. Check token settings."
+  },
+  "nlpTokenItem": {
+    "initial": "Initial"
+  },
+  "nlpTexts": {
+    "search": "Search",
+    "texts": "Texts",
+    "prev": "Prev",
+    "ok": "Ok",
+    "next": "Next",
+    "deleteSelectedText": "Delete selected text"
   }
 }

@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Button from 'components/common/Button';
 import Dropdown from 'components/common/Dropdown';
 import { NlpTokenProps } from 'interfaces/nlpToken.interface';
@@ -29,6 +30,7 @@ const NlpTokenItem: FC<NlpTokenItemProps> = ({
   nlpToken,
   nerLabels,
 }) => {
+  const { t } = useTranslation();
   const [nlpTokenNerLabel, setNlpTokenNerLabel] =
     useState<NlpTokenNerLabelProps>(emptyNlpTokenNerLabel);
   const [nerLabel, setNerLabel] = useState<NerLabelProps | undefined>(
@@ -135,7 +137,7 @@ const NlpTokenItem: FC<NlpTokenItemProps> = ({
             className="nlp-token-item__labeled-element"
             labelElement={{
               htmlFor: initialInputCheckbox.name,
-              value: 'Initial',
+              value: t('nlpTokenItem.initial', 'Initial'),
             }}
           >
             <InputCheckbox

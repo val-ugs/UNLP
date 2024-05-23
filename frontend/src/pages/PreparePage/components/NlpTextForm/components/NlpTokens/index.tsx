@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NlpTokenProps } from 'interfaces/nlpToken.interface';
 import { NerLabelProps } from 'interfaces/nerLabel.interface';
 import Accordion from 'components/common/Accordion';
@@ -17,6 +18,7 @@ const NlpTokens: FC<NlpTokensItemProps> = ({
   nlpTextId,
   nerLabels,
 }) => {
+  const { t } = useTranslation();
   const [nlpTokens, setNlpTokens] = useState<NlpTokenProps[]>([]);
   const {
     data: nlpTokensData,
@@ -33,7 +35,7 @@ const NlpTokens: FC<NlpTokensItemProps> = ({
     <div className={`nlp-tokens ${className}`}>
       <Accordion
         className="nlp-tokens__accordion nlp-text-form__accordion"
-        header="Tokens:"
+        header={`${t('nlpTokens.tokens', 'Tokens')}:`}
       >
         <div className="nlp-tokens__area">
           {nlpTokens && nlpTokens.length > 0 ? (
@@ -47,7 +49,10 @@ const NlpTokens: FC<NlpTokensItemProps> = ({
             ))
           ) : (
             <div className="nlp-tokens__item">
-              No tokens found. Check token settings.
+              {t(
+                'nlpTokens.npTokensFound',
+                'No tokens found. Check token settings.'
+              )}
             </div>
           )}
         </div>

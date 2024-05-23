@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import useStateRef from 'hooks/useStateRef';
 import { nlpTextApi } from 'services/nlpTextService';
@@ -27,6 +28,7 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
   selectedNlpTextId,
   nlpDataset,
 }) => {
+  const { t } = useTranslation();
   const [nlpText, setNlpText, nlpTextRef] = useStateRef<
     NlpTextProps | undefined
   >(undefined);
@@ -97,7 +99,10 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
             className="nlp-text-form__fields-labeled-element"
             labelElement={{
               className: 'nlp-text-form__fields-label',
-              value: 'Classification label',
+              value: t(
+                'nlpTextForm.classificationLabel',
+                'Classification label'
+              ),
             }}
           >
             <InputField
@@ -116,7 +121,7 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
             className="nlp-text-form__fields-labeled-element"
             labelElement={{
               className: 'nlp-text-form__fields-label',
-              value: 'Summarization',
+              value: t('nlpTextForm.summarization', 'Summarization'),
             }}
           >
             <textarea
@@ -129,7 +134,7 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
         <div className="nlp-text-form__item nlp-text-form__text">
           <Accordion
             className="nlp-text-form__accordion nlp-text-form__text-accordion"
-            header={'Text:'}
+            header={`${t('nlpTextForm.text', 'Text')}:`}
           >
             <textarea
               className="nlp-text-form__text-textarea"
@@ -143,7 +148,7 @@ const NlpTextForm: FC<NlpTextFormProps> = ({
             className="nlp-text-form__tokens-settings-button"
             onClick={handleOpenNlpTokenSettings}
           >
-            Token Settings
+            {t('nlpTextForm.tokenSettings', 'Token Settings')}
           </Button>
         </div>
         <div className="nlp-text-form__item">

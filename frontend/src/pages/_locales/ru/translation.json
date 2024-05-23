@@ -75,5 +75,40 @@
   "preparePage": {
     "datasetNotSelectedOrNotFound": "Датасет не выбран или не найден",
     "textNotSelectedOrNotFound": "Текст не найден или не выбран"
+  },
+  "menu": {
+    "loadData": "Загрузка датасета",
+    "saveData": "Сохранение датасета",
+    "actions": "Действия",
+    "metrics": "Метрики"
+  },
+  "nerLabels": {
+    "labels": "NER Метки"
+  },
+  "nlpDatasets": {
+    "dataset": "Датасет",
+    "deleteSelectedDatabase": "Удалить выбранные датасеты",
+    "datasetsNotFound": "Датасеты не найдены"
+  },
+  "nlpTextForm": {
+    "classificationLabel": "Метка классификации",
+    "summarization": "Обобщение",
+    "text": "Текст",
+    "tokenSettings": "Настройки токенов"
+  },
+  "nlpTokens": {
+    "tokens": "Токены",
+    "npTokensFound": "Токены не найдены. Проверьте настройки токенов."
+  },
+  "nlpTokenItem": {
+    "initial": "Начальный"
+  },
+  "nlpTexts": {
+    "search": "Найти",
+    "texts": "Тексты",
+    "prev": "Пред.",
+    "ok": "Ок",
+    "next": "След.",
+    "deleteSelectedText": "Удалить выбранный текст"
   }
 }
