@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import Button from 'components/common/Button';
@@ -17,6 +18,7 @@ const NlpDatasetList: FC<NlpDatasetListProps> = ({
   selectedNlpDatasetId,
   setSelectedNlpDatasetId,
 }) => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const {
     data: nlpDatasetsData,
@@ -63,7 +65,7 @@ const NlpDatasetList: FC<NlpDatasetListProps> = ({
                     setSelectedNlpDatasetId(nlpDataset.id);
                   }}
                 >
-                  Dataset&nbsp;{nlpDataset.id}
+                  {t('nlpDatasets.dataset', 'Dataset')}&nbsp;{nlpDataset.id}
                 </Button>
               </div>
             ))}
@@ -74,13 +76,18 @@ const NlpDatasetList: FC<NlpDatasetListProps> = ({
                 className="nlp-datasets__delete-button"
                 onClick={handleDelete}
               >
-                Delete selected database
+                {t(
+                  'nlpDatasets.deleteSelectedDatabase',
+                  'Delete selected database'
+                )}
               </Button>
             </div>
           </div>
         </>
       ) : (
-        <div className="nlp-datasets__not-found">Datasets not found</div>
+        <div className="nlp-datasets__not-found">
+          {t('nlpDatasets.datasetsNotFound', 'Datasets not found')}
+        </div>
       )}
     </div>
   );

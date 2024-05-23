@@ -1,4 +1,5 @@
 import React, { FC, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import Button from 'components/common/Button';
 import { reactFlowSlice } from 'store/reducers/reactFlowSlice';
@@ -10,6 +11,7 @@ interface EdgeContextMenuProps {
 }
 
 const EdgeContextMenu: FC<EdgeContextMenuProps> = ({ edgeId, coords }) => {
+  const { t } = useTranslation();
   const { deleteEdge } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -22,9 +24,11 @@ const EdgeContextMenu: FC<EdgeContextMenuProps> = ({ edgeId, coords }) => {
       className="edge-context-menu"
       style={{ top: coords.y, left: coords.x }}
     >
-      <div className="edge-context-menu__title">Edge menu</div>
+      <div className="edge-context-menu__title">
+        {t('edgeContextMenu.edgeMenu', 'Edge menu:')}
+      </div>
       <Button className="edge-context-menu__button" onClick={handleDeleteEdge}>
-        Delete
+        {t('edgeContextMenu.delete', 'Delete')}
       </Button>
     </div>
   );

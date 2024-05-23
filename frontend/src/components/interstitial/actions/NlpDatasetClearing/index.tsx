@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
@@ -12,6 +13,7 @@ import { actionModalSlice } from 'store/reducers/actionModalSlice';
 import './styles.scss';
 
 const NlpDatasetClearing: FC = () => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [nlpDatasetId, setNlpDatasetId] = useState<number>();
   const [field, setField] = useState<fieldType>(fieldType.ClassificationLabel);
@@ -71,7 +73,9 @@ const NlpDatasetClearing: FC = () => {
         <div className="nlp-dataset-clearing__item">
           <LabeledElement
             className="nlp-dataset-clearing__labeled-element"
-            labelElement={{ value: 'Select nlp dataset' }}
+            labelElement={{
+              value: t('nlpDatasetClearing.selectNlpDataset', 'Select dataset'),
+            }}
           >
             <Select
               className={nlpDatasetSelect.className}
@@ -86,7 +90,12 @@ const NlpDatasetClearing: FC = () => {
         <div className="nlp-dataset-clearing__item">
           <LabeledElement
             className="nlp-dataset-clearing__labeled-element"
-            labelElement={{ value: 'Select field to clear' }}
+            labelElement={{
+              value: t(
+                'nlpDatasetClearing.selectFieldToClear',
+                'Select field to clear'
+              ),
+            }}
           >
             <Select
               className={clearFieldSelect.className}
@@ -100,7 +109,7 @@ const NlpDatasetClearing: FC = () => {
         </div>
         <div className="nlp-dataset-clearing__item nlp-dataset-clearing__item-button">
           <InputButton className="nlp-dataset-clearing__button">
-            Clear
+            {t('nlpDatasetClearing.clear', 'Clear')}
           </InputButton>
         </div>
       </form>

@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
@@ -10,6 +11,7 @@ import { actionModalSlice } from 'store/reducers/actionModalSlice';
 import './styles.scss';
 
 const NlpDatasetCopying: FC = () => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [nlpDatasetId, setNlpDatasetId] = useState<number>();
   const { deactivate } = actionModalSlice.actions;
@@ -52,7 +54,9 @@ const NlpDatasetCopying: FC = () => {
         <div className="nlp-dataset-copying__item">
           <LabeledElement
             className="nlp-dataset-copying__labeled-element"
-            labelElement={{ value: 'Select nlp dataset' }}
+            labelElement={{
+              value: t('nlpDatasetCopying.selectNlpDataset', 'Select dataset'),
+            }}
           >
             <Select
               className={nlpDatasetSelect.className}
@@ -66,7 +70,7 @@ const NlpDatasetCopying: FC = () => {
         </div>
         <div className="nlp-dataset-copying__item nlp-dataset-copying__item-button">
           <InputButton className="nlp-dataset-copying__button">
-            Copy
+            {t('nlpDatasetCopying.copy', 'Copy')}
           </InputButton>
         </div>
       </form>

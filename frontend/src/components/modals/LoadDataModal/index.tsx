@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, FormEvent, useId, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import JSZip from 'jszip';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
@@ -19,6 +20,7 @@ const emptyLoadingDataDto: LoadingDataDtoProps = {
 };
 
 const LoadDataModal: FC = () => {
+  const { t } = useTranslation();
   const [loadingDataDto, setLoadingDataDto] =
     useState<LoadingDataDtoProps>(emptyLoadingDataDto);
   const loadDataId = useId();
@@ -107,15 +109,22 @@ const LoadDataModal: FC = () => {
               onChange={handleFile}
               hidden
             />
-            Load txt or json file
+            {t('loadDataModal.loadTxtOrJsonFile', 'Load txt or json file')}
           </label>
           <div className="load-data-modal__path">
-            {loadingDataDto.file ? loadingDataDto.file.name : 'Файл не выбран'}
+            {loadingDataDto.file
+              ? loadingDataDto.file.name
+              : t('loadDataModal.fileNotSelected', 'File not selected')}
           </div>
         </div>
         <div className="load-data-modal__field">
           <LabeledElement
-            labelElement={{ value: 'Regex text pattern to split' }}
+            labelElement={{
+              value: t(
+                'loadDataModal.regexTextPatternToSplit',
+                'Regex text pattern to split'
+              ),
+            }}
           >
             <InputField
               className={patternInputField.className}
@@ -135,7 +144,7 @@ const LoadDataModal: FC = () => {
             className="load-data-modal__button"
             disabled={loadingDataDto.file ? false : true}
           >
-            Load data
+            {t('loadDataModal.loadData', 'Load data')}
           </InputButton>
         </div>
       </form>

@@ -1,4 +1,5 @@
 import React, { FC, FormEvent, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import ContentModal from 'components/interstitial/ContentModal';
 import InputButton from 'components/common/Inputs/InputButton';
@@ -18,6 +19,7 @@ export interface NlpTokenSettingsModalProps {
 const NlpTokenSettingsModal: FC<NlpTokenSettingsModalProps> = ({
   className,
 }) => {
+  const { t } = useTranslation();
   const [nlpDataset, setNlpDataset] = React.useState<
     NlpDatasetProps | undefined
   >(undefined);
@@ -79,17 +81,22 @@ const NlpTokenSettingsModal: FC<NlpTokenSettingsModalProps> = ({
   return (
     <ContentModal
       className={`nlp-token-settings-modal ${className}`}
-      title={'Nlp token settings'}
+      title={t('nlpTokenSettingsModal.nlpTokenSettings', 'NLP token settings')}
       isActive={isActive}
       handleClose={handleClose}
     >
       <div className="nlp-token-settings-modal__warning">
-        When changing token settings, NER labels will be removed.
+        {t(
+          'nlpTokenSettingsModal.whenChangingTokenSettings',
+          'When changing token settings, NER labels will be removed.'
+        )}
       </div>
       <form className="nlp-token-settings-modal__form" onSubmit={handleSubmit}>
         <LabeledElement
           className="nlp-token-settings-modal__item"
-          labelElement={{ value: 'Pattern to remove' }}
+          labelElement={{
+            value: t('patternToRemove.patternToRemove', 'Pattern to remove'),
+          }}
         >
           <InputField
             className={patternToRemoveInputField.className}
@@ -105,7 +112,12 @@ const NlpTokenSettingsModal: FC<NlpTokenSettingsModalProps> = ({
         </LabeledElement>
         <LabeledElement
           className="nlp-token-settings-modal__item"
-          labelElement={{ value: 'Pattern to split' }}
+          labelElement={{
+            value: t(
+              'nlpTokenSettingsModal.patternToSplit',
+              'Pattern to split'
+            ),
+          }}
         >
           <InputField
             className={patternToSplitInputField.className}
@@ -121,7 +133,7 @@ const NlpTokenSettingsModal: FC<NlpTokenSettingsModalProps> = ({
         </LabeledElement>
         <div className="nlp-token-settings-modal__button">
           <InputButton className="nlp-token-settings-modal__button">
-            Confirm
+            {t('nlpTokenSettingsModal.confirm', 'Confirm')}
           </InputButton>
         </div>
       </form>

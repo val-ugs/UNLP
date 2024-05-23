@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import { NodeProps } from 'reactflow';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
@@ -33,6 +34,7 @@ interface NlpDatasetCreatingByFieldNodeProps {
 const NlpDatasetCreatingByFieldNode: FC<
   NodeProps<NlpDatasetCreatingByFieldNodeProps>
 > = (node) => {
+  const { t } = useTranslation();
   const [nerLabels, setNerLabels] = useState<NerLabelProps[]>([]);
   const { editNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
@@ -193,7 +195,12 @@ const NlpDatasetCreatingByFieldNode: FC<
       <div className="nlp-dataset-creating-by-field-node__main">
         <LabeledElement
           className="nlp-dataset-creating-by-field-node__labeled-element"
-          labelElement={{ value: 'Select field' }}
+          labelElement={{
+            value: t(
+              'nlpDatasetCreatingByFieldNode.selectField',
+              'Select field"'
+            ),
+          }}
         >
           <Select
             className={fieldSelect.className}
@@ -210,7 +217,12 @@ const NlpDatasetCreatingByFieldNode: FC<
         <div className="nlp-dataset-creating-by-field-node__main">
           <LabeledElement
             className="nlp-dataset-creating-by-field-node__labeled-element"
-            labelElement={{ value: 'Select ner label' }}
+            labelElement={{
+              value: t(
+                'nlpDatasetCreatingByFieldNode.selectNerLabel',
+                'Select NER label'
+              ),
+            }}
           >
             <Select
               className={nerLabelSelect.className}
@@ -226,7 +238,12 @@ const NlpDatasetCreatingByFieldNode: FC<
       <div className="nlp-dataset-creating-by-field-node__input-checkbox">
         <LabeledElement
           className="nlp-dataset-creating-by-field-node__labeled-element"
-          labelElement={{ value: 'Is classification label saved' }}
+          labelElement={{
+            value: t(
+              'nlpDatasetCreatingByFieldNode.isClassificationLabelSaved',
+              'Is classification label saved'
+            ),
+          }}
         >
           <InputCheckbox
             className={classificationLabelSavedInputCheckbox.className}
@@ -239,7 +256,12 @@ const NlpDatasetCreatingByFieldNode: FC<
       <div className="nlp-dataset-creating-by-field-node__input-checkbox">
         <LabeledElement
           className="nlp-dataset-creating-by-field-node__labeled-element"
-          labelElement={{ value: 'Is summarization saved' }}
+          labelElement={{
+            value: t(
+              'nlpDatasetCreatingByFieldNode.isSummarizationSaved',
+              'Is summarization saved'
+            ),
+          }}
         >
           <InputCheckbox
             className={summarizationSavedInputCheckbox.className}
@@ -253,7 +275,10 @@ const NlpDatasetCreatingByFieldNode: FC<
         node.data?.input?.createNlpDatasetByFieldDto.field ==
           fieldType.NerLabel && (
           <div className="nlp-dataset-creating-by-field-node__warning">
-            Warning: Ner labels not found. Dataset not loaded. Try run program.
+            {t(
+              'nlpDatasetCreatingByFieldNode.warning',
+              'Warning: NER labels not found. Dataset not loaded. Try run program.'
+            )}
           </div>
         )}
     </BaseNode>

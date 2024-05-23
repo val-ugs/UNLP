@@ -1,4 +1,5 @@
 import React, { FC, FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
@@ -17,6 +18,7 @@ const emptyNerMetricCalculationRequest: NerMetricCalculationRequest = {
 };
 
 const NerMetricCalculation: FC = () => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [nerMetricCalculationRequest, setNerMetricCalculationRequest] =
     useState<NerMetricCalculationRequest>(emptyNerMetricCalculationRequest);
@@ -112,7 +114,12 @@ const NerMetricCalculation: FC = () => {
         <div className="ner-metric-calculation__item">
           <LabeledElement
             className="ner-metric-calculation__labeled-element"
-            labelElement={{ value: 'Select nlp dataset' }}
+            labelElement={{
+              value: t(
+                'nerMetricCalculation.selectNlpDataset',
+                'Select dataset'
+              ),
+            }}
           >
             <Select
               className={nlpDatasetSelect.className}
@@ -127,7 +134,12 @@ const NerMetricCalculation: FC = () => {
         <div className="ner-metric-calculation__item">
           <LabeledElement
             className="ner-metric-calculation__labeled-element"
-            labelElement={{ value: 'Select predicted nlp dataset' }}
+            labelElement={{
+              value: t(
+                'nerMetricCalculation.selectPredictedNlpDataset',
+                'Select predicted dataset'
+              ),
+            }}
           >
             <Select
               className={predictedNlpDatasetSelect.className}
@@ -142,7 +154,9 @@ const NerMetricCalculation: FC = () => {
         <div className="ner-metric-calculation__item">
           <LabeledElement
             className="ner-metric-calculation__labeled-element"
-            labelElement={{ value: 'Select metric' }}
+            labelElement={{
+              value: t('nerMetricCalculation.selectMetric', 'Select metric'),
+            }}
           >
             <Select
               className={metricNameSelect.className}
@@ -156,12 +170,14 @@ const NerMetricCalculation: FC = () => {
         </div>
         <div className="ner-metric-calculation__item ner-metric-calculation__item-button">
           <InputButton className="ner-metric-calculation__button">
-            Calculate
+            {t('nerMetricCalculation.calculate', 'Calculate')}
           </InputButton>
         </div>
       </form>
       {result && (
-        <pre className="ner-metric-calculation__result">Result: {result}</pre>
+        <pre className="ner-metric-calculation__result">
+          {t('nerMetricCalculation.result', 'Result:')} {result}
+        </pre>
       )}
     </div>
   );

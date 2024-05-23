@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HuggingFaceModelProps } from 'interfaces/huggingFaceModel.interface';
 import { huggingFaceModelApi } from 'services/huggingFaceModelService';
 import HuggingFaceModelPredict from './components/HuggingFaceModelPredict';
@@ -7,6 +8,7 @@ import { PredictResultsDto } from 'interfaces/dtos/predictResultsDto.interface';
 import './styles.scss';
 
 const NlpPredict: FC = () => {
+  const { t } = useTranslation();
   const [huggingFaceModel, setHuggingFaceModel] = useState<
     HuggingFaceModelProps | undefined
   >(undefined);
@@ -34,7 +36,9 @@ const NlpPredict: FC = () => {
 
   return (
     <div className="nlp-predict">
-      <div className="nlp-predict__title">Prepare model to predict:</div>
+      <div className="nlp-predict__title">
+        {t('nlpPredict.prepareModelToPredict', 'Prepare model to predict:')}
+      </div>
       <div className="nlp-predict__item nlp-predict__predict">
         <div className="nlp-predict__predict-item">
           <HuggingFaceModelPredict
@@ -50,11 +54,13 @@ const NlpPredict: FC = () => {
             className="nlp-predict__predict-button"
             onClick={handlePredict}
           >
-            Predict
+            {t('nlpPredict.predict', 'Predict')}
           </Button>
         </div>
       </div>
-      <div className="nlp-predict__title">Results:</div>
+      <div className="nlp-predict__title">
+        {t('nlpPredict.results', 'Results:')}
+      </div>
       <div className="nlp-predict__item nlp-predict__results">
         {predictResults && (
           <div className="nlp-predict__result">

@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { NerLabelProps } from 'interfaces/nerLabel.interface';
@@ -14,6 +15,7 @@ export interface NerLabelsProps {
 }
 
 const NerLabels: FC<NerLabelsProps> = ({ className, nlpDatasetId }) => {
+  const { t } = useTranslation();
   const [nerLabels, setNerLabels] = useState<NerLabelProps[]>([]);
   const { activate } = nerLabelFormModalSlice.actions;
   const dispatch = useAppDispatch();
@@ -36,7 +38,9 @@ const NerLabels: FC<NerLabelsProps> = ({ className, nlpDatasetId }) => {
 
   return (
     <div className={`ner-labels ${className}`}>
-      <div className="ner-labels__title">Labels:</div>
+      <div className="ner-labels__title">
+        {t('nerLabels.labels', 'Labels')}:
+      </div>
       <div className="ner-labels__list">
         {nerLabels?.map((nerLabel: NerLabelProps) => (
           <NerLabelItem

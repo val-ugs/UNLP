@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NodeProps } from 'reactflow';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import BaseNode from '../../_common/BaseNode';
@@ -19,6 +20,7 @@ interface NlpDatasetDeletingTextsWithoutFieldsNodeProps {
 const NlpDatasetDeletingTextsWithoutFieldsNode: FC<
   NodeProps<NlpDatasetDeletingTextsWithoutFieldsNodeProps>
 > = (node) => {
+  const { t } = useTranslation();
   const inputHandles: InputHandlesItemProps[] = [
     {
       id: 'nlpDataset',
@@ -39,7 +41,10 @@ const NlpDatasetDeletingTextsWithoutFieldsNode: FC<
       running={node.data?.running}
     >
       <div className="nlp-dataset-deleting-texts-without-fields-node__main">
-        Delete texts without fields nlp dataset
+        {t(
+          'NlpDatasetDeletingTextsWithoutFieldsNode.deleteTextsWithoutFieldsNlpDataset',
+          'Delete texts without fields dataset'
+        )}
       </div>
     </BaseNode>
   );

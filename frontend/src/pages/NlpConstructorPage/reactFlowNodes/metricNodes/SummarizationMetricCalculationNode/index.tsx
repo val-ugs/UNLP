@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import { NodeProps } from 'reactflow';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
@@ -26,6 +27,7 @@ interface SummarizationMetricCalculationNodeProps {
 const SummarizationMetricCalculationNode: FC<
   NodeProps<SummarizationMetricCalculationNodeProps>
 > = (node) => {
+  const { t } = useTranslation();
   const { editNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -74,12 +76,20 @@ const SummarizationMetricCalculationNode: FC<
     >
       <div className="summarization-metric-calculation-node__main">
         <div className="summarization-metric-calculation-node__title">
-          Summarization metric calculation
+          {t(
+            'summarizationMetricCalculationNode.summarizationMetricCalculation',
+            'Summarization metric calculation'
+          )}
         </div>
         <div className="summarization-metric-calculation-node__item">
           <LabeledElement
             className="summarization-metric-calculation-node__labeled-element"
-            labelElement={{ value: 'Select metric' }}
+            labelElement={{
+              value: t(
+                'summarizationMetricCalculationNode.selectMetric',
+                'Select metric'
+              ),
+            }}
           >
             <Select
               className={metricNameSelect.className}
@@ -93,7 +103,8 @@ const SummarizationMetricCalculationNode: FC<
         </div>
         {node.data?.output?.result && (
           <pre className="summarization-metric-calculation-node__item summarization-metric-calculation-node__result">
-            Result: {node.data?.output?.result}
+            {t('summarizationMetricCalculationNode.result', 'Result: ')}
+            {node.data?.output?.result}
           </pre>
         )}
       </div>

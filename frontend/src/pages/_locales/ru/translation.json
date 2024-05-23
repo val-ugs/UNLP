@@ -1,0 +1,136 @@
+{
+  "nlpConstructorPage": {
+    "save": "Сохранить",
+    "restore": "Восстановить",
+    "saveToFile": "Сохранить в файл",
+    "loadFromFile": "Загрузить из файла",
+    "run": "Запустить",
+    "error": "Ошибка:"
+  },
+  "edgeContextMenu": {
+    "edgeMenu": "Меню соединений",
+    "delete": "Удалить"
+  },
+  "nodeContextMenu": {
+    "nodeMenu": "Меню блоков",
+    "duplicate": "Дублировать",
+    "delete": "Удалить"
+  },
+  "paneContextMenu": {
+    "add": "Добавить"
+  },
+  "nlpDatasetClearingNodeProps": {
+    "selectFieldToClear": "Выберите поле для очистки"
+  },
+  "nlpDatasetCopyingNode": {
+    "copyNlpDataset": "Копировать датасет"
+  },
+  "nlpDatasetCreatingByFieldNode": {
+    "selectField": "Выберите поле",
+    "selectNerLabel": "Выберите NER метку",
+    "isClassificationLabelSaved": "Сохранить метку классификации",
+    "isSummarizationSaved": "Сохранить обобщение",
+    "warning": "Внимание: Ner метки не найдены. Датасет не загружен. Попробуйте запустить программу."
+  },
+  "nlpDatasetCreatingByTemplateNode": {
+    "createNlpDatasetTemplate": "Создать датасет по шаблону",
+    "inputTemplate":"Шаблон",
+    "inputDelimiter":"Разделитель"
+  },
+  "nlpDatasetDeletingTextsWithoutFieldsNode": {
+    "deleteTextsWithoutFieldsNlpDataset": "Удалить тексты без полей датасета"
+  },
+  "nlpTokenNerLabelsCreatingByPatternNode": {
+    "createNlpTokenNerLabelsByPattern": "Создать NER метки для токенов по шаблону",
+    "nerLabel": "NER метка",
+    "pattern": "шаблон",
+    "delete": "Удалить"
+  },
+  "classificationMetricCalculationNode": {
+    "classificationMetricCalculation": "Расчет метрики классификации",
+    "selectMetric": "Выберите метрику",
+    "selectAverage": "Выберите способ",
+    "result":"Результат: "
+  },
+  "nerMetricCalculationNode": {
+    "nerMetricCalculation": "Расчет метрики NER",
+    "selectMetric": "Выберите метрику",
+    "result":"Результат: "
+  },
+  "summarizationMetricCalculationNodeProps": {
+    "summarizationMetricCalculation": "Расчет метрики обобщения",
+    "selectMetric": "Выберите метрику",
+    "result":"Результат: "
+  },
+  "huggingFaceModelNode": {
+    "huggingFaceModel": "Модель",
+    "huggingFaceModelsNotFound": "Модель не найдена"
+  },
+  "nlpDatasetNode": {
+    "nlpDataset": "Датасет"
+  },
+  "predictNode": {
+    "predict": "Предсказать"
+  },
+  "nlpPredict": {
+    "prepareModelToPredict": "Подготовьте модель для предсказания:",
+    "predict": "Предсказать",
+    "results": "Результаты:"
+  },
+  "huggingFaceModelPredict": {
+    "selectHuggingFaceModel": "Выбрать модель",
+    "huggingFaceModelsNotFound": "Модели не найдены",
+    "selectTestNlpDataset": "Выберите тестовый датасет"
+  },
+  "nlpTrain": {
+    "prepareModelToTrain": "Подготовьте модель для тренировки:",
+    "train": "Тренировать",
+    "results:": "Результаты:"
+  },
+  "huggingFaceModelTrain": {
+    "createHuggingFaceModel":"Создать модель",
+    "selectHuggingFaceModel":"Выберите модель",
+    "edit":"Редактировать",
+    "delete":"Удалить",
+    "huggingFaceModelsNotFound":"Модели не найдены"
+  },
+  "preparePage": {
+    "datasetNotSelectedOrNotFound": "Датасет не выбран или не найден",
+    "textNotSelectedOrNotFound": "Текст не найден или не выбран"
+  },
+  "menu": {
+    "loadData": "Загрузка датасета",
+    "saveData": "Сохранение датасета",
+    "actions": "Действия",
+    "metrics": "Метрики"
+  },
+  "nerLabels": {
+    "labels": "NER Метки"
+  },
+  "nlpDatasets": {
+    "dataset": "Датасет",
+    "deleteSelectedDatabase": "Удалить выбранный датасет",
+    "datasetsNotFound": "Датасеты не найдены"
+  },
+  "nlpTextForm": {
+    "classificationLabel": "Метка классификации",
+    "summarization": "Обобщение",
+    "text": "Текст",
+    "tokenSettings": "Настройки токенов"
+  },
+  "nlpTokens": {
+    "tokens": "Токены",
+    "npTokensFound": "Токены не найдены. Проверьте настройки токенов."
+  },
+  "nlpTokenItem": {
+    "initial": "Начальный"
+  },
+  "nlpTexts": {
+    "search": "Найти",
+    "texts": "Тексты",
+    "prev": "Пред.",
+    "ok": "Ок",
+    "next": "След.",
+    "deleteSelectedText": "Удалить выбранный текст"
+  }
+}

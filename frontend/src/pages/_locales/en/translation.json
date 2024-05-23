@@ -1,0 +1,136 @@
+{
+  "nlpConstructorPage": {
+    "save": "Save",
+    "restore": "Restore",
+    "saveToFile": "Save to file",
+    "loadFromFile": "Load from file",
+    "run": "Run",
+    "error": "Error:"
+  },
+  "edgeContextMenu": {
+    "edgeMenu": "Edge menu",
+    "delete": "Delete"
+  },
+  "nodeContextMenu": {
+    "nodeMenu": "Node menu",
+    "duplicate": "Duplicate",
+    "delete": "Delete"
+  },
+  "paneContextMenu": {
+    "add": "Add"
+  },
+  "nlpDatasetClearingNode": {
+    "selectFieldToClear": "Select field to clear"
+  },
+  "nlpDatasetCopyingNode": {
+    "copyNlpDataset": "Copy dataset"
+  },
+  "nlpDatasetCreatingByFieldNode": {
+    "selectField": "Select field",
+    "selectNerLabel": "Select NER label",
+    "isClassificationLabelSaved": "Is classification label saved",
+    "isSummarizationSaved": "Is summarization saved",
+    "warning": "Warning: NER labels not found. Dataset not loaded. Try run program."
+  },
+  "nlpDatasetCreatingByTemplateNode": {
+    "createNlpDatasetByTemplate": "Create dataset by template",
+    "inputTemplate": "Input template",
+    "inputDelimiter": "Input delimiter"
+  },
+  "nlpDatasetDeletingTextsWithoutFieldsNode": {
+    "deleteTextsWithoutFieldsNlpDataset": "Delete texts without fields dataset"
+  },
+  "nlpTokenNerLabelsCreatingByPatternNode": {
+    "createNlpTokenNerLabelsByPattern": "Create token ner labels by pattern",
+    "nerLabel": "NER label",
+    "pattern": "pattern",
+    "delete": "Delete"
+  },
+  "classificationMetricCalculationNode": {
+    "classificationMetricCalculation": "Classification metric calculation",
+    "selectMetric": "Select metric",
+    "selectAverage": "Select average",
+    "result":"Result: "
+  },
+  "nerMetricCalculationNode": {
+    "nerMetricCalculation": "NER metric calculation",
+    "selectMetric": "Select metric",
+    "result":"Result: "
+  },
+  "summarizationMetricCalculationNode": {
+    "summarizationMetricCalculation": "Summarization metric calculation",
+    "selectMetric": "Select metric",
+    "result":"Result: "
+  },
+  "huggingFaceModelNode": {
+    "huggingFaceModel": "Model",
+    "huggingFaceModelsNotFound": "Models not found"
+  },
+  "nlpDatasetNode": {
+    "nlpDataset": "dataset"
+  },
+  "predictNode": {
+    "predict": "Predict"
+  },
+  "nlpPredict": {
+    "prepareModelToPredict": "Prepare model to predict:",
+    "predict": "Predict",
+    "results": "Results:"
+  },
+  "huggingFaceModelPredict": {
+    "selectHuggingFaceModel": "Select model",
+    "huggingFaceModelsNotFound": "Models not found",
+    "selectTestNlpDataset": "Select test dataset"
+  },
+  "nlpTrain": {
+    "prepareModelToTrain": "Prepare model to train:",
+    "train": "Train",
+    "results:": "Results:"
+  },
+  "huggingFaceModelTrain": {
+    "createHuggingFaceModel":"Create model",
+    "selectHuggingFaceModel":"Select model",
+    "edit":"Edit",
+    "delete":"Delete",
+    "huggingFaceModelsNotFound":"Models not found"
+  },
+  "preparePage": {
+    "datasetNotSelectedOrNotFound": "Dataset not selected or not found",
+    "textNotSelectedOrNotFound": "Text not selected or not found"
+  },
+  "menu": {
+    "loadData": "Load data",
+    "saveData": "Save data",
+    "actions": "Actions",
+    "metrics": "Metrics"
+  },
+  "nerLabels": {
+    "labels": "NER Labels"
+  },
+  "nlpDatasets": {
+    "dataset": "Dataset",
+    "deleteSelectedDatabase": "Delete selected database",
+    "datasetsNotFound": "Datasets not found"
+  },
+  "nlpTextForm": {
+    "classificationLabel": "Classification label",
+    "summarization": "Summarization",
+    "text": "Text",
+    "tokenSettings": "Token Settings"
+  },
+  "nlpTokens": {
+    "tokens": "Tokens",
+    "npTokensFound": "No tokens found. Check token settings."
+  },
+  "nlpTokenItem": {
+    "initial": "Initial"
+  },
+  "nlpTexts": {
+    "search": "Search",
+    "texts": "Texts",
+    "prev": "Prev",
+    "ok": "Ok",
+    "next": "Next",
+    "deleteSelectedText": "Delete selected text"
+  }
+}

@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
@@ -10,6 +11,7 @@ import { actionModalSlice } from 'store/reducers/actionModalSlice';
 import './styles.scss';
 
 const NlpDatasetDeletingTextsWithoutFields: FC = () => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [nlpDatasetId, setNlpDatasetId] = useState<number>();
   const { deactivate } = actionModalSlice.actions;
@@ -53,7 +55,12 @@ const NlpDatasetDeletingTextsWithoutFields: FC = () => {
         <div className="nlp-dataset-deleting-texts-without-fields__item">
           <LabeledElement
             className="nlp-dataset-deleting-texts-without-fields__labeled-element"
-            labelElement={{ value: 'Select nlp dataset' }}
+            labelElement={{
+              value: t(
+                'nlpDatasetDeletingTextsWithoutFields.selectNlpDataset',
+                'Select dataset'
+              ),
+            }}
           >
             <Select
               className={nlpDatasetSelect.className}
@@ -67,7 +74,7 @@ const NlpDatasetDeletingTextsWithoutFields: FC = () => {
         </div>
         <div className="nlp-dataset-deleting-texts-without-fields__item nlp-dataset-deleting-texts-without-fields__item-button">
           <InputButton className="nlp-dataset-deleting-texts-without-fields__button">
-            Delete
+            {t('nlpDatasetDeletingTextsWithoutFields.delete', 'Delete')}
           </InputButton>
         </div>
       </form>
