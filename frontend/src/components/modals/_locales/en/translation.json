@@ -1,9 +1,10 @@
 {
   "huggingFaceModelFormModal": {
+    "huggingFaceModelForm":"Model form",
     "name": "Name",
     "modelNameOrPath": "Model name or path",
-    "trainNlpDataset": "Train nlp dataset",
-    "validNlpDataset": "Valid nlp dataset",
+    "trainNlpDataset": "Train dataset",
+    "validNlpDataset": "Valid dataset",
     "evaluateMetricName": "Evaluate metric name",
     "type": "Type",
     "trainingArgs": "Training Args:",
@@ -22,5 +23,18 @@
     "fileNotSelected": "File not selected",
     "regexTextPatternToSplit":"Regex text pattern to split",
     "loadData": "Load data"
+  },
+  "nerLabelFormModal": {
+    "nerLabelForm": "NER label form",
+    "labelName": "Label name",
+    "labelColor": "Label color",
+    "confirm": "Confirm"
+  },
+  "nlpTokenSettingsModal": {
+    "nlpTokenSettings": "NLP token settings",
+    "whenChangingTokenSettings": "When changing token settings, NER labels will be removed.",
+    "patternToRemove":"Pattern to remove",
+    "patternToSplit":"Pattern to split",
+    "confirm":"Confirm"
   }
 }

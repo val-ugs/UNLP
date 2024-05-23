@@ -1,4 +1,5 @@
 import React, { FC, FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HexColorPicker } from 'react-colorful';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import ContentModal from 'components/interstitial/ContentModal';
@@ -19,6 +20,7 @@ const emptyNerLabel: NerLabelProps = {
 };
 
 const NerLabelFormModal: FC = () => {
+  const { t } = useTranslation();
   const [nerLabel, setNerLabel] = useState<NerLabelProps>(emptyNerLabel);
   const [postNerLabel, {}] = nerLabelApi.usePostNerLabelMutation();
   const [putNerLabel, {}] = nerLabelApi.usePutNerLabelMutation();
@@ -78,14 +80,16 @@ const NerLabelFormModal: FC = () => {
   return (
     <ContentModal
       className="ner-label-form-modal"
-      title={'Ner label form'}
+      title={t('nerLabelFormModal.nerLabelForm', 'NER label form')}
       isActive={isActive}
       handleClose={handleClose}
     >
       <form className="ner-label-form-modal__form" onSubmit={handleSubmit}>
         <LabeledElement
           className="ner-label-form-modal__item"
-          labelElement={{ value: 'Label name' }}
+          labelElement={{
+            value: t('nerLabelFormModal.labelName', 'Label name'),
+          }}
         >
           <InputField
             className={labelInputField.className}
@@ -101,7 +105,9 @@ const NerLabelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="ner-label-form-modal__item"
-          labelElement={{ value: 'Label color' }}
+          labelElement={{
+            value: t('nerLabelFormModal.labelColor', 'Label color'),
+          }}
         >
           <div className="ner-label-form-modal__input-color-picker">
             <HexColorPicker
@@ -111,7 +117,7 @@ const NerLabelFormModal: FC = () => {
           </div>
         </LabeledElement>
         <InputButton className="ner-label-form-modal__button">
-          Confirm
+          {t('nerLabelFormModal.confirm', 'Confirm')}
         </InputButton>
       </form>
     </ContentModal>

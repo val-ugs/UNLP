@@ -322,7 +322,7 @@ const HuggingFaceModelFormModal: FC = () => {
   return (
     <ContentModal
       className="hugging-face-model-form-modal"
-      title={'Hugging face model form'}
+      title={t('huggingFaceModelForm.modelForm', 'Model form')}
       isActive={isActive}
       handleClose={handleClose}
     >
@@ -375,7 +375,7 @@ const HuggingFaceModelFormModal: FC = () => {
           labelElement={{
             value: t(
               'huggingFaceModelFormModal.trainNlpDataset',
-              'Train nlp dataset'
+              'Train dataset'
             ),
           }}
         >
@@ -393,7 +393,7 @@ const HuggingFaceModelFormModal: FC = () => {
           labelElement={{
             value: t(
               'huggingFaceModelFormModal.validNlpDataset',
-              'Valid nlp dataset'
+              'Valid dataset'
             ),
           }}
         >

@@ -124,10 +124,7 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
               <LabeledElement
                 className="hugging-face-model-node__labeled-element"
                 labelElement={{
-                  value: t(
-                    'huggingFaceModelNode.huggingFaceModel',
-                    'Hugging face model'
-                  ),
+                  value: t('huggingFaceModelNode.huggingFaceModel', 'Model'),
                 }}
               >
                 <Select
@@ -143,7 +140,7 @@ const HuggingFaceModelNode: FC<NodeProps<HuggingFaceModelNodeProps>> = (
           ) : (
             t(
               'huggingFaceModelNode.huggingFaceModelsNotFound',
-              'Hugging face models not found'
+              'Models not found'
             )
           )}
         </div>

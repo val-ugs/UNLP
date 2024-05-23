@@ -1,5 +1,6 @@
 {
   "huggingFaceModelFormModal": {
+    "modelForm":"Форма модели",
     "name": "Название",
     "modelNameOrPath": "Название модели или путь",
     "trainNlpDataset": "Датасет для обучения",
@@ -22,5 +23,18 @@
     "fileNotSelected": "Файл не выбран",
     "regexTextPatternToSplit":"Шаблон регулярного выражения для разделения текстов",
     "loadData": "Загрузить данные"
+  },
+  "nerLabelFormModal": {
+    "nerLabelForm": "Форма NER метки",
+    "labelName": "Название метки",
+    "labelColor": "Цвет метки",
+    "confirm": "Подтвердить"
+  },
+  "nlpTokenSettingsModal": {
+    "nlpTokenSettings": "Настройки токена NLP",
+    "whenChangingTokenSettings": "При изменении настроек токена метки NER будут удалены.",
+    "patternToRemove":"Шаблон для удаления",
+    "patternToSplit":"Шаблон для разделения",
+    "confirm":"Подтвердить"
   }
 }

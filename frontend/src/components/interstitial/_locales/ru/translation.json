@@ -18,8 +18,8 @@
   },
   "nlpDatasetCreatingByTemplate": {
     "selectNlpDatasets": "Выберите датасеты",
-    "inputTemplate":"Входной шаблон",
-    "inputDelimiter":"Входной разделитель",
+    "inputTemplate":"Шаблон",
+    "inputDelimiter":"Разделитель",
     "submit": "Применить"
   },
   "nlpDatasetDeletingTextsWithoutFields": {

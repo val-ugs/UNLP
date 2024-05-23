@@ -34,8 +34,8 @@
   },
   "nlpDatasetCreatingByTemplateNode": {
     "createNlpDatasetTemplate": "Создать датасет по шаблону",
-    "inputTemplate":"Входной шаблон",
-    "inputDelimiter":"Входной разделитель"
+    "inputTemplate":"Шаблон",
+    "inputDelimiter":"Разделитель"
   },
   "nlpDatasetDeletingTextsWithoutFieldsNode": {
     "deleteTextsWithoutFieldsNlpDataset": "Удалить тексты без полей датасета"
@@ -63,14 +63,36 @@
     "result":"Результат: "
   },
   "huggingFaceModelNode": {
-    "huggingFaceModel": "Hugging face модель",
-    "huggingFaceModelsNotFound": "Hugging face модель не найдена"
+    "huggingFaceModel": "Модель",
+    "huggingFaceModelsNotFound": "Модель не найдена"
   },
   "nlpDatasetNode": {
     "nlpDataset": "Датасет"
   },
   "predictNode": {
     "predict": "Предсказать"
+  },
+  "nlpPredict": {
+    "prepareModelToPredict": "Подготовьте модель для предсказания:",
+    "predict": "Предсказать",
+    "results": "Результаты:"
+  },
+  "huggingFaceModelPredict": {
+    "selectHuggingFaceModel": "Выбрать модель",
+    "huggingFaceModelsNotFound": "Модели не найдены",
+    "selectTestNlpDataset": "Выберите тестовый датасет"
+  },
+  "nlpTrain": {
+    "prepareModelToTrain": "Подготовьте модель для тренировки:",
+    "train": "Тренировать",
+    "results:": "Результаты:"
+  },
+  "huggingFaceModelTrain": {
+    "createHuggingFaceModel":"Создать модель",
+    "selectHuggingFaceModel":"Выберите модель",
+    "edit":"Редактировать",
+    "delete":"Удалить",
+    "huggingFaceModelsNotFound":"Модели не найдены"
   },
   "preparePage": {
     "datasetNotSelectedOrNotFound": "Датасет не выбран или не найден",
@@ -87,7 +109,7 @@
   },
   "nlpDatasets": {
     "dataset": "Датасет",
-    "deleteSelectedDatabase": "Удалить выбранные датасеты",
+    "deleteSelectedDatabase": "Удалить выбранный датасет",
     "datasetsNotFound": "Датасеты не найдены"
   },
   "nlpTextForm": {

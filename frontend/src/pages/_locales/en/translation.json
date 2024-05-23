@@ -63,14 +63,36 @@
     "result":"Result: "
   },
   "huggingFaceModelNode": {
-    "huggingFaceModel": "Hugging face model",
-    "huggingFaceModelsNotFound": "Hugging face models not found"
+    "huggingFaceModel": "Model",
+    "huggingFaceModelsNotFound": "Models not found"
   },
   "nlpDatasetNode": {
     "nlpDataset": "dataset"
   },
   "predictNode": {
     "predict": "Predict"
+  },
+  "nlpPredict": {
+    "prepareModelToPredict": "Prepare model to predict:",
+    "predict": "Predict",
+    "results": "Results:"
+  },
+  "huggingFaceModelPredict": {
+    "selectHuggingFaceModel": "Select model",
+    "huggingFaceModelsNotFound": "Models not found",
+    "selectTestNlpDataset": "Select test dataset"
+  },
+  "nlpTrain": {
+    "prepareModelToTrain": "Prepare model to train:",
+    "train": "Train",
+    "results:": "Results:"
+  },
+  "huggingFaceModelTrain": {
+    "createHuggingFaceModel":"Create model",
+    "selectHuggingFaceModel":"Select model",
+    "edit":"Edit",
+    "delete":"Delete",
+    "huggingFaceModelsNotFound":"Models not found"
   },
   "preparePage": {
     "datasetNotSelectedOrNotFound": "Dataset not selected or not found",
