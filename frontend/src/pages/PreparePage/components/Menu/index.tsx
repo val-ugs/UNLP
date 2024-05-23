@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Button from 'components/common/Button';
 import Dropdown from 'components/common/Dropdown';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
@@ -19,6 +20,7 @@ export interface MenuProps {
 }
 
 const Menu: FC<MenuProps> = ({ className, nlpDataset }) => {
+  const { t } = useTranslation();
   const [isActionOpen, setIsActionOpen] = useState<boolean>(false);
   const [isMetricOpen, setIsMetricOpen] = useState<boolean>(false);
   const [downloadNlpDataset, {}] =
@@ -59,14 +61,14 @@ const Menu: FC<MenuProps> = ({ className, nlpDataset }) => {
   return (
     <div className={`menu ${className}`}>
       <Button className="menu__item menu__button" onClick={handleLoadData}>
-        Load data
+        {t('menu.loadData', 'Load data')}
       </Button>
       <Button className="menu__item menu__button" onClick={handleSaveData}>
-        Save data
+        {t('menu.saveData', 'Save data')}
       </Button>
       <div className="menu__item menu__actions">
         <Button className="menu__button" onClick={handleOpenAction}>
-          Actions
+          {t('menu.actions', 'Actions')}
         </Button>
         <Dropdown
           className="menu__actions-dropdown"
@@ -87,7 +89,7 @@ const Menu: FC<MenuProps> = ({ className, nlpDataset }) => {
       </div>
       <div className="menu__item menu__metrics">
         <Button className="menu__button" onClick={handleOpenMetric}>
-          Metrics
+          {t('menu.metrics', 'Metrics')}
         </Button>
         <Dropdown
           className="menu__metrics-dropdown"
