@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
@@ -26,6 +27,7 @@ const emptyCreateNlpDatasetByFieldDto: createNlpDatasetByFieldDtoProps = {
 };
 
 const NlpDatasetCreatingByField: FC = () => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [nlpDatasetId, setNlpDatasetId] = useState<number>();
   const [createNlpDatasetByFieldDto, setCreateNlpDatasetByFieldDto] =
@@ -149,7 +151,12 @@ const NlpDatasetCreatingByField: FC = () => {
         <div className="nlp-dataset-creating-by-field__item">
           <LabeledElement
             className="nlp-dataset-creating-by-field__labeled-element"
-            labelElement={{ value: 'Select nlp dataset' }}
+            labelElement={{
+              value: t(
+                'nlpDatasetCreatingByField.selectNlpDataset',
+                'Select nlp dataset'
+              ),
+            }}
           >
             <Select
               className={nlpDatasetSelect.className}
@@ -164,7 +171,9 @@ const NlpDatasetCreatingByField: FC = () => {
         <div className="nlp-dataset-creating-by-field__item">
           <LabeledElement
             className="nlp-dataset-creating-by-field__labeled-element"
-            labelElement={{ value: 'Select field' }}
+            labelElement={{
+              value: t('nlpDatasetCreatingByField.selectField', 'Select field'),
+            }}
           >
             <Select
               className={fieldSelect.className}
@@ -180,7 +189,12 @@ const NlpDatasetCreatingByField: FC = () => {
           <div className="nlp-dataset-creating-by-field__item">
             <LabeledElement
               className="nlp-dataset-creating-by-field__labeled-element"
-              labelElement={{ value: 'Select ner label' }}
+              labelElement={{
+                value: t(
+                  'nlpDatasetCreatingByField.selectNerLabel',
+                  'Select NER label'
+                ),
+              }}
             >
               <Select
                 className={nerLabelSelect.className}
@@ -196,7 +210,12 @@ const NlpDatasetCreatingByField: FC = () => {
         <div className="nlp-dataset-creating-by-field__input-checkbox">
           <LabeledElement
             className="nlp-dataset-creating-by-field__labeled-element"
-            labelElement={{ value: 'Is classification label saved' }}
+            labelElement={{
+              value: t(
+                'nlpDatasetCreatingByField.isClassificationLabelSaved',
+                'Is classification label saved'
+              ),
+            }}
           >
             <InputCheckbox
               className={classificationLabelSavedInputCheckbox.className}
@@ -209,7 +228,12 @@ const NlpDatasetCreatingByField: FC = () => {
         <div className="nlp-dataset-creating-by-field__input-checkbox">
           <LabeledElement
             className="nlp-dataset-creating-by-field__labeled-element"
-            labelElement={{ value: 'Is summarization saved' }}
+            labelElement={{
+              value: t(
+                'nlpDatasetCreatingByField.isSummarizationSaved',
+                'Is summarization saved'
+              ),
+            }}
           >
             <InputCheckbox
               className={summarizationSavedInputCheckbox.className}
@@ -222,7 +246,7 @@ const NlpDatasetCreatingByField: FC = () => {
 
         <div className="nlp-dataset-creating-by-field__item nlp-dataset-creating-by-field__item-button">
           <InputButton className="nlp-dataset-creating__button">
-            Create
+            {t('nlpDatasetCreatingByField.create', 'Create')}
           </InputButton>
         </div>
       </form>

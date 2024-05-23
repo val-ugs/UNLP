@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
@@ -23,6 +24,7 @@ const emptyCreateNlpDatasetByTemplateDto: CreateNlpDatasetByTemplateDtoProps = {
 };
 
 const NlpDatasetCreatingByTemplate: FC = () => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [createNlpDatasetByTemplateDto, setCreateNlpDatasetByTemplateDto] =
     useState<CreateNlpDatasetByTemplateDtoProps>(
@@ -103,7 +105,12 @@ const NlpDatasetCreatingByTemplate: FC = () => {
         <div className="nlp-dataset-creating-by-template__item">
           <LabeledElement
             className="nlp-dataset-creating-by-template__labeled-element"
-            labelElement={{ value: 'Select nlp datasets' }}
+            labelElement={{
+              value: t(
+                'nlpDatasetCreatingByTemplate.selectNlpDatasets',
+                'Select NLP datasets'
+              ),
+            }}
           >
             <Multiselect
               className={nlpDatasetMultiselect.className}
@@ -119,7 +126,12 @@ const NlpDatasetCreatingByTemplate: FC = () => {
         <div className="nlp-dataset-creating-by-template__item">
           <LabeledElement
             className="nlp-dataset-creating-by-template__labeled-element"
-            labelElement={{ value: 'Input template' }}
+            labelElement={{
+              value: t(
+                'nlpDatasetCreatingByTemplate.inputTemplate',
+                'Input template'
+              ),
+            }}
           >
             <TextareaField
               className={templateTextareaField.className}
@@ -138,7 +150,12 @@ const NlpDatasetCreatingByTemplate: FC = () => {
         <div className="nlp-dataset-creating-by-template__item">
           <LabeledElement
             className="nlp-dataset-creating-by-template__labeled-element"
-            labelElement={{ value: 'Input delimiter' }}
+            labelElement={{
+              value: t(
+                'nlpDatasetCreatingByTemplate.inputDelimiter',
+                'Input delimiter'
+              ),
+            }}
           >
             <InputField
               className={delimiterInputField.className}
@@ -155,7 +172,7 @@ const NlpDatasetCreatingByTemplate: FC = () => {
         </div>
         <div className="nlp-dataset-creating-by-template__item nlp-dataset-creating-by-template__item-button">
           <InputButton className="nlp-dataset-creating-by-template__button">
-            Submit
+            {t('nlpDatasetCreatingByTemplate.submit', 'Submit')}
           </InputButton>
         </div>
       </form>

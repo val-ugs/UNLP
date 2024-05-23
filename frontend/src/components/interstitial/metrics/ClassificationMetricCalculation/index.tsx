@@ -1,4 +1,5 @@
 import React, { FC, FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Select, { SelectProps } from 'components/common/Select';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
@@ -22,6 +23,7 @@ const emptyClassificationMetricCalculationRequest: ClassificationMetricCalculati
   };
 
 const ClassificationMetricCalculation: FC = () => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [
     classificationMetricCalculationRequest,
@@ -148,7 +150,12 @@ const ClassificationMetricCalculation: FC = () => {
         <div className="classification-metric-calculation__item">
           <LabeledElement
             className="classification-metric-calculation__labeled-element"
-            labelElement={{ value: 'Select nlp dataset' }}
+            labelElement={{
+              value: t(
+                'classificationMetricCalculation.selectNlpDataset',
+                'Select nlp dataset'
+              ),
+            }}
           >
             <Select
               className={nlpDatasetSelect.className}
@@ -163,7 +170,12 @@ const ClassificationMetricCalculation: FC = () => {
         <div className="classification-metric-calculation__item">
           <LabeledElement
             className="classification-metric-calculation__labeled-element"
-            labelElement={{ value: 'Select predicted nlp dataset' }}
+            labelElement={{
+              value: t(
+                'classificationMetricCalculation.selectPredictedNlpDataset',
+                'Select predicted nlp dataset'
+              ),
+            }}
           >
             <Select
               className={predictedNlpDatasetSelect.className}
@@ -178,7 +190,12 @@ const ClassificationMetricCalculation: FC = () => {
         <div className="classification-metric-calculation__item">
           <LabeledElement
             className="classification-metric-calculation__labeled-element"
-            labelElement={{ value: 'Select metric' }}
+            labelElement={{
+              value: t(
+                'classificationMetricCalculation.selectMetric',
+                'Select metric'
+              ),
+            }}
           >
             <Select
               className={metricNameSelect.className}
@@ -195,7 +212,12 @@ const ClassificationMetricCalculation: FC = () => {
           <div className="classification-metric-calculation__item">
             <LabeledElement
               className="classification-metric-calculation__labeled-element"
-              labelElement={{ value: 'Select average' }}
+              labelElement={{
+                value: t(
+                  'classificationMetricCalculation.selectAverage',
+                  'Select average'
+                ),
+              }}
             >
               <Select
                 className={averageSelect.className}
@@ -210,13 +232,13 @@ const ClassificationMetricCalculation: FC = () => {
         )}
         <div className="classification-metric-calculation__item classification-metric-calculation__item-button">
           <InputButton className="classification-metric-calculation__button">
-            Calculate
+            {t('classificationMetricCalculation.calculate', 'Calculate')}
           </InputButton>
         </div>
       </form>
       {result && (
         <pre className="classification-metric-calculation__result">
-          Result: {result}
+          {t('classificationMetricCalculation.result', 'Result:')} {result}
         </pre>
       )}
     </div>

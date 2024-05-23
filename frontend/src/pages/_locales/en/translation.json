@@ -1,4 +1,24 @@
 {
+  "nlpConstructorPage": {
+    "save": "Save",
+    "restore": "Restore",
+    "saveToFile": "Save to file",
+    "loadFromFile": "Load from file",
+    "run": "Run",
+    "error": "Error:"
+  },
+  "edgeContextMenu": {
+    "edgeMenu": "Edge menu",
+    "delete": "Delete"
+  },
+  "nodeContextMenu": {
+    "nodeMenu": "Node menu",
+    "duplicate": "Duplicate",
+    "delete": "Delete"
+  },
+  "paneContextMenu": {
+    "add": "Add"
+  },
   "preparePage": {
     "datasetNotSelectedOrNotFound": "Dataset not selected or not found",
     "textNotSelectedOrNotFound": "Text not selected or not found"

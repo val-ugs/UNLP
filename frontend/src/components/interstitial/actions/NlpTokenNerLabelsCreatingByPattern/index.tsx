@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState, MouseEvent, FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'hooks/redux';
 import Select, { SelectProps } from 'components/common/Select';
@@ -26,6 +27,7 @@ const emptyCreateNlpTokenNerLabelsByPatternDto: CreateNlpTokenNerLabelsByPattern
   };
 
 const NlpTokenNerLabelsCreatingByPattern: FC = () => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [nerLabels, setNerLabels] = useState<NerLabelProps[]>([]);
   const [error, setError] = useState<string>();
@@ -111,7 +113,12 @@ const NlpTokenNerLabelsCreatingByPattern: FC = () => {
         <div className="nlp-token-ner-label-creating-by-pattern__item">
           <LabeledElement
             className="nlp-token-ner-label-creating-by-pattern__labeled-element"
-            labelElement={{ value: 'Select nlp dataset' }}
+            labelElement={{
+              value: t(
+                'nlpTokenNerLabelsCreatingByPattern.selectNlpDataset',
+                'Select NLP dataset'
+              ),
+            }}
           >
             <Select
               className={nlpDatasetSelect.className}
@@ -135,7 +142,14 @@ const NlpTokenNerLabelsCreatingByPattern: FC = () => {
                 0 && (
                 <div className="nlp-token-ner-label-creating-by-pattern__item">
                   <div className="nlp-token-ner-label-creating-by-pattern__item-title">
-                    &quot;Ner label&quot; - &quot;pattern:&quot;
+                    &quot;
+                    {t(
+                      'nlpTokenNerLabelsCreatingByPattern.nerLabel',
+                      'NER label'
+                    )}
+                    &quot; - &quot;
+                    {t('nlpTokenNerLabelsCreatingByPattern.pattern', 'pattern')}
+                    :&quot;
                   </div>
                   <UnorderedList className="nlp-token-ner-label-creating-by-pattern__ner-label-patterns">
                     {createNlpTokenNerLabelsByPatternDto.nerLabelPatterns.map(
@@ -163,7 +177,10 @@ const NlpTokenNerLabelsCreatingByPattern: FC = () => {
                                   });
                                 }}
                               >
-                                Delete
+                                {t(
+                                  'nlpTokenNerLabelsCreatingByPattern.delete',
+                                  'Delete'
+                                )}
                               </Button>
                             </div>
                           </UnorderedList.Item>
@@ -175,21 +192,24 @@ const NlpTokenNerLabelsCreatingByPattern: FC = () => {
               )}
             <div className="nlp-token-ner-label-creating-by-pattern__item nlp-token-ner-label-creating-by-pattern__item-button">
               <InputButton className="nlp-token-ner-label-creating-by-pattern__button">
-                Submit
+                {t('nlpTokenNerLabelsCreatingByPattern.submit', 'Submit')}
               </InputButton>
             </div>
           </>
         ) : (
           createNlpTokenNerLabelsByPatternDto.nlpDatasetId && (
             <div className="nlp-token-ner-label-creating-by-pattern__item nlp-token-ner-label-creating-by-pattern__item-error">
-              Error: Ner labels not found
+              {t(
+                'nlpTokenNerLabelsCreatingByPattern.errorNerLabelsNotFound',
+                'Error: Ner labels not found'
+              )}
             </div>
           )
         )}
       </form>
       {error && (
         <div className="nlp-token-ner-label-creating-by-pattern__item nlp-token-ner-label-creating-by-pattern__item-error">
-          Error: {error}
+          {t('nlpTokenNerLabelsCreatingByPattern.error', 'Error:')} {error}
         </div>
       )}
     </div>

@@ -1,4 +1,5 @@
 import React, { FC, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import { v4 as uuidv4 } from 'uuid';
 import { Node, useReactFlow } from 'reactflow';
@@ -16,6 +17,7 @@ interface PaneContextMenuProps {
 }
 
 const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
+  const { t } = useTranslation();
   const { addNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
   const { screenToFlowPosition } = useReactFlow();
@@ -46,7 +48,9 @@ const PaneContextMenu: FC<PaneContextMenuProps> = ({ coords }) => {
       className="pane-context-menu"
       style={{ top: coords.y, left: coords.x }}
     >
-      <div className="pane-context-menu__title">Add</div>
+      <div className="pane-context-menu__title">
+        {t('paneContextMenu.add', 'Add')}
+      </div>
       <NodeGroupMenu
         groupTitle={'nodes'}
         listOfNodes={listOfNlpConstructorNodes}

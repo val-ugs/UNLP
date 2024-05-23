@@ -1,4 +1,5 @@
 import React, { FC, useState, MouseEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import Select, { SelectProps } from 'components/common/Select';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import { NerLabelProps } from 'interfaces/nerLabel.interface';
@@ -20,6 +21,7 @@ const AddNerLabelPattern: FC<AddNerLabelPatternProps> = ({
   nerLabels,
   handleAddNerLabelPattern,
 }) => {
+  const { t } = useTranslation();
   const [nerLabelId, setNerLabelId] = useState<number>();
   const [pattern, setPattern] = useState<string>();
 
@@ -66,7 +68,9 @@ const AddNerLabelPattern: FC<AddNerLabelPatternProps> = ({
       <div className="ner-label-pattern__item">
         <LabeledElement
           className="ner-label-pattern__labeled-element"
-          labelElement={{ value: 'Select ner label' }}
+          labelElement={{
+            value: t('addNerLabelPattern.selectNerLabel', 'Select NER label'),
+          }}
         >
           <Select
             className={nerLabelSelect.className}
@@ -79,7 +83,12 @@ const AddNerLabelPattern: FC<AddNerLabelPatternProps> = ({
         </LabeledElement>
         <LabeledElement
           className="ner-label-pattern__labeled-element"
-          labelElement={{ value: 'Enter regex pattern' }}
+          labelElement={{
+            value: t(
+              'addNerLabelPattern.enterRegexPattern',
+              'Enter regex pattern'
+            ),
+          }}
         >
           <InputField
             className={patternInputField.className}
@@ -96,7 +105,7 @@ const AddNerLabelPattern: FC<AddNerLabelPatternProps> = ({
       </div>
       <div className="ner-label-pattern__item ner-label-pattern__item-button">
         <Button className="ner-label-pattern__button" onClick={handleAdd}>
-          Add
+          {t('addNerLabelPattern.add', 'Add')}
         </Button>
       </div>
     </div>
