@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import LabeledElement from 'components/interstitial/LabeledElement';
 import { HuggingFaceModelProps } from 'interfaces/huggingFaceModel.interface';
 import { nlpDatasetApi } from 'services/nlpDatasetService';
@@ -13,6 +14,7 @@ interface HuggingFaceModelInfoProps {
 const HuggingFaceModelInfo: FC<HuggingFaceModelInfoProps> = ({
   huggingFaceModel,
 }) => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>();
   const {
     data: nlpDatasetsData,
@@ -37,88 +39,153 @@ const HuggingFaceModelInfo: FC<HuggingFaceModelInfoProps> = ({
         >
           <div className="hugging-face-model-info__info">
             <div className="hugging-face-model-info__training-args-name">
-              Parameters:
+              {t('huggingFaceModelInfo.parameters', 'Parameters')}:
             </div>
             <LabeledElement
               className="hugging-face-model-info__labeled-element"
-              labelElement={{ value: 'Model name or path' }}
+              labelElement={{
+                value: t(
+                  'huggingFaceModelInfo.modelNameOrPath',
+                  'Model name or path'
+                ),
+              }}
             >
               {huggingFaceModel.modelNameOrPath}
             </LabeledElement>
             <LabeledElement
               className="hugging-face-model-info__labeled-element"
-              labelElement={{ value: 'Train nlp dataset' }}
+              labelElement={{
+                value: t(
+                  'huggingFaceModelInfo.trainNlpDataset',
+                  'Train dataset'
+                ),
+              }}
             >
               {getNlpDatasetById(huggingFaceModel.trainNlpDataset)?.id}
             </LabeledElement>
             <LabeledElement
               className="hugging-face-model-info__labeled-element"
-              labelElement={{ value: 'Valid nlp dataset' }}
+              labelElement={{
+                value: t(
+                  'huggingFaceModelInfo.validNlpDataset',
+                  'Valid dataset'
+                ),
+              }}
             >
               {getNlpDatasetById(huggingFaceModel.validNlpDataset)?.id}
             </LabeledElement>
             <LabeledElement
               className="hugging-face-model-info__labeled-element"
-              labelElement={{ value: 'Evaluate metric name' }}
+              labelElement={{
+                value: t(
+                  'huggingFaceModelInfo.evaluateMetricName',
+                  'Evaluate metric name'
+                ),
+              }}
             >
               {huggingFaceModel.evaluateMetricName}
             </LabeledElement>
             {huggingFaceModel.trainingArgs ? (
               <div className="hugging-face-model-info__training-args">
                 <div className="hugging-face-model-info__training-args-name">
-                  Training args:
+                  {t('huggingFaceModelInfo.trainingArgs', 'Training args:')}
                 </div>
                 <LabeledElement
                   className="hugging-face-model-info__labeled-element"
-                  labelElement={{ value: 'Learning rate' }}
+                  labelElement={{
+                    value: t(
+                      'huggingFaceModelInfo.learningRate',
+                      'Learning rate'
+                    ),
+                  }}
                 >
                   {huggingFaceModel.trainingArgs.learningRate}
                 </LabeledElement>
                 <LabeledElement
                   className="hugging-face-model-info__labeled-element"
-                  labelElement={{ value: 'Per device train batch size' }}
+                  labelElement={{
+                    value: t(
+                      'huggingFaceModelInfo.perDeviceTrainBatchSize',
+                      'Per device train batch size'
+                    ),
+                  }}
                 >
                   {huggingFaceModel.trainingArgs.perDeviceTrainBatchSize}
                 </LabeledElement>
                 <LabeledElement
                   className="hugging-face-model-info__labeled-element"
-                  labelElement={{ value: 'Per device eval batch size' }}
+                  labelElement={{
+                    value: t(
+                      'huggingFaceModelInfo.perDeviceEvalBatchSize',
+                      'Per device eval batch size'
+                    ),
+                  }}
                 >
                   {huggingFaceModel.trainingArgs.perDeviceEvalBatchSize}
                 </LabeledElement>
                 <LabeledElement
                   className="hugging-face-model-info__labeled-element"
-                  labelElement={{ value: 'Num train epochs' }}
+                  labelElement={{
+                    value: t(
+                      'huggingFaceModelInfo.numTrainEpochs',
+                      'Num train epochs'
+                    ),
+                  }}
                 >
                   {huggingFaceModel.trainingArgs.numTrainEpochs}
                 </LabeledElement>
                 <LabeledElement
                   className="hugging-face-model-info__labeled-element"
-                  labelElement={{ value: 'Weight decay' }}
+                  labelElement={{
+                    value: t(
+                      'huggingFaceModelInfo.weightDecay',
+                      'Weight decay'
+                    ),
+                  }}
                 >
                   {huggingFaceModel.trainingArgs.weightDecay}
                 </LabeledElement>
                 <LabeledElement
                   className="hugging-face-model-info__labeled-element"
-                  labelElement={{ value: 'Evaluation strategy' }}
+                  labelElement={{
+                    value: t(
+                      'huggingFaceModelInfo.evaluationStrategy',
+                      'Evaluation strategy'
+                    ),
+                  }}
                 >
                   {huggingFaceModel.trainingArgs.evaluationStrategy}
                 </LabeledElement>
                 <LabeledElement
                   className="hugging-face-model-info__labeled-element"
-                  labelElement={{ value: 'Save strategy' }}
+                  labelElement={{
+                    value: t(
+                      'huggingFaceModelInfo.saveStrategy',
+                      'Save strategy'
+                    ),
+                  }}
                 >
                   {huggingFaceModel.trainingArgs.saveStrategy}
                 </LabeledElement>
                 <LabeledElement
                   className="hugging-face-model-info__labeled-element"
-                  labelElement={{ value: 'Load best model at end' }}
+                  labelElement={{
+                    value: t(
+                      'huggingFaceModelInfo.loadBestModelAtEnd',
+                      'Load best model at end'
+                    ),
+                  }}
                 >
                   {huggingFaceModel.trainingArgs.loadBestModelAtEnd.toString()}
                 </LabeledElement>
               </div>
             ) : (
-              <>Training args not found</>
+              <>
+                {t(
+                  'huggingFaceModelInfo.trainingArgsNotFound',
+                  'Training args not found'
+                )}
+              </>
             )}
           </div>
         </Accordion>

@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import ReactFlow, {
   Background,
@@ -31,6 +32,7 @@ import './styles.scss';
 const flowKey = 'react-flow-key';
 
 const NlpConstructorPage: FC = () => {
+  const { t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
   const {
     clicked: paneClicked,
@@ -210,7 +212,7 @@ const NlpConstructorPage: FC = () => {
                 className="nlp-constructor-page__panel-button"
                 onClick={handleSave}
               >
-                Save
+                {t('nlpConstructorPage.save', 'Save')}
               </Button>
             </div>
             <div className="nlp-constructor-page__panel-item">
@@ -218,7 +220,7 @@ const NlpConstructorPage: FC = () => {
                 className="nlp-constructor-page__panel-button"
                 onClick={handleRestore}
               >
-                Restore
+                {t('nlpConstructorPage.restore', 'Restore')}
               </Button>
             </div>
             <div className="nlp-constructor-page__panel-item">
@@ -226,7 +228,7 @@ const NlpConstructorPage: FC = () => {
                 className="nlp-constructor-page__panel-button"
                 onClick={handleSaveToFile}
               >
-                Save to file
+                {t('nlpConstructorPage.saveToFile', 'Save to file')}
               </Button>
             </div>
             <div className="nlp-constructor-page__panel-item">
@@ -241,7 +243,7 @@ const NlpConstructorPage: FC = () => {
                   onChange={handleLoadFromFile}
                   hidden
                 />
-                Load from file
+                {t('nlpConstructorPage.loadFromFile', 'Load from file')}
               </label>
             </div>
             <div className="nlp-constructor-page__panel-item">
@@ -249,7 +251,7 @@ const NlpConstructorPage: FC = () => {
                 className="nlp-constructor-page__panel-button"
                 onClick={handleRun}
               >
-                Run
+                {t('nlpConstructorPage.run', 'Run')}
               </Button>
             </div>
           </Panel>
@@ -263,7 +265,7 @@ const NlpConstructorPage: FC = () => {
               }`}
               onAnimationEnd={handleAnimationErrorEnd}
             >
-              Error: {error}
+              {t('nlpConstructorPage.error', 'Error:')} {error}
             </div>
           )}
         </ReactFlow>

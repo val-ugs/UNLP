@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import { NodeProps } from 'reactflow';
 import LabeledElement from 'components/interstitial/LabeledElement';
@@ -21,6 +22,7 @@ interface NlpDatasetNodeProps {
 }
 
 const NlpDatasetNode: FC<NodeProps<NlpDatasetNodeProps>> = (node) => {
+  const { t } = useTranslation();
   const { editNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
@@ -73,7 +75,9 @@ const NlpDatasetNode: FC<NodeProps<NlpDatasetNodeProps>> = (node) => {
       <div className="nlp-dataset-node__main">
         <LabeledElement
           className="nlp-dataset-node__labeled-element"
-          labelElement={{ value: 'Nlp dataset' }}
+          labelElement={{
+            value: t('nlpDatasetNode.nlpDataset', 'Dataset'),
+          }}
         >
           <Select
             className={nlpDatasetSelect.className}

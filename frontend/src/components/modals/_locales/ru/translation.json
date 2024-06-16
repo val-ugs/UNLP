@@ -1,0 +1,40 @@
+{
+  "huggingFaceModelFormModal": {
+    "modelForm":"Форма модели",
+    "name": "Название",
+    "modelNameOrPath": "Название модели или путь",
+    "trainNlpDataset": "Датасет для обучения",
+    "validNlpDataset": "Датасет для валидации",
+    "evaluateMetricName": "Название метрики оценки",
+    "type": "Тип",
+    "trainingArgs": "Тренировочные аргументы:",
+    "learningRate": "Скорость обучения",
+    "perDeviceTrainBatchSize": "Размер тренировочной партии для каждого ядра",
+    "perDeviceEvalBatchSize": "Размер валидированной партии для каждого ядра",
+    "numTrainEpochs": "Количество тренировочных эпох",
+    "weightDecay": "Снижение веса",
+    "evaluationStrategy": "Стратегия оценки",
+    "saveStrategy": "Сохранить стратегию",
+    "loadBestModelAtEnd": "Загрузить лучшую модель в конце",
+    "confirm":"Подтвердить"
+  },
+  "loadDataModal": {
+    "loadTxtOrJsonFile": "Загрузите файл txt или json",
+    "fileNotSelected": "Файл не выбран",
+    "regexTextPatternToSplit":"Шаблон регулярного выражения для разделения текстов",
+    "loadData": "Загрузить данные"
+  },
+  "nerLabelFormModal": {
+    "nerLabelForm": "Форма NER метки",
+    "labelName": "Название метки",
+    "labelColor": "Цвет метки",
+    "confirm": "Подтвердить"
+  },
+  "nlpTokenSettingsModal": {
+    "nlpTokenSettings": "Настройки токена NLP",
+    "whenChangingTokenSettings": "При изменении настроек токена метки NER будут удалены.",
+    "patternToRemove":"Шаблон для удаления",
+    "patternToSplit":"Шаблон для разделения",
+    "confirm":"Подтвердить"
+  }
+}

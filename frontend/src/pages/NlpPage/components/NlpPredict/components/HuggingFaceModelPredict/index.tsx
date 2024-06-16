@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'hooks/redux';
 import Button from 'components/common/Button';
@@ -32,6 +33,7 @@ const HuggingFaceModelPredict: FC<HuggingFaceModelPredictProps> = ({
   testNlpDatasetId,
   setTestNlpDatasetId,
 }) => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [huggingFaceModelType, setHuggingFaceModelType] =
     useState<HuggingFaceModelType>(HuggingFaceModelType.Classification);
@@ -122,7 +124,12 @@ const HuggingFaceModelPredict: FC<HuggingFaceModelPredictProps> = ({
           <div className="hugging-face-model-predict__model">
             <LabeledElement
               className="hugging-face-model-predict__model-item hugging-face-model-predict__labeled-element"
-              labelElement={{ value: 'Select hugging face model' }}
+              labelElement={{
+                value: t(
+                  'huggingFaceModelPredict.selectHuggingFaceModel',
+                  'Select model'
+                ),
+              }}
             >
               <Select
                 className={huggingFaceModelSelect.className}
@@ -135,7 +142,10 @@ const HuggingFaceModelPredict: FC<HuggingFaceModelPredictProps> = ({
             </LabeledElement>
           </div>
         ) : (
-          'Hugging face models not found'
+          t(
+            'huggingFaceModelPredict.huggingFaceModelsNotFound',
+            'Models not found'
+          )
         )}
         <div className="hugging-face-model-predict__item">
           <HuggingFaceModelInfo huggingFaceModel={huggingFaceModel} />
@@ -143,7 +153,12 @@ const HuggingFaceModelPredict: FC<HuggingFaceModelPredictProps> = ({
         <div className="hugging-face-model-predict__item">
           <LabeledElement
             className="hugging-face-model-predict__labeled-element"
-            labelElement={{ value: 'Select test nlp dataset' }}
+            labelElement={{
+              value: t(
+                'huggingFaceModelPredict.selectTestNlpDataset',
+                'Select test dataset'
+              ),
+            }}
           >
             <Select
               className={testNlpDatasetSelect.className}

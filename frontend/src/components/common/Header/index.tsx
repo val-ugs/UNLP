@@ -1,24 +1,27 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import OrderedList from '../OrderedList';
 import NavLinkButton, { NavLinkButtonProps } from '../NavLinkButton';
 import './styles.scss';
 
-const navLinkButtons: NavLinkButtonProps[] = [
-  {
-    to: '/prepare',
-    children: 'Prepare dataset',
-  },
-  {
-    to: '/nlp',
-    children: 'NLP',
-  },
-  {
-    to: '/nlp-constructor',
-    children: 'NLP Constructor',
-  },
-];
-
 const Header: FC = () => {
+  const { t } = useTranslation();
+
+  const navLinkButtons: NavLinkButtonProps[] = [
+    {
+      to: '/prepare',
+      children: `${t('header.prepareDataset', 'Prepare dataset')}`,
+    },
+    {
+      to: '/nlp',
+      children: 'NLP',
+    },
+    {
+      to: '/nlp-constructor',
+      children: `${t('header.nlpConstructor', 'NLP Constructor')}`,
+    },
+  ];
+
   return (
     <header className="header">
       <div className="header__item header__title">UNLP</div>

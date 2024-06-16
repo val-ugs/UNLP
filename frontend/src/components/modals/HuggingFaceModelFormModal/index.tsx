@@ -1,4 +1,5 @@
 import React, { FC, FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HexColorPicker } from 'react-colorful';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import ContentModal from 'components/interstitial/ContentModal';
@@ -46,6 +47,7 @@ const emptyHuggingFaceModel: HuggingFaceModelProps = {
 };
 
 const HuggingFaceModelFormModal: FC = () => {
+  const { t } = useTranslation();
   const [nlpDatasets, setNlpDatasets] = useState<NlpDatasetProps[]>([]);
   const [huggingFaceModel, setHuggingFaceModel] =
     useState<HuggingFaceModelProps>(emptyHuggingFaceModel);
@@ -320,7 +322,7 @@ const HuggingFaceModelFormModal: FC = () => {
   return (
     <ContentModal
       className="hugging-face-model-form-modal"
-      title={'Hugging face model form'}
+      title={t('huggingFaceModelForm.modelForm', 'Model form')}
       isActive={isActive}
       handleClose={handleClose}
     >
@@ -331,7 +333,9 @@ const HuggingFaceModelFormModal: FC = () => {
         <div className="hugging-face-model-form-modal__item">Parameters:</div>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Name' }}
+          labelElement={{
+            value: t('huggingFaceModelFormModal.name', 'Name'),
+          }}
         >
           <InputField
             className={nameInputField.className}
@@ -347,7 +351,12 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Model name or path' }}
+          labelElement={{
+            value: t(
+              'huggingFaceModelFormModal.modelNameOrPath',
+              'Model name or path'
+            ),
+          }}
         >
           <InputField
             className={modelNameOrPathInputField.className}
@@ -363,7 +372,12 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Train nlp dataset' }}
+          labelElement={{
+            value: t(
+              'huggingFaceModelFormModal.trainNlpDataset',
+              'Train dataset'
+            ),
+          }}
         >
           <Select
             className={trainNlpDatasetSelect.className}
@@ -376,7 +390,12 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Valid nlp dataset' }}
+          labelElement={{
+            value: t(
+              'huggingFaceModelFormModal.validNlpDataset',
+              'Valid dataset'
+            ),
+          }}
         >
           <Select
             className={validNlpDatasetSelect.className}
@@ -389,7 +408,12 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Evaluate metric name' }}
+          labelElement={{
+            value: t(
+              'huggingFaceModelFormModal.evaluateMetricName',
+              'Evaluate metric name'
+            ),
+          }}
         >
           <InputField
             className={evaluateMetricNameField.className}
@@ -405,7 +429,9 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Type' }}
+          labelElement={{
+            value: t('huggingFaceModelFormModal.type', 'Type'),
+          }}
         >
           <Select
             className={typeSelect.className}
@@ -417,11 +443,13 @@ const HuggingFaceModelFormModal: FC = () => {
           </Select>
         </LabeledElement>
         <div className="hugging-face-model-form-modal__item">
-          Training args:
+          {t('huggingFaceModelFormModal.trainingArgs', 'Training Args:')}
         </div>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Learning rate' }}
+          labelElement={{
+            value: t('huggingFaceModelFormModal.learningRate', 'Learning rate'),
+          }}
         >
           <InputNumber
             className={learningRateField.className}
@@ -435,7 +463,12 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Per device train batch size' }}
+          labelElement={{
+            value: t(
+              'huggingFaceModelFormModal.perDeviceTrainBatchSize',
+              'Per device train batch size'
+            ),
+          }}
         >
           <InputNumber
             className={perDeviceTrainBatchSizeField.className}
@@ -449,7 +482,12 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Per device eval batch size' }}
+          labelElement={{
+            value: t(
+              'huggingFaceModelFormModal.perDeviceEvalBatchSize',
+              'Per device eval batch size'
+            ),
+          }}
         >
           <InputNumber
             className={perDeviceEvalBatchSizeField.className}
@@ -463,7 +501,12 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Num train epochs' }}
+          labelElement={{
+            value: t(
+              'huggingFaceModelFormModal.numTrainEpochs',
+              'Num train epochs'
+            ),
+          }}
         >
           <InputNumber
             className={numTrainEpochsField.className}
@@ -477,7 +520,9 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Weight decay' }}
+          labelElement={{
+            value: t('huggingFaceModelFormModal.weightDecay', 'Weight decay'),
+          }}
         >
           <InputNumber
             className={weightDecayField.className}
@@ -491,7 +536,12 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Evaluation strategy' }}
+          labelElement={{
+            value: t(
+              'huggingFaceModelFormModal.evaluationStrategy',
+              'Evaluation strategy'
+            ),
+          }}
         >
           <InputField
             className={evaluationStrategyField.className}
@@ -507,7 +557,9 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Save strategy' }}
+          labelElement={{
+            value: t('huggingFaceModelFormModal.saveStrategy', 'Save strategy'),
+          }}
         >
           <InputField
             className={saveStrategyField.className}
@@ -523,7 +575,12 @@ const HuggingFaceModelFormModal: FC = () => {
         </LabeledElement>
         <LabeledElement
           className="hugging-face-model-form-modal__item"
-          labelElement={{ value: 'Load best model at end' }}
+          labelElement={{
+            value: t(
+              'huggingFaceModelFormModal.loadBestModelAtEnd',
+              'Load best model at end'
+            ),
+          }}
         >
           <InputCheckbox
             className={loadBestModelAtEndInputCheckbox.className}
@@ -533,7 +590,7 @@ const HuggingFaceModelFormModal: FC = () => {
           />
         </LabeledElement>
         <InputButton className="hugging-face-model-form-modal__button">
-          Confirm
+          {t('huggingFaceModelFormModal.confirm', 'Confirm')}
         </InputButton>
       </form>
     </ContentModal>

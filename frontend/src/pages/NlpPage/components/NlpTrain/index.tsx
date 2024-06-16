@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Button from 'components/common/Button';
 import HuggingFaceModelTrain from './components/HuggingFaceModelTrain';
 import { HuggingFaceModelProps } from 'interfaces/huggingFaceModel.interface';
@@ -7,6 +8,7 @@ import { TrainResultsDto } from 'interfaces/dtos/trainResultsDto.interface';
 import './styles.scss';
 
 const NlpTrain: FC = () => {
+  const { t } = useTranslation();
   const [huggingFaceModel, setHuggingFaceModel] = useState<
     HuggingFaceModelProps | undefined
   >(undefined);
@@ -28,7 +30,9 @@ const NlpTrain: FC = () => {
 
   return (
     <div className="nlp-train">
-      <div className="nlp-train__title">Prepare model to train:</div>
+      <div className="nlp-train__title">
+        {t('nlpTrain.prepareModelToTrain', 'Prepare model to train:')}
+      </div>
       <div className="nlp-train__item nlp-train__train">
         <div className="nlp-train__train-item">
           <HuggingFaceModelTrain
@@ -39,11 +43,13 @@ const NlpTrain: FC = () => {
         </div>
         <div className="nlp-train__train-item">
           <Button className="nlp-train__train-button" onClick={handleTrain}>
-            Train
+            {t('nlpTrain.train', 'Train')}
           </Button>
         </div>
       </div>
-      <div className="nlp-train__title">Results:</div>
+      <div className="nlp-train__title">
+        {t('nlpTrain.results', 'Results:')}
+      </div>
       <div className="nlp-train__item nlp-train__results">
         {trainResults &&
           trainResults.map((result: TrainResultsDto) => (

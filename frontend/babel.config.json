@@ -25,6 +25,7 @@
         "hooks": "./src/hooks",
         "interfaces": "./src/interfaces",
         "images": "./src/images",
+        "localization": "./src/localization",
         "pages": "./src/pages",
         "services": "./src/services",
         "store": "./src/store"

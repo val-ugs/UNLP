@@ -1,0 +1,80 @@
+{
+  "nlpDatasetClearing": {
+    "selectNlpDataset": "Выберите датасет",
+    "selectFieldToClear": "Выберите поле для очистки",
+    "clear": "Очистить"
+  },
+  "nlpDatasetCopying": {
+    "selectNlpDataset": "Выберите датасет",
+    "copy": "Копировать"
+  },
+  "nlpDatasetCreatingByField": {
+    "selectNlpDataset": "Выберите датасет",
+    "selectField": "Выберите поле",
+    "selectNerLabel": "Выберите NER метку",
+    "isClassificationLabelSaved": "Сохранить метку классификации",
+    "isSummarizationSaved": "Сохранить обобщение",
+    "create": "Создать"
+  },
+  "nlpDatasetCreatingByTemplate": {
+    "selectNlpDatasets": "Выберите датасеты",
+    "inputTemplate":"Шаблон",
+    "inputDelimiter":"Разделитель",
+    "submit": "Применить"
+  },
+  "nlpDatasetDeletingTextsWithoutFields": {
+    "selectNlpDataset": "Выберите датасет",
+    "delete": "Удалить"
+  },
+  "nlpTokenNerLabelsCreatingByPattern": {
+    "selectNlpDataset": "Выберите датасет",
+    "pattern":"шаблон",
+    "delete":"Удалить",
+    "submit": "Применить",
+    "errorNerLabelsNotFound": "Ошибка: NER метки не найдены",
+    "error": "Ошибка:"
+  },
+  "addNerLabelPattern": {
+    "selectNerLabel": "Выберите NER метку",
+    "add": "Добавить"
+  },
+  "huggingFaceModelInfo": {
+    "parameters": "Параметры",
+    "modelNameOrPath": "Название модели или путь",
+    "trainNlpDataset": "Датасет для обучения",
+    "validNlpDataset": "Датасет для валидации",
+    "evaluateMetricName": "Название метрики оценки",
+    "trainingArgs": "Тренировочные аргументы:",
+    "learningRate": "Скорость обучения",
+    "perDeviceTrainBatchSize": "Размер тренировочной партии для каждого ядра",
+    "perDeviceEvalBatchSize": "Размер валидированной партии для каждого ядра",
+    "numTrainEpochs": "Количество тренировочных эпох",
+    "weightDecay": "Снижение веса",
+    "evaluationStrategy": "Стратегия оценки",
+    "saveStrategy": "Сохранить стратегию",
+    "loadBestModelAtEnd": "Загрузить лучшую модель в конце",
+    "trainingArgsNotFound": "Тренировочные аргументы не найдены"
+  },
+  "classificationMetricCalculation":{
+    "selectNlpDataset": "Выберите датасет",
+    "selectPredictedNlpDataset": "Выберите прогнозируемый датасет",
+    "selectMetric": "Выберите метрику",
+    "selectAverage": "Выберите способ",
+    "calculate": "Рассчитать",
+    "result": "Результат:"
+  },
+  "nerMetricCalculation":{
+    "selectNlpDataset": "Выберите датасет",
+    "selectPredictedNlpDataset": "Выберите прогнозируемый датасет",
+    "selectMetric": "Выберите метрику",
+    "calculate": "Рассчитать",
+    "result": "Результат:"
+  },
+  "summarizationMetricCalculation":{
+    "selectNlpDataset": "Выберите датасет",
+    "selectPredictedNlpDataset": "Выберите прогнозируемый датасет",
+    "selectMetric": "Выберите метрику",
+    "calculate": "Рассчитать",
+    "result": "Результат:"
+  }
+}

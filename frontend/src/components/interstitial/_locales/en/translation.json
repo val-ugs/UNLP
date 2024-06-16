@@ -1,0 +1,81 @@
+{
+  "nlpDatasetClearing": {
+    "selectNlpDataset": "Select dataset",
+    "selectFieldToClear": "Select field to clear",
+    "clear": "Clear"
+  },
+  "nlpDatasetCopying": {
+    "selectNlpDataset": "Select dataset",
+    "copy": "Copy"
+  },
+  "nlpDatasetCreatingByField": {
+    "selectNlpDataset": "Select dataset",
+    "selectFieldToClear": "Select field to clear",
+    "selectNerLabel": "Select NER label",
+    "isClassificationLabelSaved": "Is classification label saved",
+    "isSummarizationSaved": "Is summarization saved",
+    "create": "Create"
+  },
+  "nlpDatasetCreatingByTemplate": {
+    "selectNlpDatasets": "Select datasets",
+    "inputTemplate": "Input template",
+    "inputDelimiter": "Input delimiter",
+    "submit": "Submit"
+  },
+  "nlpDatasetDeletingTextsWithoutFields": {
+    "selectNlpDataset": "Select dataset",
+    "delete": "Delete"
+  },
+  "nlpTokenNerLabelsCreatingByPattern": {
+    "selectNlpDataset": "Select dataset",
+    "pattern":"pattern",
+    "delete":"Delete",
+    "submit": "Submit",
+    "errorNerLabelsNotFound": "Error: Ner labels not found",
+    "error": "Error:"
+  },
+  "addNerLabelPattern": {
+    "selectNerLabel": "Select NER label",
+    "enterRegexPattern": "Enter regex pattern",
+    "add": "Add"
+  },
+  "huggingFaceModelInfo": {
+    "parameters": "Parameters",
+    "modelNameOrPath": "Model name or path",
+    "trainNlpDataset": "Train dataset",
+    "validNlpDataset": "Valid dataset",
+    "evaluateMetricName": "Evaluate metric name",
+    "trainingArgs": "Training args:",
+    "learningRate": "Learning rate",
+    "perDeviceTrainBatchSize": "Per device train batch size",
+    "perDeviceEvalBatchSize": "Per device eval batch size",
+    "numTrainEpochs": "Num train epochs",
+    "weightDecay": "Weight decay",
+    "evaluationStrategy": "Evaluation strategy",
+    "saveStrategy": "Save strategy",
+    "loadBestModelAtEnd": "Load best model at end",
+    "trainingArgsNotFound": "Training args not found"
+  },
+  "classificationMetricCalculation":{
+    "selectNlpDataset": "Select dataset",
+    "selectPredictedNlpDataset": "Select predicted dataset",
+    "selectMetric": "Select metric",
+    "selectAverage": "Select average",
+    "calculate": "Calculate",
+    "result": "Result:"
+  },
+  "nerMetricCalculation":{
+    "selectNlpDataset": "Select dataset",
+    "selectPredictedNlpDataset": "Select predicted dataset",
+    "selectMetric": "Select metric",
+    "calculate": "Calculate",
+    "result": "Result:"
+  },
+  "summarizationMetricCalculation":{
+    "selectNlpDataset": "Select dataset",
+    "selectPredictedNlpDataset": "Select predicted dataset",
+    "selectMetric": "Select metric",
+    "calculate": "Calculate",
+    "result": "Result:"
+  }
+}

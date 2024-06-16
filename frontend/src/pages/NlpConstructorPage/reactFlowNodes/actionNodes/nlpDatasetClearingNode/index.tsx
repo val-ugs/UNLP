@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'hooks/redux';
 import { NodeProps } from 'reactflow';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
@@ -26,6 +27,7 @@ interface NlpDatasetClearingNodeProps {
 const NlpDatasetClearingNode: FC<NodeProps<NlpDatasetClearingNodeProps>> = (
   node
 ) => {
+  const { t } = useTranslation();
   const { editNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -72,7 +74,12 @@ const NlpDatasetClearingNode: FC<NodeProps<NlpDatasetClearingNodeProps>> = (
       <div className="nlp-dataset-clearing-node__main">
         <LabeledElement
           className="nlp-dataset-clearing-node__labeled-element"
-          labelElement={{ value: 'Select field to clear' }}
+          labelElement={{
+            value: t(
+              'nlpDatasetClearingNode.selectFieldToClear',
+              'Select field to clear'
+            ),
+          }}
         >
           <Select
             className={clearFieldSelect.className}

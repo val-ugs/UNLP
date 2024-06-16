@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { skipToken } from '@reduxjs/toolkit/query';
 import Button from 'components/common/Button';
 import { NlpTextProps } from 'interfaces/nlpText.interface';
@@ -30,6 +31,7 @@ const NlpTexts: FC<NlpTextsProps> = ({
   selectedNlpTextId,
   setSelectedNlpTextId,
 }) => {
+  const { t } = useTranslation();
   const [getNlpTextRequest, setGetNlpTextRequest] =
     useState<GetNlpTextPageRequestProps>({
       nlpDatasetId: nlpDatasetId,
@@ -169,7 +171,7 @@ const NlpTexts: FC<NlpTextsProps> = ({
       <div className="nlp-texts__search">
         <LabeledElement
           className="nlp-texts__search-labeled"
-          labelElement={{ value: 'Search' }}
+          labelElement={{ value: t('nlpTexts.search', 'Search') }}
         >
           <InputField
             className={searchInputField.className}
@@ -190,7 +192,9 @@ const NlpTexts: FC<NlpTextsProps> = ({
             {getSortSymbol()}
           </Button>
         </div>
-        <div className="nlp-texts__title-text">Texts:</div>
+        <div className="nlp-texts__title-text">
+          {t('nlpTexts.texts', 'Texts')}:
+        </div>
       </div>
       <div className="nlp-texts__list">
         {nlpTexts?.map((nlpText: NlpTextProps) => (
@@ -208,7 +212,7 @@ const NlpTexts: FC<NlpTextsProps> = ({
       </div>
       <div className="nlp-texts__pagination">
         <Button className="nlp-texts__pagination-prev" onClick={handlePrevPage}>
-          Prev
+          {t('nlpTexts.prev', 'Prev')}
         </Button>
         {getNlpTextsResponse?.nlpTextsCount && (
           <>
@@ -233,7 +237,7 @@ const NlpTexts: FC<NlpTextsProps> = ({
                 />
                 <div className="nlp-texts__pagination-submit">
                   <InputButton className="nlp-texts__pagination-submit-button">
-                    Ok
+                    {t('nlpTexts.ok', 'Ok')}
                   </InputButton>
                 </div>
               </form>
@@ -241,13 +245,13 @@ const NlpTexts: FC<NlpTextsProps> = ({
           </>
         )}
         <Button className="nlp-texts__pagination-next" onClick={handleNextPage}>
-          Next
+          {t('nlpTexts.next', 'Next')}
         </Button>
       </div>
       <div className="nlp-texts__bottom">
         <div className="nlp-texts__delete">
           <Button className="nlp-texts__delete-button" onClick={handleDelete}>
-            Delete selected text
+            {t('nlpTexts.deleteSelectedText', 'Delete selected text')}
           </Button>
         </div>
       </div>

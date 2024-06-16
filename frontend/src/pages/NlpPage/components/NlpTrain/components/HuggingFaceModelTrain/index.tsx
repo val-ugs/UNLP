@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { useAppDispatch } from 'hooks/redux';
 import Button from 'components/common/Button';
@@ -27,6 +28,7 @@ const HuggingFaceModelTrain: FC<HuggingFaceModelTrainProps> = ({
   huggingFaceModel,
   setHuggingFaceModel,
 }) => {
+  const { t } = useTranslation();
   const [huggingFaceModelType, setHuggingFaceModelType] =
     useState<HuggingFaceModelType>(HuggingFaceModelType.Classification);
   const [huggingFaceModels, setHuggingFaceModels] =
@@ -87,7 +89,7 @@ const HuggingFaceModelTrain: FC<HuggingFaceModelTrainProps> = ({
           className="hugging-face-model-train__add-button"
           onClick={handleAdd}
         >
-          Create hugging face model
+          {t('huggingFaceModelTrain.createHuggingFaceModel', 'Create model')}
         </Button>
       </div>
       <div className="hugging-face-model-train__item">
@@ -116,7 +118,12 @@ const HuggingFaceModelTrain: FC<HuggingFaceModelTrainProps> = ({
           <div className="hugging-face-model-train__model">
             <LabeledElement
               className="hugging-face-model-train__model-item hugging-face-model-train__labeled-element"
-              labelElement={{ value: 'Select hugging face model' }}
+              labelElement={{
+                value: t(
+                  'huggingFaceModelTrain.selectHuggingFaceModel',
+                  'Select model'
+                ),
+              }}
             >
               <Select
                 className={huggingFaceModelSelect.className}
@@ -134,7 +141,7 @@ const HuggingFaceModelTrain: FC<HuggingFaceModelTrainProps> = ({
                     className="hugging-face-model-train__edit-button"
                     onClick={handleEdit}
                   >
-                    Edit
+                    {t('huggingFaceModelTrain.edit', 'Edit')}
                   </Button>
                 </div>
                 <div className="hugging-face-model-train__model-item">
@@ -142,14 +149,17 @@ const HuggingFaceModelTrain: FC<HuggingFaceModelTrainProps> = ({
                     className="hugging-face-model-train__delete-button"
                     onClick={handleDelete}
                   >
-                    Delete
+                    {t('huggingFaceModelTrain.delete', 'Delete')}
                   </Button>
                 </div>
               </>
             )}
           </div>
         ) : (
-          'Hugging face models not found'
+          t(
+            'huggingFaceModelTrain.huggingFaceModelsNotFound',
+            'Models not found'
+          )
         )}
         <div className="hugging-face-model-train__item">
           <HuggingFaceModelInfo huggingFaceModel={huggingFaceModel} />

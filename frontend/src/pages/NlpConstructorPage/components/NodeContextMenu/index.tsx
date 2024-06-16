@@ -1,4 +1,5 @@
 import React, { FC, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { v4 as uuidv4 } from 'uuid';
 import Button from 'components/common/Button';
@@ -12,6 +13,7 @@ interface NodeContextMenuProps {
 }
 
 const NodeContextMenu: FC<NodeContextMenuProps> = ({ nodeId, coords }) => {
+  const { t } = useTranslation();
   const { nodes } = useAppSelector((state) => state.reactFlowReducer);
   const { addNode, deleteNode } = reactFlowSlice.actions;
   const dispatch = useAppDispatch();
@@ -35,15 +37,17 @@ const NodeContextMenu: FC<NodeContextMenuProps> = ({ nodeId, coords }) => {
       className="node-context-menu"
       style={{ top: coords.y, left: coords.x }}
     >
-      <div className="node-context-menu__title">Node menu</div>
+      <div className="node-context-menu__title">
+        {t('nodeContextMenu.nodeMenu', 'Node menu')}
+      </div>
       <Button
         className="node-context-menu__button"
         onClick={handleDuplicateNode}
       >
-        Duplicate
+        {t('nodeContextMenu.duplicate', 'Duplicate')}
       </Button>
       <Button className="node-context-menu__button" onClick={handleDeleteNode}>
-        Delete
+        {t('nodeContextMenu.delete', 'Delete')}
       </Button>
     </div>
   );

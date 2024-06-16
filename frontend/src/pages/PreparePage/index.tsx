@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { skipToken } from '@reduxjs/toolkit/query';
 import Layout from 'pages/_layouts/Layout';
 import NlpDatasets from './components/NlpDatasets';
@@ -12,6 +13,7 @@ import Menu from './components/Menu';
 import './styles.scss';
 
 const PreparePage: FC = () => {
+  const { t } = useTranslation();
   const [nlpDataset, setNlpDataset] = useState<NlpDatasetProps | undefined>(
     undefined
   );
@@ -57,7 +59,10 @@ const PreparePage: FC = () => {
             />
           ) : (
             <div className="prepare-page__sidebar-left">
-              Database not selected or not found
+              {t(
+                'preparePage.datasetNotSelectedOrNotFound',
+                'Dataset not selected or not found'
+              )}
             </div>
           )}
           {selectedNlpTextId && nlpDataset ? (
@@ -68,7 +73,10 @@ const PreparePage: FC = () => {
             />
           ) : (
             <div className="prepare-page__text-nlp-form">
-              Text not selected or not found
+              {t(
+                'preparePage.textNotSelectedOrNotFound',
+                'Text not selected or not found'
+              )}
             </div>
           )}
           <NerLabels
