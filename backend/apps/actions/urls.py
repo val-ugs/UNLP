@@ -10,4 +10,5 @@ urlpatterns = [
     path('delete-texts-without-fields/<int:nlp_dataset_pk>/', actions_view.delete_texts_without_fields, name='delete_texts_without_fields'),
     path('create-nlp-token-ner-labels-by-pattern/<int:nlp_dataset_pk>/', actions_view.create_nlp_token_ner_labels_by_pattern, name='create_nlp_token_ner_labels_by_pattern'),
     path('create-nlp-dataset-by-template/', actions_view.create_nlp_dataset_by_template, name='create_nlp_dataset_by_template'),
+    path('load-nlp-dataset-from-file/', actions_view.load_nlp_dataset_from_file, name='load_nlp_dataset_from_file'),
 ]
