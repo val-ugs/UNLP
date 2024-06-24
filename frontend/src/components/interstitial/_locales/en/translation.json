@@ -1,4 +1,9 @@
 {
+  "nlpDatasetLoading": {
+    "inputFilePath": "File path",
+    "inputTextPatternToSplit": "Regex text pattern to split",
+    "submit": "Submit"
+  },
   "nlpDatasetClearing": {
     "selectNlpDataset": "Select dataset",
     "selectFieldToClear": "Select field to clear",

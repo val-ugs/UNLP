@@ -19,7 +19,12 @@
   "paneContextMenu": {
     "add": "Добавить"
   },
-  "nlpDatasetClearingNodeProps": {
+  "nlpDatasetLoadingNode": {
+    "inputFilePath": "Путь к файлу",
+    "inputTextPatternToSplit": "Шаблон регулярного выражения для разделения текстов",
+    "submit": "Применить"
+  },
+  "nlpDatasetClearingNode": {
     "selectFieldToClear": "Выберите поле для очистки"
   },
   "nlpDatasetCopyingNode": {

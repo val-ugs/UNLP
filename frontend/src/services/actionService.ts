@@ -2,6 +2,7 @@ import { BaseQueryFn, EndpointBuilder } from '@reduxjs/toolkit/query';
 import { api } from './apiService';
 import { tagTypes } from './tagTypes';
 import { fieldType } from 'data/enums/fieldType';
+import { LoadNlpDatasetDtoProps } from 'interfaces/dtos/loadNlpDatasetDto.interface';
 import { createNlpDatasetByFieldDtoProps } from 'interfaces/dtos/createNlpDatasetByFieldDto.interface';
 import { NlpDatasetProps } from 'interfaces/nlpDataset.interface';
 import { CreateNlpTokenNerLabelsByPatternDtoProps } from 'interfaces/dtos/createNlpTokenNerLabelsByPatternDto';
@@ -9,6 +10,25 @@ import { CreateNlpDatasetByTemplateDtoProps } from 'interfaces/dtos/createNlpDat
 
 export const actionApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
+    loadNlpDataset: build.mutation<NlpDatasetProps, LoadNlpDatasetDtoProps>({
+      query: (loadNlpDataset) => ({
+        url: '/actions/load-nlp-dataset-from-file/',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          file_path: loadNlpDataset.filePath,
+          text_pattern_to_split: loadNlpDataset.textPatternToSplit,
+        }),
+      }),
+      transformResponse: (response: any) => {
+        return {
+          id: response['id'],
+          tokenPatternToRemove: response['token_pattern_to_remove'],
+          tokenPatternToSplit: response['token_pattern_to_split'],
+        };
+      },
+      invalidatesTags: [tagTypes.NlpDataset],
+    }),
     clearNlpDataset: build.mutation<
       NlpDatasetProps,
       { nlpDatasetId: number; field: fieldType }
