@@ -34,9 +34,9 @@ const NlpDatasetLoading: FC = () => {
     className: 'nlp-dataset-loading__input-field nodrag nowheel',
     type: 'text',
     name: 'filePath',
-    value: loadNlpDatasetDto.textPatternToSplit ?? '',
+    value: loadNlpDatasetDto.filePath ?? '',
     setValue: setFilePathValue,
-    maxLength: 1,
+    maxLength: 500,
     disabled: false,
   };
 
@@ -52,7 +52,7 @@ const NlpDatasetLoading: FC = () => {
     name: 'textPatternToSplit',
     value: loadNlpDatasetDto.textPatternToSplit ?? '',
     setValue: setTextPatternToSplitValue,
-    maxLength: 1,
+    maxLength: 30,
     disabled: false,
   };
 
@@ -68,7 +68,7 @@ const NlpDatasetLoading: FC = () => {
           <LabeledElement
             className="nlp-dataset-loading__labeled-element"
             labelElement={{
-              value: t('nlpDatasetLoading.inputFilePath', 'Input file path'),
+              value: t('nlpDatasetLoading.inputFilePath', 'File path'),
             }}
           >
             <InputField
@@ -90,7 +90,7 @@ const NlpDatasetLoading: FC = () => {
             labelElement={{
               value: t(
                 'nlpDatasetLoading.inputTextPatternToSplit',
-                'Input text pattern to split'
+                'Regex text pattern to split'
               ),
             }}
           >

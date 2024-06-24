@@ -19,6 +19,11 @@
   "paneContextMenu": {
     "add": "Add"
   },
+  "nlpDatasetLoadingNode": {
+    "inputFilePath": "File path",
+    "inputTextPatternToSplit": "Regex text pattern to split",
+    "submit": "Submit"
+  },
   "nlpDatasetClearingNode": {
     "selectFieldToClear": "Select field to clear"
   },
@@ -85,7 +90,7 @@
   "nlpTrain": {
     "prepareModelToTrain": "Prepare model to train:",
     "train": "Train",
-    "results:": "Results:"
+    "results": "Results:"
   },
   "huggingFaceModelTrain": {
     "createHuggingFaceModel":"Create model",

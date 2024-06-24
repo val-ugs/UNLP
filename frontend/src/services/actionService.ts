@@ -12,12 +12,12 @@ export const actionApi = api.injectEndpoints({
   endpoints: (build: EndpointBuilder<BaseQueryFn, string, string>) => ({
     loadNlpDataset: build.mutation<NlpDatasetProps, LoadNlpDatasetDtoProps>({
       query: (loadNlpDataset) => ({
-        url: '/actions/load-nlp-dataset/',
+        url: '/actions/load-nlp-dataset-from-file/',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          filePath: loadNlpDataset.filePath,
-          textPatternToSplit: loadNlpDataset.textPatternToSplit,
+          file_path: loadNlpDataset.filePath,
+          text_pattern_to_split: loadNlpDataset.textPatternToSplit,
         }),
       }),
       transformResponse: (response: any) => {

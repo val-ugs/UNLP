@@ -1,7 +1,7 @@
 {
   "nlpDatasetLoading": {
     "inputFilePath": "Путь к файлу",
-    "inputTextPatternToSplit": "Шаблон для разделения",
+    "inputTextPatternToSplit": "Шаблон регулярного выражения для разделения текстов",
     "submit": "Применить"
   },
   "nlpDatasetClearing": {
