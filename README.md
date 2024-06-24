@@ -1,6 +1,6 @@
 # UNLP
 
-<b>Universal NLP Constructor</b> - a natural language processing constructor using artificial intelligence, is a visual programming software designed for solving complex problems consisting of subtasks.
+<b>Universal NLP Constructor</b> is a visual programming software designed for solving complex natural language processing (NLP) problems that consist of subtasks. It leverages artificial intelligence (AI) techniques to effectively tackle these challenges.
 
 ## Program sections
 
