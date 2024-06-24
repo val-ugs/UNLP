@@ -1,4 +1,5 @@
 import { ActionProps } from 'interfaces/action.interface';
+import NlpDatasetLoading from 'components/interstitial/actions/NlpDatasetLoading';
 import NlpDatasetClearing from 'components/interstitial/actions/NlpDatasetClearing';
 import NlpDatasetCopying from 'components/interstitial/actions/NlpDatasetCopying';
 import NlpDatasetCreatingByField from 'components/interstitial/actions/NlpDatasetCreatingByField';
@@ -7,6 +8,10 @@ import NlpTokenNerLabelsCreatingByPattern from 'components/interstitial/actions/
 import NlpDatasetCreatingByTemplate from 'components/interstitial/actions/NlpDatasetCreatingByTemplate';
 
 export const listOfActions: ActionProps[] = [
+  {
+    name: 'Load dataset',
+    component: <NlpDatasetLoading />,
+  },
   {
     name: 'Clear dataset',
     component: <NlpDatasetClearing />,

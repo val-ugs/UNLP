@@ -4,6 +4,7 @@ import { run as runHuggingFaceModel } from './nodeRunners/nodes/runHuggingFaceMo
 import { run as runNlpDataset } from './nodeRunners/nodes/runNlpDatasetNode';
 import { run as runPredict } from './nodeRunners/nodes/runPredictNode';
 // import action node runners
+import { run as runLoadNlpDataset } from './nodeRunners/actionNodes/runLoadNlpDataset';
 import { run as runClearNlpDataset } from './nodeRunners/actionNodes/runClearNlpDataset';
 import { run as runCopyNlpDataset } from './nodeRunners/actionNodes/runCopyNlpDataset';
 import { run as runCreateNlpDatasetByField } from './nodeRunners/actionNodes/runCreateNlpDatasetByField';
@@ -25,6 +26,8 @@ export const runNode = async (node: Node, thunkApi: any) => {
     case 'PredictNode':
       return await runPredict(node, thunkApi);
     // action nodes
+    case 'NlpDatasetLoadingNode':
+      return await runLoadNlpDataset(node, thunkApi);
     case 'NlpDatasetClearingNode':
       return await runClearNlpDataset(node, thunkApi);
     case 'NlpDatasetCopyingNode':
